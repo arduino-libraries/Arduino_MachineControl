@@ -228,9 +228,9 @@ private:
 
     Encoding encoding_;
 
-    InterruptIn channelA_;
-    InterruptIn channelB_;
-    InterruptIn index_;
+    mbed::InterruptIn channelA_;
+    mbed::InterruptIn channelB_;
+    mbed::InterruptIn index_;
 
     int          pulsesPerRev_;
     int          prevState_;
