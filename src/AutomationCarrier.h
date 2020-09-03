@@ -33,7 +33,7 @@ private:
 
 extern RTDClass temp_probes;
 
-static 	mbed::CAN   _can(PH_13, PB_8);
+static 	mbed::CAN   _can(PB_8, PH_13);
 
 class COMMClass {
 public:
@@ -118,15 +118,15 @@ public:
 		switch (index) {
 			case 0:
 				return out_0;
-			case 1:
-				return out_1;
+			//case 1:
+			//	return out_1;
 			case 2:
 				return out_2;
 		}
 	}
 private:
 	mbed::PwmOut out_0 = mbed::PwmOut(PJ_11);
-	mbed::PwmOut out_1 = mbed::PwmOut(PG_7);
+	//mbed::PwmOut out_1 = mbed::PwmOut(PG_7);
 	mbed::PwmOut out_2 = mbed::PwmOut(PC_7);
 };
 
