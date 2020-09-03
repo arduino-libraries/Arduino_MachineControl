@@ -1,0 +1,33 @@
+#######################################
+# Syntax Coloring Map For ArduinoRS485
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+ArduinoRS485	KEYWORD1
+RS485	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+end	KEYWORD2
+peek	KEYWORD2
+read	KEYWORD2
+flush	KEYWORD2
+write	KEYWORD2
+
+beginTransmission	KEYWORD2
+endTransmission	KEYWORD2
+receive	KEYWORD2
+noReceive	KEYWORD2
+sendBreak	KEYWORD2
+sendBreakMicroseconds	KEYWORD2
+setPins	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
