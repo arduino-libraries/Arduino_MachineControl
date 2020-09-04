@@ -4,6 +4,8 @@
 #include "utility/Adafruit_MAX31865/Adafruit_MAX31865.h"
 #include "utility/Arduino_MKRTHERM/src/MKRTHERM.h"
 #include "utility/ArduinoRS485/src/ArduinoRS485.h"
+#include "utility/QEI/QEI.h"
+#include "utility/ioexpander/TCA6424A.h"
 
 #include "mbed.h"
 
@@ -138,24 +140,40 @@ extern AnalogOutClass analog_out;
   Use QEI library for mbed since it implements index pin
 */
 
+static QEI _enc_0(PJ_8, PH_12, PH_11, 0);
+static QEI _enc_1(PC_13, PK_1, PJ_10, 0);
+
 class EncoderClass {
 public:
+	QEI& operator[](int index) {
+		switch (index) {
+			case 0:
+				return enc_0;
+			case 1:
+				return enc_1;
+		}
+	}
 private:
+	QEI& enc_0 = _enc_0;
+	QEI& enc_1 = _enc_1;
 };
 
 extern EncoderClass encoders;
 
 /* 
-  TODO: writeme 
   using gpio expander class https://www.i2cdevlib.com/devices/tca6424a#source
   Ask Giampaolo for proper porting
   Expander interrupt is PI_5
   prog_latch_retry (AKA TERM ? ) is PH_14
+
+  TODO: check if Wire and address are correct
 */
 
-class ProgrammableDIOClass {
+class ProgrammableDIOClass : public TCA6424A {
 public:
+	mbed::DigitalOut prog_latch_retry = mbed::DigitalOut(PH_14);
 private:
+
 };
 
 extern ProgrammableDIOClass programmable_digital_io;
