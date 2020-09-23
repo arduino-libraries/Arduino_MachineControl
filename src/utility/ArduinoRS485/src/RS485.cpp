@@ -19,7 +19,7 @@
 
 #include "RS485.h"
 
-RS485Class::RS485Class(HardwareSerial& hwSerial, int txPin, int dePin, int rePin) :
+RS485Class::RS485Class(HardwareSerial& hwSerial, PinName txPin, PinName dePin, PinName rePin) :
   _serial(&hwSerial),
   _txPin(txPin),
   _dePin(dePin),
@@ -38,12 +38,12 @@ void RS485Class::begin(unsigned long baudrate, uint16_t config)
   _baudrate = baudrate;
   _config = config;
 
-  if (_dePin > -1) {
+  if (_dePin != NC) {
     pinMode(_dePin, OUTPUT);
     digitalWrite(_dePin, LOW);
   }
 
-  if (_rePin > -1) {
+  if (_rePin != NC) {
     pinMode(_rePin, OUTPUT);
     digitalWrite(_rePin, HIGH);
   }
@@ -57,12 +57,12 @@ void RS485Class::end()
 {
   _serial->end();
 
-  if (_rePin > -1) {
+  if (_rePin != NC) {
     digitalWrite(_rePin, LOW);
     pinMode(_dePin, INPUT);
   }
   
-  if (_dePin > -1) {
+  if (_dePin != NC) {
     digitalWrite(_dePin, LOW);
     pinMode(_rePin, INPUT);
   }
@@ -117,7 +117,7 @@ void RS485Class::endTransmission()
 {
   _serial->flush();
 
-  if (_dePin > -1) {
+  if (_dePin != NC) {
     delayMicroseconds(50);
     digitalWrite(_dePin, LOW);
   }
@@ -127,14 +127,14 @@ void RS485Class::endTransmission()
 
 void RS485Class::receive()
 {
-  if (_rePin > -1) {
+  if (_rePin != NC) {
     digitalWrite(_rePin, LOW);
   }
 }
 
 void RS485Class::noReceive()
 {
-  if (_rePin > -1) {
+  if (_rePin != NC) {
     digitalWrite(_rePin, HIGH);
   }
 }
@@ -143,7 +143,7 @@ void RS485Class::sendBreak(unsigned int duration)
 {
   _serial->flush();
   _serial->end();
-  if (_txPin > -1) {
+  if (_txPin != NC) {
     pinMode(_txPin, OUTPUT);
     digitalWrite(_txPin, LOW);
   }
@@ -155,7 +155,7 @@ void RS485Class::sendBreakMicroseconds(unsigned int duration)
 {
   _serial->flush();
   _serial->end();
-  if (_txPin > -1) {
+  if (_txPin != NC) {
     pinMode(_txPin, OUTPUT);
     digitalWrite(_txPin, LOW);
   }
@@ -163,7 +163,7 @@ void RS485Class::sendBreakMicroseconds(unsigned int duration)
   _serial->begin(_baudrate, _config);
 }
 
-void RS485Class::setPins(int txPin, int dePin, int rePin)
+void RS485Class::setPins(PinName txPin, PinName dePin, PinName rePin)
 {
   _txPin = txPin;
   _dePin = dePin;
