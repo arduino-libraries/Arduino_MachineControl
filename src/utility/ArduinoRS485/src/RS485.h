@@ -22,6 +22,8 @@
 
 #include <Arduino.h>
 
+#include "mbed.h"
+
 #ifdef PIN_SERIAL1_TX
 #define RS485_DEFAULT_TX_PIN PIN_SERIAL1_TX
 #else
@@ -38,7 +40,7 @@
 
 class RS485Class : public Stream {
   public:
-    RS485Class(HardwareSerial& hwSerial, int txPin = -1, int dePin = -1, int rePin = -1);
+    RS485Class(HardwareSerial& hwSerial, PinName txPin = NC, PinName dePin = NC, PinName rePin = NC);
 
     virtual void begin(unsigned long baudrate);
     virtual void begin(unsigned long baudrate, uint16_t config);
@@ -59,7 +61,7 @@ class RS485Class : public Stream {
     void sendBreak(unsigned int duration);
     void sendBreakMicroseconds(unsigned int duration);
 
-    void setPins(int txPin, int dePin, int rePin);
+    void setPins(PinName txPin, PinName dePin, PinName rePin);
 
     mbed::DigitalOut half_duplex = mbed::DigitalOut(PA_9);
     mbed::DigitalOut sel_485 = mbed::DigitalOut(PA_10);
@@ -70,9 +72,9 @@ class RS485Class : public Stream {
 
   private:
     HardwareSerial* _serial;
-    int _txPin;
-    int _dePin = -1;
-    int _rePin = -1;
+    PinName _txPin;
+    PinName _dePin = NC;
+    PinName _rePin = NC;
 
 
     bool _transmisionBegun;

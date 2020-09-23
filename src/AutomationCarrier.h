@@ -7,6 +7,7 @@
 #include "utility/QEI/QEI.h"
 #include "utility/ioexpander/TCA6424A.h"
 
+#include "Arduino.h"
 #include "mbed.h"
 
 namespace automation {
@@ -25,12 +26,14 @@ public:
 		}
 	}
 
-	Adafruit_MAX31865 rtd = Adafruit_MAX31865(PA_6);
-	THERMClass t = THERMClass(7);
+	Adafruit_MAX31865 rtd = Adafruit_MAX31865(cs_rtd);
+	THERMClass t = THERMClass(cs_tc);
 
 private:
-	mbed::DigitalOut ch_sel[3] = { mbed::DigitalOut(PA_0), mbed::DigitalOut(PI_4), mbed::DigitalOut(PJ_9) };
-	mbed::DigitalOut rtd_th = mbed::DigitalOut(PH_9);
+	mbed::DigitalOut ch_sel[3] = { mbed::DigitalOut(PA_0), mbed::DigitalOut(PI_4), mbed::DigitalOut(PG_10) };
+	mbed::DigitalOut rtd_th = mbed::DigitalOut(PC_15);
+	mbed::DigitalOut cs_tc = mbed::DigitalOut(PI_0);
+	mbed::DigitalOut cs_rtd = mbed::DigitalOut(PA_6);
 };
 
 extern RTDClass temp_probes;
@@ -46,11 +49,10 @@ public:
 		can_disable = 1;
 	}
 
-	UART _UART4_ = arduino::UART(PA_0, PI_9, PI_10, PI_13);
+	UART _UART4_ = arduino::UART(PA_0, PI_9, NC, NC);
 	mbed::CAN& can = _can;
 
-	RS485Class rs485 = RS485Class(_UART4_);
-
+	RS485Class rs485 = RS485Class(_UART4_,PA_0, PI_13,PI_10);
 private:
 	mbed::DigitalOut can_disable = mbed::DigitalOut(PA_13, 0);
 
@@ -192,7 +194,7 @@ public:
 	}
 private:
 	mbed::DigitalOut out[8] = {
-		mbed::DigitalOut(PI_6), mbed::DigitalOut(PC_15), mbed::DigitalOut(PG_10), mbed::DigitalOut(PE_2),
+		mbed::DigitalOut(PI_6), mbed::DigitalOut(PH_9), mbed::DigitalOut(PJ_9), mbed::DigitalOut(PE_2),
 		mbed::DigitalOut(PI_3), mbed::DigitalOut(PI_2), mbed::DigitalOut(PD_3), mbed::DigitalOut(PA_14)
 	};
 };
