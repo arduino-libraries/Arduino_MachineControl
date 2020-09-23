@@ -1,0 +1,99 @@
+name: Compile Examples
+
+on: 
+  pull_request:
+    paths:
+      - ".github/workflows/compile-examples.yml"
+      - "src/**"
+      - "examples/**"
+  push:
+    paths:
+      - ".github/workflows/compile-examples.yml"
+      - "src/**"
+      - "examples/**"
+  # Scheduled trigger checks for breakage caused by changes to external resources (libraries, platforms)
+  schedule:
+    # run every Tuesday at 3 AM UTC
+    - cron: "0 3 * * 2"
+  # workflow_dispatch event allows the workflow to be triggered manually
+  # See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows#workflow_dispatch
+  workflow_dispatch:
+  # repository_dispatch event allows the workflow to be triggered via the GitHub API
+  # See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows#repository_dispatch
+  repository_dispatch:
+
+env:
+  SKETCHES_REPORTS_PATH: sketches-reports
+  SKETCHES_REPORTS_ARTIFACT_NAME: sketches-reports
+
+jobs:
+  compile-examples:
+    runs-on: ubuntu-latest
+
+    env:
+      ARDUINOCORE_MBED_STAGING_PATH: extras/ArduinoCore-mbed
+      ARDUINOCORE_API_STAGING_PATH: extras/ArduinoCore-API
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # It's necessary to checkout the platform before installing it so that the ArduinoCore-API dependency can be added
+      - name: Checkout ArduinoCore-mbed
+        uses: actions/checkout@v2
+        with:
+          repository: arduino/ArduinoCore-mbed
+          # The arduino/actions/libraries/compile-examples action will install the platform from this path
+          path: ${{ env.ARDUINOCORE_MBED_STAGING_PATH }}
+
+      - name: Remove ArduinoCore-API symlink from Arduino mbed-Enabled Boards platform
+        run: rm "${{ env.ARDUINOCORE_MBED_STAGING_PATH }}/cores/arduino/api"
+
+      - name: Checkout ArduinoCore-API
+        uses: actions/checkout@v2
+        with:
+          repository: arduino/ArduinoCore-API
+          # As specified at https://github.com/arduino/ArduinoCore-mbed/blob/master/README.md#installation
+          ref: namespace_arduino
+          path: ${{ env.ARDUINOCORE_API_STAGING_PATH }}
+
+      - name: Install ArduinoCore-API
+        run: |
+          mv "${{ env.ARDUINOCORE_API_STAGING_PATH }}/api" "${{ env.ARDUINOCORE_MBED_STAGING_PATH }}/cores/arduino"
+
+      - name: Compile example sketches
+        uses: arduino/compile-sketches@main
+        with:
+          fqbn: arduino-beta:mbed:envie_m7
+          platforms: |
+            # Install Arduino mbed-Enabled Boards via Boards Manager for the toolchain
+            - name: arduino-beta:mbed
+            # Overwrite the Arduino mbed-Enabled Boards release version with version from the tip of the master branch (located in local path because of the need to first install ArduinoCore-API)
+            - source-path: extras/ArduinoCore-mbed
+              name: arduino-beta:mbed
+          enable-deltas-report: true
+          enable-warnings-report: true
+          sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Save memory usage change report as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          path: ${{ env.SKETCHES_REPORTS_PATH }}
+          name: ${{ env.SKETCHES_REPORTS_ARTIFACT_NAME }}
+
+  report:
+    needs: compile-examples
+    # Only run the job when the workflow is triggered by a pull request from this repository (because arduino/report-size-deltas requires write permissions)
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download sketches reports artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.SKETCHES_REPORTS_ARTIFACT_NAME }}
+          path: ${{ env.SKETCHES_REPORTS_PATH }}
+
+      - uses: arduino/report-size-deltas@main
+        with:
+          sketches-reports-source: ${{ env.SKETCHES_REPORTS_PATH }}
