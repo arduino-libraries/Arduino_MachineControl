@@ -3,7 +3,7 @@
 
 #include "utility/Adafruit_MAX31865/Adafruit_MAX31865.h"
 #include "utility/Arduino_MKRTHERM/src/MKRTHERM.h"
-#include "utility/ArduinoRS485/src/ArduinoRS485.h"
+#include "utility/RS485/RS485.h"
 #include "utility/QEI/QEI.h"
 #include "utility/ioexpander/TCA6424A.h"
 
