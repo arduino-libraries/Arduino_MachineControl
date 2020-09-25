@@ -1,10 +1,10 @@
 /*
   RS485 Full duplex communication
 
-  This sketch shows how to use the SP335ECR1 on Automation
-  Carrier as full duplex RS485 interface, how to periodically
-  sends a string on RS485 tx channel and how to receive data
-  from interface rx channel.
+  This sketch shows how to use the SP335ECR1 on the Automation
+  Carrier as a full duplex RS485 interface, how to periodically
+  send a string on the RS485 TX channel and how to receive data
+  from the interface RX channel.
 
   Circuit:
    - Portenta H7
