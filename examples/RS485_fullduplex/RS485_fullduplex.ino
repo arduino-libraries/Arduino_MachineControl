@@ -44,8 +44,8 @@ void setup() {
 
 
 void loop() {
-  // Call receive(); sets properly the flux controll pins
-  // and allow to receive data if available
+  // Call receive(); sets the flux control pins properly
+  // and allows receiving data if available
   comm_protocols.rs485.receive();
   if (comm_protocols.rs485.available()) {
     Serial.print("read byte: ");
