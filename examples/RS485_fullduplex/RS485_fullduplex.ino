@@ -52,9 +52,10 @@ void loop() {
     Serial.write(comm_protocols.rs485.read());
     Serial.println();
   }
-  // Call beginTransmission(); sets properly the flux controll pins
-  // and allow to start a trasnsmissio, if instead of a string wants
-  // to send byte use the API write();
+  // Call beginTransmission(); sets the flux control pins properly
+  // and allows starting a trasnsmission.
+  // If instead of a string, you want
+  // to send bytes, use the API write();
   comm_protocols.rs485.beginTransmission();
   comm_protocols.rs485.print("hello ");
   comm_protocols.rs485.println(counter);
