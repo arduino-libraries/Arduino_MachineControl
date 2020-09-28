@@ -1,5 +1,5 @@
 /*
-  This file is part of the ArduinoRS485 library.
+  This file is part of the AutomationCarrier library.
   Copyright (c) 2020 Arduino SA.
 
   This library is free software; you can redistribute it and/or
