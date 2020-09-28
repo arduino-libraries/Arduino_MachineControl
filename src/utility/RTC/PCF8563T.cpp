@@ -82,7 +82,6 @@ void PCF8563TClass::setSeconds(uint8_t seconds) {
 
 uint8_t PCF8563TClass::getYears() {
   uint8_t years = readByte(PCF8563T_YEARS_REG);
-  Serial.println(years,BIN);
   return (years & 0x0F) + ((years >> 4)*10);
 }
 
