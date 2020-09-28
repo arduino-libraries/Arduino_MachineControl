@@ -1,7 +1,7 @@
 /*
   RTC Example
 
-  This sketch shows how to use the RTC PCF8563T on Automation
+  This sketch shows how to use the RTC PCF8563T on the Automation
   Carrier and how to configure the PCF8563T's time registers.
 
   Circuit:
