@@ -1,6 +1,6 @@
 /*
-  This file is part of the Arduino_MKRTHERM library.
-  Copyright (c) 2019 Arduino SA. All rights reserved.
+  This file is part of the AutomationCarrier library.
+  Copyright (c) 2020 Arduino SA.
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -17,16 +17,16 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "MKRTHERM.h"
+#include "MAX31855.h"
 
-THERMClass::THERMClass(int cs, SPIClass& spi) :
+MAX31855Class::MAX31855Class(PinName cs, SPIClass& spi) :
   _cs(cs),
   _spi(&spi),
   _spiSettings(4000000, MSBFIRST, SPI_MODE0)
 {
 }
 
-int THERMClass::begin()
+int MAX31855Class::begin()
 {
   uint32_t rawword;
 
@@ -44,14 +44,14 @@ int THERMClass::begin()
   return 1;
 }
 
-void THERMClass::end()
+void MAX31855Class::end()
 {
   pinMode(_cs, INPUT);
   digitalWrite(_cs, LOW);
   _spi->end();
 }
 
-uint32_t THERMClass::readSensor()
+uint32_t MAX31855Class::readSensor()
 {
   uint32_t read = 0x00;
 
@@ -73,7 +73,7 @@ uint32_t THERMClass::readSensor()
   return read;
 }
 
-float THERMClass::readTemperature()
+float MAX31855Class::readTemperature(int type)
 {
   uint32_t rawword;
   float celsius;
@@ -95,11 +95,14 @@ float THERMClass::readTemperature()
   }
   // multiply for the LSB value
   celsius = rawword * 0.25f;
-
+  if (type == PROBE_J) {
+    // conversion factor from K type to J type
+    celsius = celsius * 4/5; 
+  }
   return celsius;
 }
 
-float THERMClass::readReferenceTemperature()
+float MAX31855Class::readReferenceTemperature(int type)
 {
   uint32_t rawword;
   float ref;
@@ -119,8 +122,11 @@ float THERMClass::readReferenceTemperature()
       // multiply for the LSB value
       ref = rawword * 0.0625f;
   }
-
+  if (type == PROBE_J) {
+    // conversion factor from K type to J type
+    ref = ref * 4/5;
+  }
   return ref;
 }
 
-THERMClass THERM;
+MAX31855Class THERM;

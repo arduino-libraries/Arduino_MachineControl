@@ -1,6 +1,6 @@
 /*
-  This file is part of the Arduino_MKRTHERM library.
-  Copyright (c) 2019 Arduino SA. All rights reserved.
+  This file is part of the AutomationCarrier library.
+  Copyright (c) 2020 Arduino SA.
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -17,30 +17,34 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef _MKRTHERM_H_
-#define _MKRTHERM_H_
+#ifndef _MAX31855_H_
+#define _MAX31855_H_
 
 #include <Arduino.h>
+#include <mbed.h>
 #include <SPI.h>
 
-class THERMClass {
+#define PROBE_K 0
+#define PROBE_J 1
+
+class MAX31855Class {
 public:
-  THERMClass(int cs = A4, SPIClass& spi = SPI);
+  MAX31855Class(PinName cs = NC, SPIClass& spi = SPI);
 
   int begin();
   void end();
 
-  float readTemperature();
-  float readReferenceTemperature();
+  float readTemperature(int type = PROBE_K);
+  float readReferenceTemperature(int type = PROBE_K);
 
 private:
   uint32_t readSensor();
 
-  int _cs;
+  PinName _cs;
   SPIClass* _spi;
   SPISettings _spiSettings;
 };
 
-extern THERMClass THERM;
+extern MAX31855Class THERM;
 
 #endif

@@ -2,7 +2,7 @@
 #define __AUTOMATION_CARRIER_H__
 
 #include "utility/Adafruit_MAX31865/Adafruit_MAX31865.h"
-#include "utility/Arduino_MKRTHERM/src/MKRTHERM.h"
+#include "utility/THERMOCOUPLE/MAX31855.h"
 #include "utility/RS485/RS485.h"
 #include "utility/QEI/QEI.h"
 #include "utility/ioexpander/TCA6424A.h"
@@ -26,9 +26,17 @@ public:
 			ch_sel[i] = (i == channel ? 1 : 0);
 		}
 	}
+	void enableTC() {
+		cs_tc = 1;
+		cs_rtd = 0;
+	}
+	void enableRTD() {
+		cs_tc = 0;
+		cs_rtd = 1;
+	}
 
-	Adafruit_MAX31865 rtd = Adafruit_MAX31865(cs_rtd);
-	THERMClass t = THERMClass(cs_tc);
+	Adafruit_MAX31865 rtd = Adafruit_MAX31865(PA_6);
+	MAX31855Class tc = MAX31855Class(PI_0);
 
 private:
 	mbed::DigitalOut ch_sel[3] = { mbed::DigitalOut(PA_0), mbed::DigitalOut(PI_4), mbed::DigitalOut(PG_10) };
