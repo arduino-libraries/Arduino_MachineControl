@@ -10,5 +10,5 @@ EncoderClass encoders;
 DigitalOutputsClass digital_outputs;
 DigitalInputsClass digital_inputs;
 ProgrammableDIOClass programmable_digital_io;
-
+RtcControllerClass rtc_controller;
 }
