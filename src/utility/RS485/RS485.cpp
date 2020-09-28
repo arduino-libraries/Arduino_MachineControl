@@ -1,6 +1,6 @@
 /*
   This file is part of the ArduinoRS485 library.
-  Copyright (c) 2018 Arduino SA. All rights reserved.
+  Copyright (c) 2020 Arduino SA.
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -61,7 +61,7 @@ void RS485Class::end()
     digitalWrite(_rePin, LOW);
     pinMode(_dePin, INPUT);
   }
-  
+
   if (_dePin != NC) {
     digitalWrite(_dePin, LOW);
     pinMode(_rePin, INPUT);

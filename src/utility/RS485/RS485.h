@@ -1,6 +1,6 @@
 /*
   This file is part of the ArduinoRS485 library.
-  Copyright (c) 2018 Arduino SA. All rights reserved.
+  Copyright (c) 2020 Arduino SA.
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -20,23 +20,8 @@
 #ifndef _RS485_H_INCLUDED
 #define _RS485_H_INCLUDED
 
-#include <Arduino.h>
-
+#include "Arduino.h"
 #include "mbed.h"
-
-#ifdef PIN_SERIAL1_TX
-#define RS485_DEFAULT_TX_PIN PIN_SERIAL1_TX
-#else
-#define RS485_DEFAULT_TX_PIN 1 
-#endif
-
-#ifdef __AVR__
-#define RS485_DEFAULT_DE_PIN 2
-#define RS485_DEFAULT_RE_PIN -1
-#else
-#define RS485_DEFAULT_DE_PIN A6
-#define RS485_DEFAULT_RE_PIN A5
-#endif
 
 class RS485Class : public Stream {
   public:
