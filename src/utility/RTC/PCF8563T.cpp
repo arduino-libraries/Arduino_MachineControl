@@ -45,7 +45,6 @@ bool PCF8563TClass::begin()
 void PCF8563TClass::setYears(uint8_t years) { 
   uint8_t dec = years / 10;
   uint8_t unit = years - (dec * 10);
-  Serial.println(((dec << 4) + unit),BIN);
   writeByte(PCF8563T_YEARS_REG, ((dec << 4) + unit));
 }
 
