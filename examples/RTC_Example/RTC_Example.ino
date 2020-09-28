@@ -7,7 +7,6 @@
   Circuit:
    - Portenta H7
    - Automation Carrier
-   - A Slave device with RS485 inteface
 
 
   created 24 September 2020
