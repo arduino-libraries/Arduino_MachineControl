@@ -6,6 +6,7 @@
 #include "utility/RS485/RS485.h"
 #include "utility/QEI/QEI.h"
 #include "utility/ioexpander/TCA6424A.h"
+#include "utility/RTC/PCF8563T.h"
 
 #include "Arduino.h"
 #include "mbed.h"
@@ -222,6 +223,17 @@ private:
 };
 
 extern DigitalInputsClass digital_inputs;
+
+
+class RtcControllerClass : public PCF8563TClass {
+public:
+	mbed::DigitalIn int_pin = mbed::DigitalIn(PB_9);
+private:
+
+};
+
+extern RtcControllerClass rtc_controller;
+
 }
 
 #endif
