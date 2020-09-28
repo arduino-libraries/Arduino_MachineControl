@@ -45,7 +45,7 @@ void setup() {
 }
 
 void loop() {
-  // APIs to get date's fileds.
+  // APIs to get date's fields.
   Serial.print("Date: ");
   Serial.print(rtc_controller.getYears());
   Serial.print("/");
