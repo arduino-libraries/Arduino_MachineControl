@@ -10,8 +10,8 @@
    - Automation Carrier
    - Two K Type thermocouple temperature sensors connected to the
       TEMP PROBES's TP0s and TP1s inputs of Automation Carrier
-   - A J Type thermocouple temperature sensor connected to the
-     TEMP PROBES's TP3s inputs of Automation Carrier
+   - A J Type thermocouple temperature sensor connected to
+     TEMP PROBES CH3 on the Automation Carrier
 
 
   created 25 August 2020
