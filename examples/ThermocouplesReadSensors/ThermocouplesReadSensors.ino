@@ -8,8 +8,8 @@
   The circuit:
    - Portenta H7
    - Automation Carrier
-   - Two K Type thermocouple temperature sensors connected to the
-      TEMP PROBES's TP0s and TP1s inputs of Automation Carrier
+   - Two K Type thermocouple temperature sensors connected to
+      TEMP PROBES CH0 and CH1 on the Automation Carrier
    - A J Type thermocouple temperature sensor connected to
      TEMP PROBES CH3 on the Automation Carrier
 
