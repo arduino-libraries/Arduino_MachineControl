@@ -1,5 +1,5 @@
 /*
-  Automation Carrirer - Thermocouples Read Sensors
+  Automation Carrier - Thermocouples Read Sensors
 
   This example reads the temperatures measured by the thermocouples
   connected to the Automation Carrier's temp probe inputs and prints
