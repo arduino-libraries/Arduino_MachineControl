@@ -19,7 +19,7 @@
 
 #include "MAX31855.h"
 
-MAX31855Class::MAX31855Class(PinName cs, SPIClass& spi) :
+MAX31855Class::MAX31855Class(int cs, SPIClass& spi) :
   _cs(cs),
   _spi(&spi),
   _spiSettings(4000000, MSBFIRST, SPI_MODE0)
@@ -93,6 +93,7 @@ float MAX31855Class::readTemperature(int type)
     // Positive value, just drop the lower 18 bits.
     rawword >>= 18;
   }
+
   // multiply for the LSB value
   celsius = rawword * 0.25f;
   if (type == PROBE_J) {
@@ -121,10 +122,6 @@ float MAX31855Class::readReferenceTemperature(int type)
   } else {
       // multiply for the LSB value
       ref = rawword * 0.0625f;
-  }
-  if (type == PROBE_J) {
-    // conversion factor from K type to J type
-    ref = ref * 4/5;
   }
   return ref;
 }

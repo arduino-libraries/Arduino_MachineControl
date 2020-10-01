@@ -5,7 +5,7 @@
 #include "utility/THERMOCOUPLE/MAX31855.h"
 #include "utility/RS485/RS485.h"
 #include "utility/QEI/QEI.h"
-#include "utility/ioexpander/TCA6424A.h"
+#include "utility/ioexpander/ArduinoIOExpander.h"
 #include "utility/RTC/PCF8563T.h"
 
 #include "Arduino.h"
@@ -25,24 +25,28 @@ public:
 		for (int i=0; i<3; i++) {
 			ch_sel[i] = (i == channel ? 1 : 0);
 		}
+		delay(150);
 	}
 	void enableTC() {
-		cs_tc = 1;
-		cs_rtd = 0;
-	}
-	void enableRTD() {
-		cs_tc = 0;
-		cs_rtd = 1;
+		digitalWrite(PI_0, LOW);
+		digitalWrite(PA_6, HIGH);
 	}
 
+	void enableRTD() {
+		digitalWrite(PI_0, HIGH);
+		digitalWrite(PA_6, LOW);
+	}
+	void disableCS() {
+		digitalWrite(PI_0, HIGH);
+		digitalWrite(PA_6, HIGH);
+	}
 	Adafruit_MAX31865 rtd = Adafruit_MAX31865(PA_6);
-	MAX31855Class tc = MAX31855Class(PI_0);
+	MAX31855Class tc = MAX31855Class(7);
 
 private:
-	mbed::DigitalOut ch_sel[3] = { mbed::DigitalOut(PA_0), mbed::DigitalOut(PI_4), mbed::DigitalOut(PG_10) };
+	mbed::DigitalOut ch_sel[3] = { mbed::DigitalOut(PA_0C), mbed::DigitalOut(PI_4), mbed::DigitalOut(PG_10)};
 	mbed::DigitalOut rtd_th = mbed::DigitalOut(PC_15);
-	mbed::DigitalOut cs_tc = mbed::DigitalOut(PI_0);
-	mbed::DigitalOut cs_rtd = mbed::DigitalOut(PA_6);
+
 };
 
 extern RTDClass temp_probes;
@@ -86,17 +90,73 @@ extern COMMClass comm_protocols;
 class AnalogInClass {
 public:
 	uint16_t read(int channel) {
-		switch (channel) {
-			case 0:
-				return in_0.read_u16();
-			case 1:
-				return in_1.read_u16();
-			case 2:
-				return in_2.read_u16();
-			default:
-				break;
-			}
-		return 0;
+        uint16_t value = 0;
+        switch (channel) {
+            case 0:
+                value = in_0.read_u16();
+                break;
+            case 1:
+                value =  in_1.read_u16();
+                break;
+            case 2:
+                value =  in_2.read_u16();
+                break;
+            default:
+                break;
+            }
+        delay(20);
+        return value;
+    }
+
+	uint16_t set0_10V() {
+		ch0_in1 = 1;
+		ch0_in2 = 1;
+		ch0_in3 = 0;
+		ch0_in4 = 1;
+
+		ch1_in1 = 1;
+		ch1_in2 = 1;
+		ch1_in3 = 0;
+		ch1_in4 = 1;
+
+		ch2_in1 = 1;
+		ch2_in2 = 1;
+		ch2_in3 = 0;
+		ch2_in4 = 1;
+	}
+
+	uint16_t set4_24mA() {
+		ch0_in1 = 1;
+		ch0_in2 = 0;
+		ch0_in3 = 1;
+		ch0_in4 = 0;
+
+		ch1_in1 = 1;
+		ch1_in2 = 0;
+		ch1_in3 = 1;
+		ch1_in4 = 0;
+
+		ch2_in1 = 1;
+		ch2_in2 = 0;
+		ch2_in3 = 1;
+		ch2_in4 = 0;
+	}
+
+	uint16_t setNTC() {
+		ch0_in1 = 0;
+		ch0_in2 = 0;
+		ch0_in3 = 1;
+		ch0_in4 = 1;
+
+		ch1_in1 = 0;
+		ch1_in2 = 0;
+		ch1_in3 = 1;
+		ch1_in4 = 1;
+
+		ch2_in1 = 0;
+		ch2_in2 = 0;
+		ch2_in3 = 1;
+		ch2_in4 = 1;
 	}
 
 	mbed::AnalogIn& operator[](int index) {
@@ -118,12 +178,11 @@ public:
 
 private:
 	mbed::AnalogIn in_0 = mbed::AnalogIn(PC_3C);
-	mbed::AnalogIn in_1 = mbed::AnalogIn(PA_1C);
-	mbed::AnalogIn in_2 = mbed::AnalogIn(PC_2C);
+	mbed::AnalogIn in_2 = mbed::AnalogIn(PA_1C);
+	mbed::AnalogIn in_1 = mbed::AnalogIn(PC_2C);
 };
 
 extern AnalogInClass analog_in;
-
 
 class AnalogOutClass {
 public:
@@ -139,7 +198,7 @@ public:
 	}
 private:
 	mbed::PwmOut out_0 = mbed::PwmOut(PJ_11);
-	//mbed::PwmOut out_1 = mbed::PwmOut(PG_7);
+	//mbed::PwmOut out_1 = AnalogOutPWMClass();
 	mbed::PwmOut out_2 = mbed::PwmOut(PC_7);
 };
 
@@ -180,7 +239,7 @@ extern EncoderClass encoders;
   TODO: check if Wire and address are correct
 */
 
-class ProgrammableDIOClass : public TCA6424A {
+class ProgrammableDIOClass : public ArduinoIOExpanderClass {
 public:
 	mbed::DigitalOut prog_latch_retry = mbed::DigitalOut(PH_14);
 private:

@@ -29,7 +29,7 @@
 
 class MAX31855Class {
 public:
-  MAX31855Class(PinName cs = NC, SPIClass& spi = SPI);
+  MAX31855Class(int cs = A4, SPIClass& spi = SPI);
 
   int begin();
   void end();
@@ -40,7 +40,7 @@ public:
 private:
   uint32_t readSensor();
 
-  PinName _cs;
+  int _cs;
   SPIClass* _spi;
   SPISettings _spiSettings;
 };
