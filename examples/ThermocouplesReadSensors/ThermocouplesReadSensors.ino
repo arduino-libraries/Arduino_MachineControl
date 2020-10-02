@@ -27,42 +27,26 @@ using namespace automation;
 
 void setup() {
   Serial.begin(9600);
-  Serial.println("Thermocouples");
   temp_probes.resetTH();
   temp_probes.tc.begin();
+  // Enables Thermocouples chip select
+  temp_probes.enableTC();
 }
 
 void loop() {
-  // Enables Thermocouples chip select
-  // and runs Channels readings
-  temp_probes.enableTC();
-
-  temp_probes.selectChannel(0);
-  Serial.print("Reference temperature ch0: ");
-  Serial.print(temp_probes.tc.readReferenceTemperature());
-  Serial.println(" °C");
-  Serial.print("Temperature ch0: ");
-  Serial.print(temp_probes.tc.readTemperature());
-  Serial.println(" °C");
-  
+  float temp_ch0 = temp_probes.t.readTemperature();
+  Serial.print("Temperature CH0 [°C]: ");
+  Serial.print(temp_ch0);
+  Serial.print(" ");
   temp_probes.selectChannel(1);
-  Serial.print("Reference temperature ch1: ");
-  Serial.print(temp_probes.tc.readReferenceTemperature());
-  Serial.println(" °C");
 
-  Serial.print("Temperature ch1: ");
-  Serial.print(temp_probes.tc.readTemperature(PROBE_J));
-  Serial.println(" °C");
+  float temp_ch1 = temp_probes.t.readTemperature();
+  Serial.print(", CH1 [°C]: ");
+  Serial.print(temp_ch1);
+  Serial.print(" ");  temp_probes.selectChannel(2);
 
-  temp_probes.selectChannel(2);
-  Serial.print("Reference temperature ch2: ");
-  Serial.print(temp_probes.tc.readReferenceTemperature());
-  Serial.println(" °C");
-
-  Serial.print("Temperature ch2: ");
-  Serial.print(temp_probes.tc.readTemperature());
-  Serial.println(" °C");
-
+  float temp_ch2 = temp_probes.t.readTemperature();
+  Serial.print(", CH2 [°C]: ");
+  Serial.print(temp_ch2);
   Serial.println();
-  delay(1000);
 }
