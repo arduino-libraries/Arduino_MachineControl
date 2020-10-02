@@ -85,4 +85,4 @@ void ArduinoIOExpanderClass::initPins()
     pinMode(IO_READ_CH_PIN_11, INPUT);
 }
 
-ArduinoIOExpanderClass Expander {};
+ArduinoIOExpanderClass Expander;

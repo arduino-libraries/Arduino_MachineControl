@@ -198,7 +198,7 @@ public:
 	}
 private:
 	mbed::PwmOut out_0 = mbed::PwmOut(PJ_11);
-	//mbed::PwmOut out_1 = AnalogOutPWMClass();
+	//AnalogOutPWMClass out_1 = AnalogOutPWMClass();
 	mbed::PwmOut out_2 = mbed::PwmOut(PC_7);
 };
 
@@ -241,9 +241,14 @@ extern EncoderClass encoders;
 
 class ProgrammableDIOClass : public ArduinoIOExpanderClass {
 public:
-	mbed::DigitalOut prog_latch_retry = mbed::DigitalOut(PH_14);
+	void setLatch() {
+		prog_latch_retry = 0;
+	}
+	void setRetry() {
+		prog_latch_retry = 1;
+	}
 private:
-
+	mbed::DigitalOut prog_latch_retry = mbed::DigitalOut(PH_14);
 };
 
 extern ProgrammableDIOClass programmable_digital_io;
@@ -256,6 +261,9 @@ public:
 			out[i] = val & 0x1;
 			val = val >> 1;
 		}
+	}
+	void set(int index, bool val) {
+			out[index] = val;
 	}
 	mbed::DigitalOut& operator[](int index) {
 		return out[index];
@@ -278,6 +286,9 @@ public:
 			val |= (in[i] << i);
 		}
 		return val;
+	}
+	uint8_t read(int index) {
+		return in[index];
 	}
 	mbed::DigitalIn& operator[](int index) {
 		return in[index];
