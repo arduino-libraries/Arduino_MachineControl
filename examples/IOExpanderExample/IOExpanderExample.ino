@@ -36,16 +36,16 @@ void setup() {
 }
 
 void loop() {
-  wrtiteAll(HIGH);
+  writeAll(HIGH);
   readAll();
   delay(1000);
-  wrtiteAll(LOW);
+  writeAll(LOW);
   readAll();
   delay(1000);
 
 }
 
-void wrtiteAll(PinStatus status) {
+void writeAll(PinStatus status) {
   // write the status value to each pin
   programmable_digital_io.digitalWrite(IO_WRITE_CH_PIN_00, status);
   programmable_digital_io.digitalWrite(IO_WRITE_CH_PIN_01, status);
