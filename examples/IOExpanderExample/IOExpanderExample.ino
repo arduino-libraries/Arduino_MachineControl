@@ -64,8 +64,8 @@ void writeAll(PinStatus status) {
 void readAll() {
   // Reads from input pin. This API returns -1 if you try to read from a write channel.
   Serial.println("Pin 00: " + String(programmable_digital_io.digitalRead(IO_READ_CH_PIN_00)));
-  Serial.println("Pin 01: " + String(programmable_digital_io.digitalRead(IO_READ_CH_PIN_02)));
-  Serial.println("Pin 02: " + String(programmable_digital_io.digitalRead(IO_READ_CH_PIN_01)));
+  Serial.println("Pin 01: " + String(programmable_digital_io.digitalRead(IO_READ_CH_PIN_01)));
+  Serial.println("Pin 02: " + String(programmable_digital_io.digitalRead(IO_READ_CH_PIN_02)));
   Serial.println("Pin 03: " + String(programmable_digital_io.digitalRead(IO_READ_CH_PIN_03)));
   Serial.println("Pin 04: " + String(programmable_digital_io.digitalRead(IO_READ_CH_PIN_04)));
   Serial.println("Pin 05: " + String(programmable_digital_io.digitalRead(IO_READ_CH_PIN_05)));
