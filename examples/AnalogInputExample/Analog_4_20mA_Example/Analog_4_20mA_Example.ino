@@ -1,5 +1,5 @@
 /*
-  Automation Carrirer - Analog in 4 - 20 mA Example
+  Automation Carrier - Analog in 4 - 20 mA Example
 
   This example provides the current value acquired by the
   Automation Carrier. For each channel of connector
