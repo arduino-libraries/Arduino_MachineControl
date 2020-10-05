@@ -23,7 +23,7 @@ void setup() {
   Serial.begin(9600);
   while (!Serial);
 
-  Serial.println("Digital out test:");
+  Serial.println("Digital out test");
   digital_outputs.setAll(0);
   programmable_digital_io.setLatch();
   // To write on a single channel use the API set(int channel_index, bool val)
