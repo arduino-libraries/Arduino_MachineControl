@@ -1,5 +1,5 @@
 /*
-  Automation Carrirer - IOExpander Read And Write Example
+  Automation Carrier - IOExpander Read And Write Example
 
   This sketch shows how to use the GPIO Expander on the Automation
   Carrier, how to periodically send a value on the programmable IO
