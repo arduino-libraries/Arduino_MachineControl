@@ -60,7 +60,7 @@ void loop() {
   }
   Serial.print("Resistor ch1: ");
   Serial.print(resistance_ch1);
-  Serial.println("ohm");
+  Serial.println(" ohm");
 
   float raw_voltage_ch2 = analog_in.read(2);
   float voltage_ch2 = (raw_voltage_ch2 * reference) / 65535;
