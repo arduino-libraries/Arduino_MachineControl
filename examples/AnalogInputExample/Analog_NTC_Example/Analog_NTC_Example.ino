@@ -1,7 +1,7 @@
 /*
   Automation Carrirer - Analog in NTC Example
 
-  This example provides the resistor value acquired by the
+  This example provides the resistance value acquired by the
   Automation Carrier. A 3V voltage reference is connected
   to each channel of the ANALOG_IN connector. The reference
   has a 100k resistor in series, so it can provide only a low
