@@ -11,7 +11,7 @@
   input resistor and the 100k in series to the voltage reference.
   The resistor value is calculated by inverting the formula of the
   voltage divider.
-  To use the NTC functionality the 24V supply on
+  To use the NTC functionality, the 24V supply on
   PWR SUPPLY connector is necessary.
 
   The circuit:
