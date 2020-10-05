@@ -6,7 +6,7 @@
   to each channel of the ANALOG_IN connector. The reference
   has a 100k resistor in series, so it can provide only a low
   current.
-  The voltage sampled by the ADC on Portenta is the reference
+  The voltage sampled by the Portenta's ADC is the reference
   voltage divided by the voltage divider composed by the
   input resistor and the 100k in series to the voltage reference.
   The resistor value is calculated by inverting the formula of the
