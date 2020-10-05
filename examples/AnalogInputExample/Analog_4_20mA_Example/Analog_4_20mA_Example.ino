@@ -5,7 +5,7 @@
   Automation Carrier. For each channel of connector
   ANALOG_IN there is a 120 ohm resistor to GND; the current
   of the 4-20mA sensor flows through it, generating a voltage
-  which is sampled by the ADC on Portenta.
+  which is sampled by the Portenta's ADC.
   To use the 4-20mA functionality the 24V supply on
   PWR SUPPLY connector is necessary.
 
