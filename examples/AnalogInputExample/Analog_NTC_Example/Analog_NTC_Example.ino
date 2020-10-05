@@ -72,7 +72,7 @@ void loop() {
   }
   Serial.print("Scaled ch2: ");
   Serial.print(resistance_ch2);
-  Serial.println("ohm");
+  Serial.println(" ohm");
   Serial.println();
   delay(250);
 }
