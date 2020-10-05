@@ -1,5 +1,5 @@
 /*
-  Automation Carrirer - Analog in 0 - 10 V Example
+  Automation Carrier - Analog in 0 - 10 V Example
 
   This example provides the voltage value acquired by the
   Automation Carrier. For each channel of connector
