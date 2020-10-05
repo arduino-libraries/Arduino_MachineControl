@@ -1,5 +1,5 @@
 /*
-  Automation Carrirer - Analog in NTC Example
+  Automation Carrier - Analog in NTC Example
 
   This example provides the resistance value acquired by the
   Automation Carrier. A 3V voltage reference is connected
