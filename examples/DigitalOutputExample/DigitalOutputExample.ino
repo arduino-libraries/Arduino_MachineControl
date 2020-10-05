@@ -1,5 +1,5 @@
 /*
-  Automation Carrirer - Digital Output Example
+  Automation Carrier - Digital Output Example
 
   This sketch shows how to send a value on the Digital
   outputs channels on the Automation Carrier.
