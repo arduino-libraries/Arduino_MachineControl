@@ -1,5 +1,5 @@
 /*
-  Automation Carrirer - Digital Input Example
+  Automation Carrier - Digital Input Example
 
   This sketch shows how to periodically read from all the Digital
   Inputs channels on the Automation Carrier.
