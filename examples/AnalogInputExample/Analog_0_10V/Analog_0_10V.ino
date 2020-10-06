@@ -2,8 +2,8 @@
   Automation Carrier - Analog in 0 - 10 V Example
 
   This example provides the voltage value acquired by the
-  Automation Carrier. For each channel of connector
-  ANALOG_IN there is a resistor divided made by a 100k and 39k,
+  Automation Carrier. For each channel of the ANALOG IN connector,
+  there is a resistor divider made by a 100k and 39k,
   the input voltage is divided by a ratio of 0.28.
   Maximum input voltage is 10V.
   To use the 0V-10V functionality the 24V supply on
