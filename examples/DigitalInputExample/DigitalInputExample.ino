@@ -1,8 +1,8 @@
 /*
   Automation Carrier - Digital Input Example
 
-  This sketch shows how to periodically read from all the Digital
-  Inputs channels on the Automation Carrier.
+  This sketch shows how to periodically read from all the DIGITAL
+  INPUTS channels on the Automation Carrier.
 
   The circuit:
    - Portenta H7
