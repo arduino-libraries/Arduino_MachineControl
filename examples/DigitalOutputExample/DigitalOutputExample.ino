@@ -1,8 +1,8 @@
 /*
   Automation Carrier - Digital Output Example
 
-  This sketch shows how to send a value on the Digital
-  Outputs channels on the Automation Carrier.
+  This sketch shows how to send a value on the DIGITAL
+  OUTPUTS channels on the Automation Carrier.
 
   The circuit:
    - Portenta H7
