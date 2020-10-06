@@ -2,9 +2,9 @@
   Automation Carrier - IOExpander Read And Write Example
 
   This sketch shows how to use the GPIO Expander on the Automation
-  Carrier, how to periodically send a value on the Programmable Digital I/O
-  output channels and how to periodically read from the Programmable
-  Digital I/O input channels.
+  Carrier, how to periodically send a value on the PROGRAMMABLE DIGITAL I/O
+  output channels and how to periodically read from the PROGRAMMABLE
+  DIGITAL I/O input channels.
 
   The circuit:
    - Portenta H7
