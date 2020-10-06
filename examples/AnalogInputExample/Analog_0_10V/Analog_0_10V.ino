@@ -6,8 +6,8 @@
   there is a resistor divider made by a 100k and 39k,
   the input voltage is divided by a ratio of 0.28.
   Maximum input voltage is 10V.
-  To use the 0V-10V functionality the 24V supply on
-  PWR SUPPLY connector is necessary.
+  To use the 0V-10V functionality, a 24V supply on
+  the PWR SUPPLY connector is necessary.
 
   The circuit:
    - Portenta H7
