@@ -58,7 +58,7 @@ void loop() {
   } else {
     resistance_ch1 = -1;
   }
-  Serial.print("Resistor ch1: ");
+  Serial.print("Resistance ch1: ");
   Serial.print(resistance_ch1);
   Serial.println(" ohm");
 
