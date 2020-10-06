@@ -37,29 +37,30 @@ void loop() {
   //Read one-by-one each channel and print them one-by-one
   
   readings = digital_inputs.read(0);
-  Serial.println("CH0: "+String(readings));
+  Serial.println("CH00: "+String(readings));
   
   readings = digital_inputs.read(1);
-  Serial.println("CH1: "+String(readings));
+  Serial.println("CH01: "+String(readings));
   
   readings = digital_inputs.read(2);
-  Serial.println("CH2: "+String(readings));
+  Serial.println("CH02: "+String(readings));
   
   readings = digital_inputs.read(3);
-  Serial.println("CH3: "+String(readings));
+  Serial.println("CH03: "+String(readings));
   
   readings = digital_inputs.read(4);
-  Serial.println("CH4: "+String(readings));
+  Serial.println("CH04: "+String(readings));
   
   readings = digital_inputs.read(5);
-  Serial.println("CH5: "+String(readings));
+  Serial.println("CH05: "+String(readings));
   
   readings = digital_inputs.read(6);
-  Serial.println("CH6: "+String(readings));
+  Serial.println("CH06: "+String(readings));
   
   readings = digital_inputs.read(7);
-  Serial.println("CH7: "+String(readings));
+  Serial.println("CH07: "+String(readings));
 
   Serial.println();
+  
   delay(250);
 }
