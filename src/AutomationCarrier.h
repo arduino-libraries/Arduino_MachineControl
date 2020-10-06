@@ -108,7 +108,7 @@ public:
         return value;
     }
 
-	uint16_t set0_10V() {
+	void set0_10V() {
 		ch0_in1 = 1;
 		ch0_in2 = 1;
 		ch0_in3 = 0;
@@ -125,7 +125,7 @@ public:
 		ch2_in4 = 1;
 	}
 
-	uint16_t set4_24mA() {
+	void set4_20mA() {
 		ch0_in1 = 1;
 		ch0_in2 = 0;
 		ch0_in3 = 1;
@@ -142,7 +142,7 @@ public:
 		ch2_in4 = 0;
 	}
 
-	uint16_t setNTC() {
+	void setNTC() {
 		ch0_in1 = 0;
 		ch0_in2 = 0;
 		ch0_in3 = 1;
@@ -184,21 +184,122 @@ private:
 
 extern AnalogInClass analog_in;
 
+class AnalogOutPWMClass {
+public:
+	AnalogOutPWMClass() {
+		GPIO_InitTypeDef   GPIO_InitStruct;
+		/*##-1- Enable peripherals and GPIO Clocks #################################*/
+		/* HRTIM1 Peripheral clock enable */
+		__HAL_RCC_HRTIM1_CLK_ENABLE();
+
+		/* Enable GPIO Channels Clock */
+		__HAL_RCC_GPIOG_CLK_ENABLE();
+
+		/* Configure HRTIMA TIMA TA1/A2, TIMB TB1/2, TIMC TC1/2, TIMD TD1/2 and TIME TE1.2
+		channels as alternate function mode */
+		/* Common configuration for all channels */
+		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+		GPIO_InitStruct.Pull = GPIO_PULLUP;
+		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+		GPIO_InitStruct.Alternate = GPIO_AF2_HRTIM1;
+		GPIO_InitStruct.Pin = GPIO_PIN_7;
+		HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+
+		/*##-1- Configure the HRTIM peripheral ######################################################*/
+		/* Initialize the HRTIM structure */
+		HrtimHandle.Instance = HRTIM1;
+		HrtimHandle.Init.HRTIMInterruptResquests = HRTIM_IT_NONE;
+		HrtimHandle.Init.SyncOptions = HRTIM_SYNCOPTION_NONE;
+
+		HAL_HRTIM_Init(&HrtimHandle);
+	}
+
+	~AnalogOutPWMClass(){}
+	// TODO: check why chamnge PrescalerRatio broke the portenta
+	void period_ms(int period) {
+
+		sConfig_time_base.Mode = HRTIM_MODE_CONTINUOUS;
+		sConfig_time_base.Period = 100;
+		sConfig_time_base.PrescalerRatio = HRTIM_PRESCALERRATIO_DIV1;
+		sConfig_time_base.RepetitionCounter = 0;
+
+		HAL_HRTIM_TimeBaseConfig(&HrtimHandle, HRTIM_TIMERINDEX_TIMER_E, &sConfig_time_base);
+	}
+
+	bool write(uint8_t voltage) {
+		sConfig_Channel.Polarity = HRTIM_OUTPUTPOLARITY_LOW;
+		sConfig_Channel.IdleLevel = HRTIM_OUTPUTIDLELEVEL_INACTIVE;
+		sConfig_Channel.Pulse = voltage*10;
+
+		HAL_HRTIM_SimplePWMChannelConfig(&HrtimHandle, HRTIM_TIMERINDEX_TIMER_E,
+		HRTIM_OUTPUT_TE2, &sConfig_Channel);
+		if (HAL_HRTIM_SimplePWMStart(&HrtimHandle, HRTIM_TIMERINDEX_TIMER_E, HRTIM_OUTPUT_TE2) != HAL_OK)
+		{
+			return false;
+		}
+		return true;
+	}
+
+	bool stop() {
+		if (HAL_HRTIM_SimplePWMStop(&HrtimHandle, HRTIM_TIMERINDEX_TIMER_E, HRTIM_OUTPUT_TE2) != HAL_OK)
+		{
+			return false;
+		}
+		return true;
+	}
+
+private:
+	HRTIM_HandleTypeDef HrtimHandle;
+
+	HRTIM_TimeBaseCfgTypeDef sConfig_time_base;
+	HRTIM_SimplePWMChannelCfgTypeDef sConfig_Channel;
+};
+
+
+extern AnalogOutPWMClass analopwm;
+
+
 class AnalogOutClass {
 public:
+	void write(int index, uint8_t voltage) {
+		switch (index) {
+			case 0:
+				out_0.write(voltage / 10.568);
+				break;
+			case 1:
+				out_1.write(voltage);
+				break;
+			case 2:
+				out_2.write(voltage / 10.568);
+				break;
+		}
+	}
+	void period_ms(int index, uint8_t period) {
+		switch (index) {
+			case 0:
+				out_0.period_ms(period);
+				break;
+			case 1:
+				out_1.period_ms(period);
+				break;
+			case 2:
+				out_2.period_ms(period);
+				break;
+		}
+	}
 	mbed::PwmOut& operator[](int index) {
 		switch (index) {
 			case 0:
 				return out_0;
 			//case 1:
-			//	return out_1;
+				//return out_1;
 			case 2:
 				return out_2;
 		}
 	}
 private:
 	mbed::PwmOut out_0 = mbed::PwmOut(PJ_11);
-	//AnalogOutPWMClass out_1 = AnalogOutPWMClass();
+	AnalogOutPWMClass out_1 = AnalogOutPWMClass();
 	mbed::PwmOut out_2 = mbed::PwmOut(PC_7);
 };
 
@@ -256,7 +357,7 @@ extern ProgrammableDIOClass programmable_digital_io;
 
 class DigitalOutputsClass {
 public:
-	uint8_t setAll(uint8_t val) {
+	void setAll(uint8_t val) {
 		for (int i = 0; i < 8; i++) {
 			out[i] = val & 0x1;
 			val = val >> 1;

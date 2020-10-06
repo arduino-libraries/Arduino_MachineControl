@@ -35,19 +35,19 @@ void setup() {
 
 void loop() {
   temp_probes.selectChannel(0);
-  float temp_ch0 = temp_probes.t.readTemperature();
+  float temp_ch0 = temp_probes.tc.readTemperature();
   Serial.print("Temperature CH0 [°C]: ");
   Serial.print(temp_ch0);
   Serial.print(" ");
 
   temp_probes.selectChannel(1);
-  float temp_ch1 = temp_probes.t.readTemperature();
+  float temp_ch1 = temp_probes.tc.readTemperature();
   Serial.print(", CH1 [°C]: ");
   Serial.print(temp_ch1);
   Serial.print(" ");
  
   temp_probes.selectChannel(2);
-  float temp_ch2 = temp_probes.t.readTemperature();
+  float temp_ch2 = temp_probes.tc.readTemperature();
   Serial.print(", CH2 [°C]: ");
   Serial.print(temp_ch2);
   Serial.println();
