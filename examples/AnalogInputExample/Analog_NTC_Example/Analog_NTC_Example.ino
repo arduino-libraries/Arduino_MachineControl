@@ -3,7 +3,7 @@
 
   This example provides the resistance value acquired by the
   Automation Carrier. A 3V voltage reference is connected
-  to each channel of the ANALOG_IN connector. The reference
+  to each channel of the ANALOG IN connector. The reference
   has a 100k resistor in series, so it can provide only a low
   current.
   The voltage sampled by the Portenta's ADC is the reference
