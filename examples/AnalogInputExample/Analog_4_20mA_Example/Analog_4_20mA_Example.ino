@@ -7,7 +7,7 @@
   of the 4-20mA sensor flows through it, generating a voltage
   which is sampled by the Portenta's ADC.
   To use the 4-20mA functionality, a 24V supply on
-  PWR SUPPLY connector is necessary.
+  the PWR SUPPLY connector is necessary.
 
   The circuit:
    - Portenta H7
