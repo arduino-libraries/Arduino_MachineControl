@@ -12,7 +12,7 @@
   The resistor value is calculated by inverting the formula of the
   voltage divider.
   To use the NTC functionality, the 24V supply on
-  PWR SUPPLY connector is necessary.
+  the PWR SUPPLY connector is necessary.
 
   The circuit:
    - Portenta H7
