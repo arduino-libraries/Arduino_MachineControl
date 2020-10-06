@@ -125,7 +125,7 @@ public:
 		ch2_in4 = 1;
 	}
 
-	void set4_24mA() {
+	void set4_20mA() {
 		ch0_in1 = 1;
 		ch0_in2 = 0;
 		ch0_in3 = 1;
