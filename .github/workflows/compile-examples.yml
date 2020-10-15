@@ -64,13 +64,13 @@ jobs:
       - name: Compile example sketches
         uses: arduino/compile-sketches@main
         with:
-          fqbn: arduino-beta:mbed:envie_m7
+          fqbn: arduino:mbed:envie_m7
           platforms: |
             # Install Arduino mbed-Enabled Boards via Boards Manager for the toolchain
-            - name: arduino-beta:mbed
+            - name: arduino:mbed
             # Overwrite the Arduino mbed-Enabled Boards release version with version from the tip of the master branch (located in local path because of the need to first install ArduinoCore-API)
             - source-path: extras/ArduinoCore-mbed
-              name: arduino-beta:mbed
+              name: arduino:mbed
           enable-deltas-report: true
           enable-warnings-report: true
           sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}
