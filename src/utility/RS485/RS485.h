@@ -33,6 +33,8 @@ class RS485Class : public Stream {
     virtual int available();
     virtual int peek();
     virtual int read(void);
+    virtual size_t readBytes(char *buf, size_t length);
+    virtual size_t readBytes(uint8_t *buf, size_t length) { return readBytes((char *)buf, length); };
     virtual void flush();
     virtual size_t write(uint8_t b);
     using Print::write; // pull in write(str) and write(buf, size) from Print
