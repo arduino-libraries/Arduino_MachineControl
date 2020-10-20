@@ -23,7 +23,7 @@
 #include "Arduino.h"
 #include "mbed.h"
 
-class RS485Class : public Stream {
+class RS485Class : public HardwareSerial {
   public:
     RS485Class(HardwareSerial& hwSerial, PinName txPin = NC, PinName dePin = NC, PinName rePin = NC);
 
