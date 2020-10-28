@@ -23,7 +23,7 @@ bool ArduinoIOExpanderClass::begin()
   if(!_tca.testConnection()) {
     return false;
   }
-
+  //Initialize all pins to the default mode
   initPins();
 
   return true;
