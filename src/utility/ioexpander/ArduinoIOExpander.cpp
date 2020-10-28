@@ -20,7 +20,13 @@ bool ArduinoIOExpanderClass::begin()
 {
   Wire.begin();
   _tca.initialize();
-  return _tca.testConnection();
+  if(!_tca.testConnection()) {
+    return false;
+  }
+
+  initPins();
+
+  return true;
 }
 
 ArduinoIOExpanderClass::operator bool()
@@ -37,7 +43,7 @@ bool ArduinoIOExpanderClass::pinMode(int pin, PinMode direction)
   return true;
 }
 
-bool ArduinoIOExpanderClass::digitalWrite(int pin, PinStatus status)
+bool ArduinoIOExpanderClass::set(int pin, PinStatus status)
 { 
   if (pin < IO_READ_CH_PIN_00) {
     if (status > HIGH)
@@ -49,7 +55,7 @@ bool ArduinoIOExpanderClass::digitalWrite(int pin, PinStatus status)
   return false; 
 }
 
-int ArduinoIOExpanderClass::digitalRead(int pin)
+int ArduinoIOExpanderClass::read(int pin)
 {
   if (pin > IO_READ_CH_PIN_11) {
     return _tca.readPin(pin) == true ? 1 : 0;
@@ -59,6 +65,7 @@ int ArduinoIOExpanderClass::digitalRead(int pin)
 
 void ArduinoIOExpanderClass::initPins()
 {
+    PinStatus status = SWITCH_OFF;
     pinMode(IO_WRITE_CH_PIN_00, OUTPUT);
     pinMode(IO_WRITE_CH_PIN_01, OUTPUT);
     pinMode(IO_WRITE_CH_PIN_02, OUTPUT);
@@ -83,6 +90,19 @@ void ArduinoIOExpanderClass::initPins()
     pinMode(IO_READ_CH_PIN_09, INPUT);
     pinMode(IO_READ_CH_PIN_10, INPUT);
     pinMode(IO_READ_CH_PIN_11, INPUT);
+
+    set(IO_WRITE_CH_PIN_00, status);
+    set(IO_WRITE_CH_PIN_01, status);
+    set(IO_WRITE_CH_PIN_02, status);
+    set(IO_WRITE_CH_PIN_03, status);
+    set(IO_WRITE_CH_PIN_04, status);
+    set(IO_WRITE_CH_PIN_05, status);
+    set(IO_WRITE_CH_PIN_06, status);
+    set(IO_WRITE_CH_PIN_07, status);
+    set(IO_WRITE_CH_PIN_08, status);
+    set(IO_WRITE_CH_PIN_09, status);
+    set(IO_WRITE_CH_PIN_10, status);
+    set(IO_WRITE_CH_PIN_11, status);
 }
 
 ArduinoIOExpanderClass Expander;
