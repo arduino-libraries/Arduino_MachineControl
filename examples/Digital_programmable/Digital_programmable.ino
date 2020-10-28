@@ -30,8 +30,6 @@ void setup() {
   }
 
   Serial.println("GPIO expander initialization done");
-  //Initialize all pins to the default mode
-  digital_programmables.initPins();
   digital_programmables.setLatch();
 }
 
