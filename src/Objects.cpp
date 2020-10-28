@@ -9,6 +9,6 @@ AnalogOutClass analog_out;
 EncoderClass encoders;
 DigitalOutputsClass digital_outputs;
 DigitalInputsClass digital_inputs;
-ProgrammableDIOClass programmable_digital_io;
+ProgrammableDIOClass digital_programmables;
 RtcControllerClass rtc_controller;
 }

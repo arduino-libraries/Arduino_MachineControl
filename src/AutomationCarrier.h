@@ -352,7 +352,7 @@ private:
 	mbed::DigitalOut prog_latch_retry = mbed::DigitalOut(PH_14);
 };
 
-extern ProgrammableDIOClass programmable_digital_io;
+extern ProgrammableDIOClass digital_programmables;
 
 
 class DigitalOutputsClass {

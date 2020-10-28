@@ -20,6 +20,9 @@
 #include <Wire.h>
 #include "TCA6424A.h"
 
+#define SWITCH_ON HIGH
+#define SWITCH_OFF LOW
+
 enum {
     IO_WRITE_CH_PIN_00 =      TCA6424A_P00,
     IO_WRITE_CH_PIN_01 =      TCA6424A_P01,
@@ -58,13 +61,14 @@ public:
 
     operator bool();
 
-    void initPins();
-    bool digitalWrite(int pin, PinStatus status);
-    bool digitalWrite(int pin, int status) { return digitalWrite(pin, (PinStatus)status); };
+    bool set(int pin, PinStatus status);
+    bool set(int pin, int status) { return set(pin, (PinStatus)status); };
 
-    int digitalRead(int pin);
+    int read(int pin);
     bool pinMode(int pin, PinMode direction);
 
+private:
+    void initPins();
 private:
     TCA6424A _tca {};
 };
