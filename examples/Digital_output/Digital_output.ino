@@ -43,9 +43,9 @@ void setup() {
   while (!Serial);
 
   //Set over current behavior of all channels to latch mode:
-  programmable_digital_io.setLatch();
+  digital_programmables.setLatch();
   //Set over current behavior of all channels to auto retry mode:
-  programmable_digital_io.setRetry();
+  digital_programmables.setRetry();
   
   //At startup set all channels to OPEN
   digital_outputs.setAll(0);

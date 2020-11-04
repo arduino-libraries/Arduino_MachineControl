@@ -55,6 +55,16 @@ static 	mbed::CAN   _can(PB_8, PH_13);
 
 class COMMClass {
 public:
+	// to be tested: cjeck if can be made a big pin initialization
+	void init(){
+		//SHUTDOWN OF RS485 LEDS
+		digitalWrite(PA_0, LOW);
+		digitalWrite(PI_9, LOW);
+		//SHUTDOWN OF CAN LEDS
+		digitalWrite(PB_8, LOW);
+		digitalWrite(PH_13, LOW);
+	}
+
 	void enableCAN() {
 		can_disable = 0;
 	}
