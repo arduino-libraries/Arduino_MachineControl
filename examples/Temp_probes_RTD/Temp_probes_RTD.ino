@@ -17,7 +17,6 @@ void setup() {
   temp_probes.setTH();
   temp_probes.selectChannel(0);
   temp_probes.rtd.begin(MAX31865_2WIRE);  // set to 2WIRE or 4WIRE as necessary
-  temp_probes.tc.begin();
 }
 
 
