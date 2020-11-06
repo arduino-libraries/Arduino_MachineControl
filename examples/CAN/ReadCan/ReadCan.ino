@@ -20,8 +20,8 @@
 using namespace automation;
 
 #define DATARATE_2MB     260000
-#define DATARATE_1_5MB   200000
-#define DATARATE_1MB     130000
+#define DATARATE_1_5MB   206000
+#define DATARATE_1MB     125000
 #define DATARATE_800KB   100000
 
 
