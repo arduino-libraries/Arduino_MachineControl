@@ -41,7 +41,6 @@ void setup() {
 void loop() {
   mbed::CANMessage msg;
   if (comm_protocols.can.read(msg)) {
-    counter++;
 
     // Print the sender ID
     Serial.print("ID: ");
