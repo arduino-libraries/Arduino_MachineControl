@@ -83,6 +83,11 @@ int RS485Class::read(void)
   return _serial->read();
 }
 
+size_t RS485Class::readBytes(char *buf, size_t length)
+{
+  return _serial->readBytes(buf, length);
+}
+
 void RS485Class::flush()
 {
   return _serial->flush();

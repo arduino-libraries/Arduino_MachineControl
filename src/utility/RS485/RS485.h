@@ -17,13 +17,13 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef _RS485_H_INCLUDED
-#define _RS485_H_INCLUDED
+#ifndef _RS485_AUTOMATION_H_INCLUDED
+#define _RS485_AUTOMATION_H_INCLUDED
 
 #include "Arduino.h"
 #include "mbed.h"
 
-class RS485Class : public Stream {
+class RS485Class : public HardwareSerial {
   public:
     RS485Class(HardwareSerial& hwSerial, PinName txPin = NC, PinName dePin = NC, PinName rePin = NC);
 
@@ -33,6 +33,8 @@ class RS485Class : public Stream {
     virtual int available();
     virtual int peek();
     virtual int read(void);
+    virtual size_t readBytes(char *buf, size_t length);
+    virtual size_t readBytes(uint8_t *buf, size_t length) { return readBytes((char *)buf, length); };
     virtual void flush();
     virtual size_t write(uint8_t b);
     using Print::write; // pull in write(str) and write(buf, size) from Print
