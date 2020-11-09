@@ -17,7 +17,6 @@ void setup() {
   temp_probes.setTH();
   temp_probes.selectChannel(0);
   temp_probes.rtd.begin(MAX31865_2WIRE);  // set to 2WIRE or 4WIRE as necessary
-  temp_probes.t.begin();
 }
 
 
@@ -57,14 +56,6 @@ void loop() {
   }
   Serial.println();
   delay(1000);
-
-  Serial.print("Reference temperature ");
-  Serial.print(temp_probes.t.readReferenceTemperature());
-  Serial.println(" °C");
-
-  Serial.print("Temperature ");
-  Serial.print(temp_probes.t.readTemperature());
-  Serial.println(" °C");
 
   Serial.println();
 }
