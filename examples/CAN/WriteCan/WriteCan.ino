@@ -45,6 +45,10 @@ void loop() {
   mbed::CANMessage msg = mbed::CANMessage(13ul, &payload, payload_size);
   if (comm_protocols.can.write(msg)) {
     Serial.println("Message sent");
+  } else {
+    Serial.println("Transmission Error: ");
+    Serial.println(comm_protocols.can.tderror());
+    comm_protocols.can.reset();
   }
 
   delay(100);

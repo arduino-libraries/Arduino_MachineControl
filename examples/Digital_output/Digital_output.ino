@@ -39,13 +39,15 @@ using namespace automation;
 
 void setup() {
   Serial.begin(9600);
-  //The loop starts only when the serial monitor is opened.
+  // The loop starts only when the serial monitor is opened.
   while (!Serial);
 
   //Set over current behavior of all channels to latch mode:
   digital_programmables.setLatch();
-  //Set over current behavior of all channels to auto retry mode:
-  digital_programmables.setRetry();
+
+  // Uncomment this line to set over current behavior of all
+  // channels to auto retry mode instead of latch mode:
+  // digital_programmables.setRetry();
   
   //At startup set all channels to OPEN
   digital_outputs.setAll(0);
@@ -55,17 +57,17 @@ void setup() {
 void loop() {
   Serial.println("DIGITAL OUT:");
   
-  //Set all channels to CLOSED
+  // Set all channels to CLOSED
   digital_outputs.setAll(255);
   Serial.print("All channels are CLOSED for 1s...");
   delay(1000);
   
-  //Set all channels to OPEN
+  // Set all channels to OPEN
   digital_outputs.setAll(0);
   Serial.println("now they are OPEN.");
   delay(1000);
 
-  //Toggle each channel for 1s, one by one
+  // Toggle each channel for 1s, one by one
   
   digital_outputs.set(0, HIGH);
   Serial.print("CH0 is CLOSED for 1s...");
