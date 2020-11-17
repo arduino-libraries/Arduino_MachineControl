@@ -202,7 +202,7 @@ public:
 		// Enables peripherals and GPIO Clocks HRTIM1 Peripheral clock enable
 		__HAL_RCC_HRTIM1_CLK_ENABLE();
 
-		// Enables GPIO Channels Clock
+		// Enable GPIO Channels Clock
 		__HAL_RCC_GPIOG_CLK_ENABLE();
 
 		// Configure HRTIMA TIMA TA1/A2, TIMB TB1/2, TIMC TC1/2, TIMD TD1/2 and TIME TE1.2
@@ -254,7 +254,7 @@ public:
 
 		sConfig_compare.AutoDelayedMode = HRTIM_AUTODELAYEDMODE_REGULAR;
 		sConfig_compare.AutoDelayedTimeout = 0;
-		sConfig_compare.CompareValue = 0;
+		sConfig_compare.CompareValue = 1;
 
 		HAL_HRTIM_WaveformCompareConfig(&HrtimHandle, HRTIM_TIMERINDEX_TIMER_E, HRTIM_COMPAREUNIT_2, &sConfig_compare);
 
