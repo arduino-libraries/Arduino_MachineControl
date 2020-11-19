@@ -198,16 +198,16 @@ class AnalogOutPWMClass {
 public:
 	AnalogOutPWMClass() {
 		GPIO_InitTypeDef   GPIO_InitStruct;
-		/*##-1- Enable peripherals and GPIO Clocks #################################*/
-		/* HRTIM1 Peripheral clock enable */
+
+		// Enables peripherals and GPIO Clocks HRTIM1 Peripheral clock enable
 		__HAL_RCC_HRTIM1_CLK_ENABLE();
 
-		/* Enable GPIO Channels Clock */
+		// Enable GPIO Channels Clock
 		__HAL_RCC_GPIOG_CLK_ENABLE();
 
-		/* Configure HRTIMA TIMA TA1/A2, TIMB TB1/2, TIMC TC1/2, TIMD TD1/2 and TIME TE1.2
-		channels as alternate function mode */
-		/* Common configuration for all channels */
+		// Configure HRTIMA TIMA TA1/A2, TIMB TB1/2, TIMC TC1/2, TIMD TD1/2 and TIME TE1.2
+		// channels as alternate function mode
+
 		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
 		GPIO_InitStruct.Pull = GPIO_PULLUP;
 		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -215,21 +215,79 @@ public:
 		GPIO_InitStruct.Pin = GPIO_PIN_7;
 		HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-		/*##-1- Configure the HRTIM peripheral ######################################################*/
-		/* Initialize the HRTIM structure */
+		// Configure the HRTIM peripheral
+		// Initialize the HRTIM structure
 		HrtimHandle.Instance = HRTIM1;
 		HrtimHandle.Init.HRTIMInterruptResquests = HRTIM_IT_NONE;
 		HrtimHandle.Init.SyncOptions = HRTIM_SYNCOPTION_NONE;
 
 		HAL_HRTIM_Init(&HrtimHandle);
+
+		// Configure the HRTIM TIME PWM channels 2
+		sConfig_time_base.Mode = HRTIM_MODE_CONTINUOUS;
+		sConfig_time_base.Period = 100;
+		sConfig_time_base.PrescalerRatio = HRTIM_PRESCALERRATIO_DIV1;
+		sConfig_time_base.RepetitionCounter = 0;
+
+		HAL_HRTIM_TimeBaseConfig(&HrtimHandle, HRTIM_TIMERINDEX_TIMER_E, &sConfig_time_base);
+
+		sConfig_timerE.DMARequests = HRTIM_TIM_DMA_NONE;
+		sConfig_timerE.HalfModeEnable = HRTIM_HALFMODE_DISABLED;
+		sConfig_timerE.StartOnSync = HRTIM_SYNCSTART_DISABLED;
+		sConfig_timerE.ResetOnSync = HRTIM_SYNCRESET_DISABLED;
+		sConfig_timerE.DACSynchro = HRTIM_DACSYNC_NONE;
+		sConfig_timerE.PreloadEnable = HRTIM_PRELOAD_ENABLED;
+		sConfig_timerE.UpdateGating = HRTIM_UPDATEGATING_INDEPENDENT;
+		sConfig_timerE.BurstMode = HRTIM_TIMERBURSTMODE_MAINTAINCLOCK;
+		sConfig_timerE.RepetitionUpdate = HRTIM_UPDATEONREPETITION_ENABLED;
+		sConfig_timerE.ResetUpdate = HRTIM_TIMUPDATEONRESET_DISABLED;
+		sConfig_timerE.InterruptRequests = HRTIM_TIM_IT_NONE;
+		sConfig_timerE.PushPull = HRTIM_TIMPUSHPULLMODE_DISABLED;
+		sConfig_timerE.FaultEnable = HRTIM_TIMFAULTENABLE_NONE;
+		sConfig_timerE.FaultLock = HRTIM_TIMFAULTLOCK_READWRITE;
+		sConfig_timerE.DeadTimeInsertion = HRTIM_TIMDEADTIMEINSERTION_DISABLED;
+		sConfig_timerE.DelayedProtectionMode = HRTIM_TIMER_D_E_DELAYEDPROTECTION_DISABLED;
+		sConfig_timerE.UpdateTrigger= HRTIM_TIMUPDATETRIGGER_NONE;
+		sConfig_timerE.ResetTrigger = HRTIM_TIMRESETTRIGGER_NONE;
+
+		HAL_HRTIM_WaveformTimerConfig(&HrtimHandle, HRTIM_TIMERINDEX_TIMER_E,&sConfig_timerE);
+
+		sConfig_compare.AutoDelayedMode = HRTIM_AUTODELAYEDMODE_REGULAR;
+		sConfig_compare.AutoDelayedTimeout = 0;
+		sConfig_compare.CompareValue = 1;
+
+		HAL_HRTIM_WaveformCompareConfig(&HrtimHandle, HRTIM_TIMERINDEX_TIMER_E, HRTIM_COMPAREUNIT_2, &sConfig_compare);
+
+		sConfig_output_config.Polarity = HRTIM_OUTPUTPOLARITY_LOW;
+		sConfig_output_config.SetSource = HRTIM_OUTPUTRESET_TIMCMP2;
+		sConfig_output_config.ResetSource = HRTIM_OUTPUTSET_TIMPER;
+		sConfig_output_config.IdleMode = HRTIM_OUTPUTIDLEMODE_NONE;
+		sConfig_output_config.IdleLevel = HRTIM_OUTPUTIDLELEVEL_INACTIVE;
+		sConfig_output_config.FaultLevel = HRTIM_OUTPUTFAULTLEVEL_NONE;
+		sConfig_output_config.ChopperModeEnable = HRTIM_OUTPUTCHOPPERMODE_DISABLED;
+		sConfig_output_config.BurstModeEntryDelayed = HRTIM_OUTPUTBURSTMODEENTRY_REGULAR;
+		sConfig_output_config.ResetSource = HRTIM_OUTPUTRESET_TIMPER;
+		sConfig_output_config.SetSource = HRTIM_OUTPUTSET_TIMCMP2;
+
+		HAL_HRTIM_WaveformOutputConfig(&HrtimHandle, HRTIM_TIMERINDEX_TIMER_E, HRTIM_OUTPUT_TE2, &sConfig_output_config);
+
+		// Start PWM signals generation
+		if (HAL_HRTIM_WaveformOutputStart(&HrtimHandle, HRTIM_OUTPUT_TE2) != HAL_OK)
+		{
+			// PWM Generation Error
+		}
+
+		// Start HRTIM counter
+		if (HAL_HRTIM_WaveformCounterStart(&HrtimHandle, HRTIM_TIMERID_TIMER_E) != HAL_OK)
+		{
+			// PWM Generation Error
+		}
 	}
 
 	~AnalogOutPWMClass(){}
-	// TODO: check why chamnge PrescalerRatio broke the portenta
 	void period_ms(int period) {
-
 		sConfig_time_base.Mode = HRTIM_MODE_CONTINUOUS;
-		sConfig_time_base.Period = 100;
+		sConfig_time_base.Period = period;
 		sConfig_time_base.PrescalerRatio = HRTIM_PRESCALERRATIO_DIV1;
 		sConfig_time_base.RepetitionCounter = 0;
 
@@ -237,16 +295,11 @@ public:
 	}
 
 	bool write(uint8_t voltage) {
-		sConfig_Channel.Polarity = HRTIM_OUTPUTPOLARITY_LOW;
-		sConfig_Channel.IdleLevel = HRTIM_OUTPUTIDLELEVEL_INACTIVE;
-		sConfig_Channel.Pulse = voltage*10;
-
-		HAL_HRTIM_SimplePWMChannelConfig(&HrtimHandle, HRTIM_TIMERINDEX_TIMER_E,
-		HRTIM_OUTPUT_TE2, &sConfig_Channel);
-		if (HAL_HRTIM_SimplePWMStart(&HrtimHandle, HRTIM_TIMERINDEX_TIMER_E, HRTIM_OUTPUT_TE2) != HAL_OK)
+		sConfig_compare.CompareValue = voltage;
+		if (HAL_HRTIM_WaveformCompareConfig(&HrtimHandle, HRTIM_TIMERINDEX_TIMER_E, HRTIM_COMPAREUNIT_2, &sConfig_compare) != HAL_OK)
 		{
 			return false;
-		}
+		  }
 		return true;
 	}
 
@@ -262,7 +315,9 @@ private:
 	HRTIM_HandleTypeDef HrtimHandle;
 
 	HRTIM_TimeBaseCfgTypeDef sConfig_time_base;
-	HRTIM_SimplePWMChannelCfgTypeDef sConfig_Channel;
+	HRTIM_TimerCfgTypeDef               sConfig_timerE;
+	HRTIM_OutputCfgTypeDef              sConfig_output_config;
+	HRTIM_CompareCfgTypeDef             sConfig_compare;
 };
 
 
@@ -271,13 +326,13 @@ extern AnalogOutPWMClass analopwm;
 
 class AnalogOutClass {
 public:
-	void write(int index, uint8_t voltage) {
+	void write(int index, float voltage) {
 		switch (index) {
 			case 0:
 				out_0.write(voltage / 10.568);
 				break;
 			case 1:
-				out_1.write(voltage);
+				out_1.write((voltage*9.3679) +1);
 				break;
 			case 2:
 				out_2.write(voltage / 10.568);
@@ -290,7 +345,7 @@ public:
 				out_0.period_ms(period);
 				break;
 			case 1:
-				out_1.period_ms(period);
+				out_1.period_ms((period/4)*100);
 				break;
 			case 2:
 				out_2.period_ms(period);
