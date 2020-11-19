@@ -294,12 +294,15 @@ public:
 		HAL_HRTIM_TimeBaseConfig(&HrtimHandle, HRTIM_TIMERINDEX_TIMER_E, &sConfig_time_base);
 	}
 
-	bool write(uint8_t voltage) {
-		sConfig_compare.CompareValue = voltage;
+	bool write(uint8_t pulse) {
+		if (pulse > 100) {
+			pulse = 100;
+		}
+		sConfig_compare.CompareValue = pulse;
 		if (HAL_HRTIM_WaveformCompareConfig(&HrtimHandle, HRTIM_TIMERINDEX_TIMER_E, HRTIM_COMPAREUNIT_2, &sConfig_compare) != HAL_OK)
 		{
 			return false;
-		  }
+		}
 		return true;
 	}
 
@@ -327,15 +330,19 @@ extern AnalogOutPWMClass analopwm;
 class AnalogOutClass {
 public:
 	void write(int index, float voltage) {
+		if (voltage < 0) {
+			voltage = 0;
+		}
+
 		switch (index) {
 			case 0:
-				out_0.write(voltage / 10.568);
+				out_0.write(voltage / 10.5);
 				break;
 			case 1:
-				out_1.write((voltage*9.3679) +1);
+				out_1.write((voltage*9.5));
 				break;
 			case 2:
-				out_2.write(voltage / 10.568);
+				out_2.write(voltage / 10.5);
 				break;
 		}
 	}
