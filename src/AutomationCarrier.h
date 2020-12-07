@@ -339,10 +339,13 @@ public:
 				out_0.write(voltage / 10.5);
 				break;
 			case 1:
-				out_1.write((voltage*9.5));
+				out_1.write(voltage / 10.5);
 				break;
 			case 2:
-				out_2.write(voltage / 10.5);
+				out_2.write((voltage*9.5));
+				break;
+			case 3:
+				out_3.write(voltage / 10.5);
 				break;
 		}
 	}
@@ -352,10 +355,13 @@ public:
 				out_0.period_ms(period);
 				break;
 			case 1:
-				out_1.period_ms((period/4)*100);
+				out_1.period_ms(period);
 				break;
 			case 2:
-				out_2.period_ms(period);
+				out_2.period_ms((period/4)*100);
+				break;
+			case 3:
+				out_3.period_ms(period);
 				break;
 		}
 	}
@@ -363,16 +369,19 @@ public:
 		switch (index) {
 			case 0:
 				return out_0;
-			//case 1:
-				//return out_1;
-			case 2:
-				return out_2;
+			case 1:
+				return out_1;
+			//case 2:
+				//return out_2;
+			case 3:
+				return out_3;
 		}
 	}
 private:
 	mbed::PwmOut out_0 = mbed::PwmOut(PJ_11);
-	AnalogOutPWMClass out_1 = AnalogOutPWMClass();
-	mbed::PwmOut out_2 = mbed::PwmOut(PC_7);
+	mbed::PwmOut out_1 = mbed::PwmOut(PK_1);
+	AnalogOutPWMClass out_2 = AnalogOutPWMClass();
+	mbed::PwmOut out_3 = mbed::PwmOut(PC_7);
 };
 
 extern AnalogOutClass analog_out;

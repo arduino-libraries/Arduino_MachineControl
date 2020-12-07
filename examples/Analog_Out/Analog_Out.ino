@@ -26,15 +26,17 @@ float counter = 0;
 
 void loop() {
 
-  analog_out.period_ms(0,4);
-  analog_out.write(0,counter);
-  analog_out.period_ms(1,4);
-  analog_out.write(1,counter);
-  analog_out.period_ms(2,4);
-  analog_out.write(2,counter);
-  delay(1000);
-  counter= counter + 0.1;
-  if( counter >= 10.5 )
+  analog_out.period_ms(0, 4);
+  analog_out.write(0, counter);
+  analog_out.period_ms(1, 4);
+  analog_out.write(1, counter);
+  analog_out.period_ms(2, 4);
+  analog_out.write(2, counter);
+  analog_out.period_ms(3, 4);
+  analog_out.write(3, counter);
+  delay(10);
+  counter = counter + 0.1;
+  if ( counter >= 10.5 )
   {
     counter = 0;
   }
