@@ -6,7 +6,7 @@
 
   The circuit:
    - Portenta H7
-   - Automation Carrier
+   - Machine Control
 
   created 17 November 2020
   by  Riccardo Rizzo
