@@ -18,7 +18,7 @@ using namespace automation;
 
 void setup() {
   Serial.begin(9600);
-  Serial.println("Analogout test");
+  Serial.println("Analog out test");
 
 }
 
