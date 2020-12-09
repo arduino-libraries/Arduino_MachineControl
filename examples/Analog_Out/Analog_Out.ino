@@ -2,7 +2,9 @@
   Machine Control - Analog out Example
 
   This example shows how to use the Analog out channels on
-  Machine Control.
+  the Machine Control.
+  The example sets the channels PWM period in the setup,
+  then loops the channels voltage output value from 0V to 10.4V.
 
   The circuit:
    - Portenta H7
@@ -10,34 +12,45 @@
 
   created 17 November 2020
   by  Riccardo Rizzo
+  modified 09 December 2020
+  by Silvio Navaretti
   This example code is in the public domain.
 */
+
 #include <AutomationCarrier.h>
 
 using namespace automation;
 
 void setup() {
+  //analog.out.period_ms(CHENNEL, PERIOD_MILLISECONDS);
+  analog_out.period_ms(0, 4);
+  analog_out.period_ms(1, 4);
+  analog_out.period_ms(2, 4);
+  analog_out.period_ms(3, 4);
+  
   Serial.begin(9600);
   Serial.println("Analog out test");
 
 }
 
-float counter = 0;
+//Output values which will be changed with this variable
+float counter = 1;
 
 void loop() {
-
-  analog_out.period_ms(0, 4);
+  //analog_out.write(CHANNEL, OUTPUT_VOLTAGE_VALUE);
   analog_out.write(0, counter);
-  analog_out.period_ms(1, 4);
   analog_out.write(1, counter);
-  analog_out.period_ms(2, 4);
   analog_out.write(2, counter);
-  analog_out.period_ms(3, 4);
   analog_out.write(3, counter);
-  delay(10);
+  Serial.println("All channels set at "+String(counter)+"V");
+  
   counter = counter + 0.1;
-  if ( counter >= 10.5 )
+  //Maximum output value is 10.4V
+  if (counter >= 10.5)
   {
     counter = 0;
+    //Additional 100ms delay introduced to manage 10.5V -> 0V fall time of 150ms
+    delay(100);
   }
+  delay(100);
 }
