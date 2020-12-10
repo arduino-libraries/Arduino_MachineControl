@@ -22,7 +22,7 @@
 using namespace automation;
 
 void setup() {
-  //analog.out.period_ms(CHENNEL, PERIOD_MILLISECONDS);
+  //analog_out.period_ms(CHANNEL, PERIOD_MILLISECONDS);
   analog_out.period_ms(0, 4);
   analog_out.period_ms(1, 4);
   analog_out.period_ms(2, 4);
