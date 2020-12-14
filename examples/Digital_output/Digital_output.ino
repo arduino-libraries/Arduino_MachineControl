@@ -43,7 +43,7 @@ void setup() {
   while (!Serial);
 
   //Set over current behavior of all channels to latch mode:
-  digital_programmables.setLatch();
+  digital_outputs.setLatch();
 
   // Uncomment this line to set over current behavior of all
   // channels to auto retry mode instead of latch mode:

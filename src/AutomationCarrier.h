@@ -450,10 +450,17 @@ public:
 	void set(int index, bool val) {
 			out[index] = val;
 	}
+	void setLatch() {
+		dig_out_latch_retry = 0;
+	}
+	void setRetry() {
+		dig_out_latch_retry = 1;
+	}
 	mbed::DigitalOut& operator[](int index) {
 		return out[index];
 	}
 private:
+	mbed::DigitalOut dig_out_latch_retry = mbed::DigitalOut(PB_2);
 	mbed::DigitalOut out[8] = {
 		mbed::DigitalOut(PI_6), mbed::DigitalOut(PH_9), mbed::DigitalOut(PJ_9), mbed::DigitalOut(PE_2),
 		mbed::DigitalOut(PI_3), mbed::DigitalOut(PI_2), mbed::DigitalOut(PD_3), mbed::DigitalOut(PA_14)
