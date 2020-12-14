@@ -56,7 +56,7 @@ static 	mbed::CAN   _can(PB_8, PH_13);
 class COMMClass {
 public:
 	// to be tested: cjeck if can be made a big pin initialization
-	void init(){
+	void init() {
 		//SHUTDOWN OF RS485 LEDS
 		digitalWrite(PA_0, LOW);
 		digitalWrite(PI_9, LOW);
@@ -423,6 +423,9 @@ extern EncoderClass encoders;
 
 class ProgrammableDIOClass : public ArduinoIOExpanderClass {
 public:
+	bool  init() {
+		return begin(IO_ADD);
+	}
 	void setLatch() {
 		prog_latch_retry = 0;
 	}
@@ -459,30 +462,14 @@ private:
 
 extern DigitalOutputsClass digital_outputs;
 
-
-class DigitalInputsClass {
+class ProgrammableDINClass : public ArduinoIOExpanderClass {
 public:
-	uint8_t readAll() {
-		uint8_t val = 0;
-		for (int i = 0; i < 8; i++) {
-			val |= (in[i] << i);
-		}
-		return val;
+	bool init() {
+		return begin(DIN_ADD);
 	}
-	uint8_t read(int index) {
-		return in[index];
-	}
-	mbed::DigitalIn& operator[](int index) {
-		return in[index];
-	}
-private:
-	mbed::DigitalIn in[8] = { 
-		mbed::DigitalIn(PD_6), mbed::DigitalIn(PD_7), mbed::DigitalIn(PB_14), mbed::DigitalIn(PB_15),
-		mbed::DigitalIn(PB_3), mbed::DigitalIn(PB_4), mbed::DigitalIn(PB_2), mbed::DigitalIn(PI_7)
-	};
 };
 
-extern DigitalInputsClass digital_inputs;
+extern ProgrammableDINClass digital_inputs;
 
 
 class RtcControllerClass : public PCF8563TClass {

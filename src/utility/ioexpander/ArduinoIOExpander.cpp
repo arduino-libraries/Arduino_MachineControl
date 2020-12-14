@@ -18,8 +18,18 @@
 
 bool ArduinoIOExpanderClass::begin()
 {
-  Wire.begin();
-  _tca.initialize();
+  if(!_tca.testConnection()) {
+    return false;
+  }
+  //Initialize all pins to the default mode
+  initPins();
+
+  return true;
+}
+
+bool ArduinoIOExpanderClass::begin(uint8_t address)
+{
+  setAddress(address);
   if(!_tca.testConnection()) {
     return false;
   }
@@ -43,6 +53,10 @@ bool ArduinoIOExpanderClass::pinMode(int pin, PinMode direction)
   return true;
 }
 
+void ArduinoIOExpanderClass::setAddress(uint8_t address) {
+  _tca.setAddress(address);
+}
+
 bool ArduinoIOExpanderClass::set(int pin, PinStatus status)
 { 
   if (pin < IO_READ_CH_PIN_00) {
@@ -57,52 +71,70 @@ bool ArduinoIOExpanderClass::set(int pin, PinStatus status)
 
 int ArduinoIOExpanderClass::read(int pin)
 {
-  if (pin > IO_READ_CH_PIN_11) {
-    return _tca.readPin(pin) == true ? 1 : 0;
+  if(_tca.getAddress() == IO_ADD) {
+    if (pin > TCA6424A_P13 && pin <= TCA6424A_P27) {
+      return _tca.readPin(pin) == true ? 1 : 0;
+    }
+  } else if(_tca.getAddress() == DIN_ADD) {
+    if ((pin >=   TCA6424A_P00)  && (pin <=   TCA6424A_P10) && (pin !=TCA6424A_P03)) {
+        return _tca.readPin(pin) == true ? 1 : 0;
+    }
   }
   return -1;
 }
 
 void ArduinoIOExpanderClass::initPins()
 {
-    PinStatus status = SWITCH_OFF;
-    pinMode(IO_WRITE_CH_PIN_00, OUTPUT);
-    pinMode(IO_WRITE_CH_PIN_01, OUTPUT);
-    pinMode(IO_WRITE_CH_PIN_02, OUTPUT);
-    pinMode(IO_WRITE_CH_PIN_03, OUTPUT);
-    pinMode(IO_WRITE_CH_PIN_04, OUTPUT);
-    pinMode(IO_WRITE_CH_PIN_05, OUTPUT);
-    pinMode(IO_WRITE_CH_PIN_06, OUTPUT);
-    pinMode(IO_WRITE_CH_PIN_07, OUTPUT);
-    pinMode(IO_WRITE_CH_PIN_08, OUTPUT);
-    pinMode(IO_WRITE_CH_PIN_09, OUTPUT);
-    pinMode(IO_WRITE_CH_PIN_10, OUTPUT);
-    pinMode(IO_WRITE_CH_PIN_11, OUTPUT);
-    pinMode(IO_READ_CH_PIN_00, INPUT);
-    pinMode(IO_READ_CH_PIN_01, INPUT);
-    pinMode(IO_READ_CH_PIN_02, INPUT);
-    pinMode(IO_READ_CH_PIN_03, INPUT);
-    pinMode(IO_READ_CH_PIN_04, INPUT);
-    pinMode(IO_READ_CH_PIN_05, INPUT);
-    pinMode(IO_READ_CH_PIN_06, INPUT);
-    pinMode(IO_READ_CH_PIN_07, INPUT);
-    pinMode(IO_READ_CH_PIN_08, INPUT);
-    pinMode(IO_READ_CH_PIN_09, INPUT);
-    pinMode(IO_READ_CH_PIN_10, INPUT);
-    pinMode(IO_READ_CH_PIN_11, INPUT);
 
-    set(IO_WRITE_CH_PIN_00, status);
-    set(IO_WRITE_CH_PIN_01, status);
-    set(IO_WRITE_CH_PIN_02, status);
-    set(IO_WRITE_CH_PIN_03, status);
-    set(IO_WRITE_CH_PIN_04, status);
-    set(IO_WRITE_CH_PIN_05, status);
-    set(IO_WRITE_CH_PIN_06, status);
-    set(IO_WRITE_CH_PIN_07, status);
-    set(IO_WRITE_CH_PIN_08, status);
-    set(IO_WRITE_CH_PIN_09, status);
-    set(IO_WRITE_CH_PIN_10, status);
-    set(IO_WRITE_CH_PIN_11, status);
+    if (_tca.getAddress() == IO_ADD) {
+      PinStatus status = SWITCH_OFF;
+      pinMode(IO_WRITE_CH_PIN_00, OUTPUT);
+      pinMode(IO_WRITE_CH_PIN_01, OUTPUT);
+      pinMode(IO_WRITE_CH_PIN_02, OUTPUT);
+      pinMode(IO_WRITE_CH_PIN_03, OUTPUT);
+      pinMode(IO_WRITE_CH_PIN_04, OUTPUT);
+      pinMode(IO_WRITE_CH_PIN_05, OUTPUT);
+      pinMode(IO_WRITE_CH_PIN_06, OUTPUT);
+      pinMode(IO_WRITE_CH_PIN_07, OUTPUT);
+      pinMode(IO_WRITE_CH_PIN_08, OUTPUT);
+      pinMode(IO_WRITE_CH_PIN_09, OUTPUT);
+      pinMode(IO_WRITE_CH_PIN_10, OUTPUT);
+      pinMode(IO_WRITE_CH_PIN_11, OUTPUT);
+      pinMode(IO_READ_CH_PIN_00, INPUT);
+      pinMode(IO_READ_CH_PIN_01, INPUT);
+      pinMode(IO_READ_CH_PIN_02, INPUT);
+      pinMode(IO_READ_CH_PIN_03, INPUT);
+      pinMode(IO_READ_CH_PIN_04, INPUT);
+      pinMode(IO_READ_CH_PIN_05, INPUT);
+      pinMode(IO_READ_CH_PIN_06, INPUT);
+      pinMode(IO_READ_CH_PIN_07, INPUT);
+      pinMode(IO_READ_CH_PIN_08, INPUT);
+      pinMode(IO_READ_CH_PIN_09, INPUT);
+      pinMode(IO_READ_CH_PIN_10, INPUT);
+      pinMode(IO_READ_CH_PIN_11, INPUT);
+
+      set(IO_WRITE_CH_PIN_00, status);
+      set(IO_WRITE_CH_PIN_01, status);
+      set(IO_WRITE_CH_PIN_02, status);
+      set(IO_WRITE_CH_PIN_03, status);
+      set(IO_WRITE_CH_PIN_04, status);
+      set(IO_WRITE_CH_PIN_05, status);
+      set(IO_WRITE_CH_PIN_06, status);
+      set(IO_WRITE_CH_PIN_07, status);
+      set(IO_WRITE_CH_PIN_08, status);
+      set(IO_WRITE_CH_PIN_09, status);
+      set(IO_WRITE_CH_PIN_10, status);
+      set(IO_WRITE_CH_PIN_11, status);
+    } else {
+      pinMode(DIN_READ_CH_PIN_00, INPUT);
+      pinMode(DIN_READ_CH_PIN_01, INPUT);
+      pinMode(DIN_READ_CH_PIN_02, INPUT);
+      pinMode(DIN_READ_CH_PIN_03, INPUT);
+      pinMode(DIN_READ_CH_PIN_04, INPUT);
+      pinMode(DIN_READ_CH_PIN_05, INPUT);
+      pinMode(DIN_READ_CH_PIN_06, INPUT);
+      pinMode(DIN_READ_CH_PIN_07, INPUT);
+    }
 }
 
 ArduinoIOExpanderClass Expander;
