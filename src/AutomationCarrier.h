@@ -182,14 +182,14 @@ public:
 
 	mbed::DigitalOut ch_in[12] = { 
 		mbed::DigitalOut(PD_4), mbed::DigitalOut(PD_5), mbed::DigitalOut(PE_3), mbed::DigitalOut(PG_3),
-		mbed::DigitalOut(PA_6), mbed::DigitalOut(PH_6), mbed::DigitalOut(PJ_7), mbed::DigitalOut(PH_15),
+		mbed::DigitalOut(PD_7), mbed::DigitalOut(PH_6), mbed::DigitalOut(PJ_7), mbed::DigitalOut(PH_15),
 		mbed::DigitalOut(PH_10), mbed::DigitalOut(PA_4), mbed::DigitalOut(PA_8), mbed::DigitalOut(PC_6) 
 	};
 
 private:
 	mbed::AnalogIn in_0 = mbed::AnalogIn(PC_3C);
-	mbed::AnalogIn in_2 = mbed::AnalogIn(PA_1C);
 	mbed::AnalogIn in_1 = mbed::AnalogIn(PC_2C);
+	mbed::AnalogIn in_2 = mbed::AnalogIn(PA_1C);
 };
 
 extern AnalogInClass analog_in;

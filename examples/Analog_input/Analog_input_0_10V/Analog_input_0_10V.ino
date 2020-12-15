@@ -17,6 +17,8 @@
   by Silvio Navaretti
   modified 30 September 2020
   by  Riccardo Rizzo
+  modified 15 December 2020
+  by Silvio Navaretti
   This example code is in the public domain.
 */
 #include <AutomationCarrier.h>
@@ -24,7 +26,7 @@
 using namespace automation;
 
 float res_divider = 0.28057;
-float reference = 3.3;
+float reference = 3;
 
 void setup() {
   analogReadResolution(16);
@@ -36,19 +38,19 @@ void setup() {
 void loop() {
   float raw_voltage_ch0 = analog_in.read(0);
   float voltage_ch0 = (raw_voltage_ch0 * reference) / 65535 / res_divider;
-  Serial.print("Voltage ch0: ");
+  Serial.print("Voltage CH0: ");
   Serial.print(voltage_ch0, 3);
   Serial.println("V");
 
   float raw_voltage_ch1 = analog_in.read(1);
   float voltage_ch1 = (raw_voltage_ch1 * reference) / 65535 / res_divider;
-  Serial.print("Voltage ch1: ");
+  Serial.print("Voltage CH1: ");
   Serial.print(voltage_ch1, 3);
   Serial.println("V");
 
   float raw_voltage_ch2 = analog_in.read(2);
   float voltage_ch2 = (raw_voltage_ch2 * reference) / 65535 / res_divider;
-  Serial.print("Voltage ch2: ");
+  Serial.print("Voltage CH2: ");
   Serial.print(voltage_ch2, 3);
   Serial.println("V");
   Serial.println();

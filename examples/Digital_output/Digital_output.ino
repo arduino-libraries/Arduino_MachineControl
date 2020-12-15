@@ -47,7 +47,7 @@ void setup() {
 
   // Uncomment this line to set over current behavior of all
   // channels to auto retry mode instead of latch mode:
-  // digital_programmables.setRetry();
+  //digital_outputs.setRetry();
   
   //At startup set all channels to OPEN
   digital_outputs.setAll(0);
