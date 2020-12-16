@@ -44,7 +44,7 @@ public:
 	MAX31855Class tc = MAX31855Class(7);
 
 private:
-	mbed::DigitalOut ch_sel[3] = { mbed::DigitalOut(PA_0C), mbed::DigitalOut(PI_4), mbed::DigitalOut(PG_10)};
+	mbed::DigitalOut ch_sel[3] = { mbed::DigitalOut(PD_6), mbed::DigitalOut(PI_4), mbed::DigitalOut(PG_10)};
 	mbed::DigitalOut rtd_th = mbed::DigitalOut(PC_15);
 
 };
@@ -393,7 +393,7 @@ extern AnalogOutClass analog_out;
 */
 
 static QEI _enc_0(PJ_8, PH_12, PH_11, 0);
-static QEI _enc_1(PC_13, PK_1, PJ_10, 0);
+static QEI _enc_1(PC_13, PI_7, PJ_10, 0);
 
 class EncoderClass {
 public:
