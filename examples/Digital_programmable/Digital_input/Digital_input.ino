@@ -38,7 +38,7 @@ void loop() {
   readAll();
 
   //Read one-by-one each channel and print them one-by-one
-  readings = digital_inputs.read(DIN_READ_CH_PIN_00)
+  readings = digital_inputs.read(DIN_READ_CH_PIN_00);
   Serial.println("CH00: "+String(readings));
 
   readings = digital_inputs.read(DIN_READ_CH_PIN_01);
