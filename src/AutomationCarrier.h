@@ -15,12 +15,6 @@ namespace automation {
 
 class RTDClass {
 public:
-	void setTH() {
-		rtd_th = 1;
-	}
-	void resetTH() {
-		rtd_th = 0;
-	}
 	void selectChannel(int channel) {
 		for (int i=0; i<3; i++) {
 			ch_sel[i] = (i == channel ? 1 : 0);
@@ -28,13 +22,15 @@ public:
 		delay(150);
 	}
 	void enableTC() {
+		rtd_th = 0;
 		digitalWrite(PI_0, LOW);
 		digitalWrite(PA_6, HIGH);
 	}
-
 	void enableRTD() {
+		rtd_th = 1;
 		digitalWrite(PI_0, HIGH);
 		digitalWrite(PA_6, LOW);
+		
 	}
 	void disableCS() {
 		digitalWrite(PI_0, HIGH);

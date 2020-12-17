@@ -8,12 +8,6 @@
    - Portenta H7
    - Machine Control
 
-  created 25 August 2020
-  by Silvio Navaretti
-  modified 29 September 2020
-  by Riccardo Rizzo
-  modified 6 October 2020
-  by Silvio Navaretti
   This example code is in the public domain.
 */
 #include <AutomationCarrier.h>

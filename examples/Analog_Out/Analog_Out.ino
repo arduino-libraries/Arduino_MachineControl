@@ -10,10 +10,6 @@
    - Portenta H7
    - Machine Control
 
-  created 17 November 2020
-  by  Riccardo Rizzo
-  modified 09 December 2020
-  by Silvio Navaretti
   This example code is in the public domain.
 */
 

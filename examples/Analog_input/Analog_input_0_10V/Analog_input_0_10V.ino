@@ -11,14 +11,8 @@
 
   The circuit:
    - Portenta H7
-   - Automation Carrier
+   - Portenta Machine Control Carrier
 
-  created 18 September 2020
-  by Silvio Navaretti
-  modified 30 September 2020
-  by  Riccardo Rizzo
-  modified 15 December 2020
-  by Silvio Navaretti
   This example code is in the public domain.
 */
 #include <AutomationCarrier.h>
