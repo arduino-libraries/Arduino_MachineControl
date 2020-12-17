@@ -311,3 +311,11 @@ void TCA6424A::setAllDirection(uint8_t bank0, uint8_t bank1, uint8_t bank2) {
     buffer[2] = bank2;
     I2Cdev::writeBytes(devAddr, TCA6424A_RA_CONFIG0 | TCA6424A_AUTO_INCREMENT, 3, buffer);
 }
+
+void TCA6424A::setAddress(uint8_t address) {
+    devAddr = address;
+}
+
+uint8_t TCA6424A::getAddress() {
+    return devAddr;
+}

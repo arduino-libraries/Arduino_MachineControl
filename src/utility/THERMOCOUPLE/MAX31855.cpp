@@ -69,7 +69,6 @@ uint32_t MAX31855Class::readSensor()
   _spi->endTransaction();
 
   digitalWrite(_cs, HIGH);
-
   return read;
 }
 
@@ -100,6 +99,7 @@ float MAX31855Class::readTemperature(int type)
     // conversion factor from K type to J type
     celsius = celsius * 4/5; 
   }
+    Serial.println(celsius);
   return celsius;
 }
 
@@ -123,6 +123,7 @@ float MAX31855Class::readReferenceTemperature(int type)
       // multiply for the LSB value
       ref = rawword * 0.0625f;
   }
+  Serial.println(ref);
   return ref;
 }
 

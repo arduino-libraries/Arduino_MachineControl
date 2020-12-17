@@ -96,6 +96,9 @@ class TCA6424A {
         void initialize();
         bool testConnection();
         
+        void setAddress(uint8_t address);
+        uint8_t getAddress();
+
         // INPUT* registers (x0h - x2h)
         bool readPin(uint16_t pin);
         uint8_t readBank(uint8_t bank);

@@ -17,8 +17,10 @@
 #pragma once
 
 #include <Arduino.h>
-#include <Wire.h>
 #include "TCA6424A.h"
+
+#define IO_ADD       TCA6424A_ADDRESS_ADDR_LOW // address pin low (GND)
+#define DIN_ADD      TCA6424A_ADDRESS_ADDR_HIGH // address pin high (VCC)
 
 #define SWITCH_ON HIGH
 #define SWITCH_OFF LOW
@@ -51,6 +53,17 @@ enum {
     IO_READ_CH_PIN_11 =       TCA6424A_P14
 };
 
+enum {
+    DIN_READ_CH_PIN_00 =      TCA6424A_P10,
+    DIN_READ_CH_PIN_01 =      TCA6424A_P05,
+    DIN_READ_CH_PIN_02 =      TCA6424A_P04,
+    DIN_READ_CH_PIN_03 =      TCA6424A_P02,
+    DIN_READ_CH_PIN_04 =      TCA6424A_P01,
+    DIN_READ_CH_PIN_05 =      TCA6424A_P00,
+    DIN_READ_CH_PIN_06 =      TCA6424A_P07,
+    DIN_READ_CH_PIN_07 =      TCA6424A_P06,
+};
+
 class ArduinoIOExpanderClass {
 
 public:
@@ -58,11 +71,12 @@ public:
     ~ArduinoIOExpanderClass() = default;
 
     bool begin();
+    bool begin(uint8_t address);
 
     operator bool();
-
+    void setAddress(uint8_t address);
     bool set(int pin, PinStatus status);
-    bool set(int pin, int status) { return set(pin, (PinStatus)status); };
+    bool set(int pin, int status) { return set( pin, (PinStatus)status); };
 
     int read(int pin);
     bool pinMode(int pin, PinMode direction);
