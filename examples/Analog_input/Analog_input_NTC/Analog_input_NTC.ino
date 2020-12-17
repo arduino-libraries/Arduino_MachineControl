@@ -18,17 +18,16 @@
    - Portenta H7
    - Automation Carrier
 
-  created 18 September 2020
-  by Silvio Navaretti
-  modified 30 September 2020
-  by  Riccardo Rizzo
   This example code is in the public domain.
 */
 #include <AutomationCarrier.h>
 
 using namespace automation;
 
-float reference = 3.3;
+#define REFERENCE_RES 100000
+
+float reference = 3;
+float lowest_voltage = 2.7;
 
 void setup() {
   analogReadResolution(16);
@@ -41,38 +40,42 @@ void loop() {
   float raw_voltage_ch0 = analog_in.read(0);
   float voltage_ch0 = (raw_voltage_ch0 * reference) / 65535;
   float resistance_ch0;
-  if (voltage_ch0 < 3) {
-    resistance_ch0 = ((-100000) * voltage_ch0) / (voltage_ch0 - 3);
+  Serial.print("Resistance CH0: ");
+  if (voltage_ch0 < lowest_voltage) {
+    resistance_ch0 = ((-REFERENCE_RES) * voltage_ch0) / (voltage_ch0 - reference);
+	Serial.print(resistance_ch0);
+	Serial.println(" ohm");
   } else {
     resistance_ch0 = -1;
+	Serial.println(" NaN");
   }
-  Serial.print("Resistance ch0: ");
-  Serial.print(resistance_ch0);
-  Serial.println(" ohm");
 
   float raw_voltage_ch1 = analog_in.read(1);
   float voltage_ch1 = (raw_voltage_ch1 * reference) / 65535;
   float resistance_ch1;
-  if (voltage_ch1 < 3) {
-    resistance_ch1 = ((-100000) * voltage_ch1) / (voltage_ch1 - 3);
+  Serial.print("Resistance CH1: ");
+  if (voltage_ch1 < lowest_voltage) {
+    resistance_ch1 = ((-REFERENCE_RES) * voltage_ch1) / (voltage_ch1 - reference);
+	Serial.print(resistance_ch1);
+	Serial.println(" ohm");
   } else {
     resistance_ch1 = -1;
+	Serial.println(" NaN");
   }
-  Serial.print("Resistance ch1: ");
-  Serial.print(resistance_ch1);
-  Serial.println(" ohm");
 
   float raw_voltage_ch2 = analog_in.read(2);
   float voltage_ch2 = (raw_voltage_ch2 * reference) / 65535;
   float resistance_ch2;
-  if (voltage_ch2 < 3) {
-    resistance_ch2 = ((-100000) * voltage_ch2) / (voltage_ch2 - 3);
+  Serial.print("Resistance CH2: ");
+  if (voltage_ch2 < lowest_voltage) {
+    resistance_ch2 = ((-REFERENCE_RES) * voltage_ch2) / (voltage_ch2 - reference);
+	Serial.print(resistance_ch2);
+	Serial.println(" ohm");
   } else {
-    resistance_ch2 = -1;
+    resistance_ch1 = -1;
+	Serial.println(" NaN");
   }
-  Serial.print("Scaled ch2: ");
-  Serial.print(resistance_ch2);
-  Serial.println(" ohm");
+
   Serial.println();
   delay(250);
 }

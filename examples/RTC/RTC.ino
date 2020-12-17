@@ -1,16 +1,14 @@
 /*
   RTC Example
 
-  This sketch shows how to use the RTC PCF8563T on the Automation
-  Carrier and how to configure the PCF8563T's time registers.
+  This sketch shows how to use the RTC PCF8563T on the Machine
+  Control Carrier and how to configure the PCF8563T's
+  time registers.
 
   Circuit:
    - Portenta H7
-   - Automation Carrier
+   - Portenta Machine Control Carrier
 
-
-  created 24 September 2020
-  by Riccardo Rizzo
 */
 #include <AutomationCarrier.h>
 

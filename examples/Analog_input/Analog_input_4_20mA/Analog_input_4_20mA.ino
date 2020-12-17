@@ -13,17 +13,15 @@
    - Portenta H7
    - Automation Carrier
 
-  created 18 September 2020
-  by Silvio Navaretti
-  modified 30 September 2020
-  by  Riccardo Rizzo
   This example code is in the public domain.
 */
 #include <AutomationCarrier.h>
 
 using namespace automation;
 
-float reference = 3.3;
+#define SENSE_RES 120
+
+float reference = 3;
 
 void setup() {
   analogReadResolution(16);
@@ -35,21 +33,21 @@ void setup() {
 void loop() {
   float raw_voltage_ch0 = analog_in.read(0);
   float voltage_ch0 = (raw_voltage_ch0 * reference) / 65535;
-  float current_ch0 = voltage_ch0 / 120 * 1000;
-  Serial.print("Measured Current ch0: ");
+  float current_ch0 = (voltage_ch0 / SENSE_RES) * 1000;
+  Serial.print("Measured Current CH0: ");
   Serial.print(current_ch0);
   Serial.println("mA");
 
   float raw_voltage_ch1 = analog_in.read(1);
   float voltage_ch1 = (raw_voltage_ch1 * reference) / 65535;
-  float current_ch1 = voltage_ch1 / 120 * 1000;
-  Serial.print("Measured Current  ch1: ");
+  float current_ch1 = (voltage_ch1 / SENSE_RES) * 1000;
+  Serial.print("Measured Current CH1: ");
   Serial.print(current_ch1);
   Serial.println("mA");
   float raw_voltage_ch2 = analog_in.read(2);
   float voltage_ch2 = (raw_voltage_ch2 * reference) / 65535;
-  float current_ch2 = voltage_ch2 / 120 * 1000;
-  Serial.print("Measured Current  ch2: ");
+  float current_ch2 = (voltage_ch2 / SENSE_RES) * 1000;
+  Serial.print("Measured Current CH2: ");
   Serial.print(current_ch2);
   Serial.println("mA");
 

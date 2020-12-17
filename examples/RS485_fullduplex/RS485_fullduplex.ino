@@ -11,11 +11,6 @@
    - Automation Carrier
    - A Slave device with RS485 inteface
 
-
-  created 25 August 2020
-  by Silvio Navaretti
-  modified 24 September 2020
-  by Martino Facchin, Riccardo Rizzo
 */
 
 #include "AutomationCarrier.h"

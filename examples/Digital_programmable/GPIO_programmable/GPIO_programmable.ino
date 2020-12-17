@@ -1,31 +1,27 @@
 /*
-  Automation Carrier - IOExpander Read And Write Example
+  Machine Control - IOExpander Read And Write Example
 
-  This sketch shows how to use the GPIO Expander on the Automation
-  Carrier, how to periodically send a value on the PROGRAMMABLE DIGITAL I/O
+  This sketch shows how to use the GPIO Expanders on the Machine Control
+  how to periodically send a value on the PROGRAMMABLE DIGITAL I/O
   output channels and how to periodically read from the PROGRAMMABLE
   DIGITAL I/O input channels.
 
   The circuit:
    - Portenta H7
-   - Automation Carrier
+   - Machine Control
 
-  created 25 August 2020
-  by Silvio Navaretti
-  modified 29 September 2020
-  by Riccardo Rizzo
   This example code is in the public domain.
 */
 
 #include <AutomationCarrier.h>
-
+#include "Wire.h"
 using namespace automation;
 
 void setup() {
   Serial.begin(9600);
   while (!Serial);
-
-  if (!digital_programmables.begin()){
+  Wire.begin();
+  if (!digital_programmables.init()) {
     Serial.println("GPIO expander initialization fail!!");
   }
 
@@ -39,14 +35,14 @@ void loop() {
   delay(1000);
 
   // Read from Pin 3
-  Serial.println("Pin 03: " + String(digital_programmables.read(SWITCH_OFF)));
+  Serial.println("Read Pin 03: " + String(digital_programmables.read(IO_READ_CH_PIN_03)));
   delay(1000);
 
   // Write the status value to Off to Pin 3
   digital_programmables.set(IO_WRITE_CH_PIN_03, SWITCH_OFF);
   delay(1000);
 
-
+  Serial.println();
   // Write the status value to On to all the Output Pins
   setAll(SWITCH_ON);
 
@@ -59,6 +55,7 @@ void loop() {
 
   // Reads from all Input Pins
   readAll();
+  Serial.println();
   delay(1000);
 
 }
@@ -92,5 +89,5 @@ void readAll() {
   Serial.println("Pin 08: " + String(digital_programmables.read(IO_READ_CH_PIN_08)));
   Serial.println("Pin 09: " + String(digital_programmables.read(IO_READ_CH_PIN_09)));
   Serial.println("Pin 10: " + String(digital_programmables.read(IO_READ_CH_PIN_10)));
-  Serial.println("Pin 11: " + String(digital_programmables.read(IO_READ_CH_PIN_11)));
+  Serial.println("Pin 11: " + String(digital_programmables.read(IO_READ_CH_PIN_11)));  
 }
