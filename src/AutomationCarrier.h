@@ -15,12 +15,6 @@ namespace automation {
 
 class RTDClass {
 public:
-	void setTH() {
-		rtd_th = 1;
-	}
-	void resetTH() {
-		rtd_th = 0;
-	}
 	void selectChannel(int channel) {
 		for (int i=0; i<3; i++) {
 			ch_sel[i] = (i == channel ? 1 : 0);
@@ -28,13 +22,15 @@ public:
 		delay(150);
 	}
 	void enableTC() {
+		rtd_th = 0;
 		digitalWrite(PI_0, LOW);
 		digitalWrite(PA_6, HIGH);
 	}
-
 	void enableRTD() {
+		rtd_th = 1;
 		digitalWrite(PI_0, HIGH);
 		digitalWrite(PA_6, LOW);
+
 	}
 	void disableCS() {
 		digitalWrite(PI_0, HIGH);
@@ -44,7 +40,7 @@ public:
 	MAX31855Class tc = MAX31855Class(7);
 
 private:
-	mbed::DigitalOut ch_sel[3] = { mbed::DigitalOut(PA_0C), mbed::DigitalOut(PI_4), mbed::DigitalOut(PG_10)};
+	mbed::DigitalOut ch_sel[3] = { mbed::DigitalOut(PD_6), mbed::DigitalOut(PI_4), mbed::DigitalOut(PG_10)};
 	mbed::DigitalOut rtd_th = mbed::DigitalOut(PC_15);
 
 };
@@ -56,7 +52,7 @@ static 	mbed::CAN   _can(PB_8, PH_13);
 class COMMClass {
 public:
 	// to be tested: cjeck if can be made a big pin initialization
-	void init(){
+	void init() {
 		//SHUTDOWN OF RS485 LEDS
 		digitalWrite(PA_0, LOW);
 		digitalWrite(PI_9, LOW);
@@ -182,14 +178,14 @@ public:
 
 	mbed::DigitalOut ch_in[12] = { 
 		mbed::DigitalOut(PD_4), mbed::DigitalOut(PD_5), mbed::DigitalOut(PE_3), mbed::DigitalOut(PG_3),
-		mbed::DigitalOut(PA_6), mbed::DigitalOut(PH_6), mbed::DigitalOut(PJ_7), mbed::DigitalOut(PH_15),
+		mbed::DigitalOut(PD_7), mbed::DigitalOut(PH_6), mbed::DigitalOut(PJ_7), mbed::DigitalOut(PH_15),
 		mbed::DigitalOut(PH_10), mbed::DigitalOut(PA_4), mbed::DigitalOut(PA_8), mbed::DigitalOut(PC_6) 
 	};
 
 private:
 	mbed::AnalogIn in_0 = mbed::AnalogIn(PC_3C);
-	mbed::AnalogIn in_2 = mbed::AnalogIn(PA_1C);
 	mbed::AnalogIn in_1 = mbed::AnalogIn(PC_2C);
+	mbed::AnalogIn in_2 = mbed::AnalogIn(PA_1C);
 };
 
 extern AnalogInClass analog_in;
@@ -393,7 +389,7 @@ extern AnalogOutClass analog_out;
 */
 
 static QEI _enc_0(PJ_8, PH_12, PH_11, 0);
-static QEI _enc_1(PC_13, PK_1, PJ_10, 0);
+static QEI _enc_1(PC_13, PI_7, PJ_10, 0);
 
 class EncoderClass {
 public:
@@ -423,6 +419,9 @@ extern EncoderClass encoders;
 
 class ProgrammableDIOClass : public ArduinoIOExpanderClass {
 public:
+	bool  init() {
+		return begin(IO_ADD);
+	}
 	void setLatch() {
 		prog_latch_retry = 0;
 	}
@@ -447,10 +446,17 @@ public:
 	void set(int index, bool val) {
 			out[index] = val;
 	}
+	void setLatch() {
+		dig_out_latch_retry = 0;
+	}
+	void setRetry() {
+		dig_out_latch_retry = 1;
+	}
 	mbed::DigitalOut& operator[](int index) {
 		return out[index];
 	}
 private:
+	mbed::DigitalOut dig_out_latch_retry = mbed::DigitalOut(PB_2);
 	mbed::DigitalOut out[8] = {
 		mbed::DigitalOut(PI_6), mbed::DigitalOut(PH_9), mbed::DigitalOut(PJ_9), mbed::DigitalOut(PE_2),
 		mbed::DigitalOut(PI_3), mbed::DigitalOut(PI_2), mbed::DigitalOut(PD_3), mbed::DigitalOut(PA_14)
@@ -459,30 +465,14 @@ private:
 
 extern DigitalOutputsClass digital_outputs;
 
-
-class DigitalInputsClass {
+class ProgrammableDINClass : public ArduinoIOExpanderClass {
 public:
-	uint8_t readAll() {
-		uint8_t val = 0;
-		for (int i = 0; i < 8; i++) {
-			val |= (in[i] << i);
-		}
-		return val;
+	bool init() {
+		return begin(DIN_ADD);
 	}
-	uint8_t read(int index) {
-		return in[index];
-	}
-	mbed::DigitalIn& operator[](int index) {
-		return in[index];
-	}
-private:
-	mbed::DigitalIn in[8] = { 
-		mbed::DigitalIn(PD_6), mbed::DigitalIn(PD_7), mbed::DigitalIn(PB_14), mbed::DigitalIn(PB_15),
-		mbed::DigitalIn(PB_3), mbed::DigitalIn(PB_4), mbed::DigitalIn(PB_2), mbed::DigitalIn(PI_7)
-	};
 };
 
-extern DigitalInputsClass digital_inputs;
+extern ProgrammableDINClass digital_inputs;
 
 
 class RtcControllerClass : public PCF8563TClass {
