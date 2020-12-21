@@ -17,7 +17,6 @@ void loop() {
   Serial.println(encoders[0].getRevolutions());
   Serial.println();
  
-    // put your main code here, to run repeatedly:
   Serial.print("Encoder 1 State: ");
   Serial.println(encoders[1].getCurrentState(),BIN);
   Serial.print("Encoder 1 Pulses: ");
