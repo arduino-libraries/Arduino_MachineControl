@@ -27,7 +27,7 @@ void setup() {
   Serial.println("Temperature probes initialization done");
   // Enables Thermocouples chip select
   temp_probes.enableTC();
-  Serial.println("Termocouples enabled");
+  Serial.println("Thermocouples enabled");
 }
 
 void loop() {
