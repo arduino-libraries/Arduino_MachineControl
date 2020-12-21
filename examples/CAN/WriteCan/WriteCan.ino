@@ -8,11 +8,6 @@
    - Portenta H7
    - Automation Carrier
 
-
-  created 25 August 2020
-  by Silvio Navaretti
-  modified 4 November 2020
-  by Riccardo Rizzo
 */
 #include <AutomationCarrier.h>
 #include <CAN.h>

@@ -24,12 +24,6 @@
    - Portenta H7
    - Automation Carrier
 
-  created 25 August 2020
-  by Silvio Navaretti
-  modified 29 September 2020
-  by Riccardo Rizzo
-  modified 6 October 2020
-  by Silvio Navaretti
   This example code is in the public domain.
 */
 
@@ -43,11 +37,11 @@ void setup() {
   while (!Serial);
 
   //Set over current behavior of all channels to latch mode:
-  digital_programmables.setLatch();
+  digital_outputs.setLatch();
 
   // Uncomment this line to set over current behavior of all
   // channels to auto retry mode instead of latch mode:
-  // digital_programmables.setRetry();
+  //digital_outputs.setRetry();
   
   //At startup set all channels to OPEN
   digital_outputs.setAll(0);
