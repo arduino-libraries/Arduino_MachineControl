@@ -69,8 +69,8 @@ void loop() {
   Serial.print("Resistance CH2: ");
   if (voltage_ch2 < lowest_voltage) {
     resistance_ch2 = ((-REFERENCE_RES) * voltage_ch2) / (voltage_ch2 - reference);
-	Serial.print(resistance_ch2);
-	Serial.println(" ohm");
+    Serial.print(resistance_ch2);
+    Serial.println(" ohm");
   } else {
     resistance_ch1 = -1;
 	Serial.println(" NaN");
