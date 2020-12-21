@@ -73,7 +73,7 @@ void loop() {
     Serial.println(" ohm");
   } else {
     resistance_ch2 = -1;
-	Serial.println(" NaN");
+    Serial.println("NaN");
   }
 
   Serial.println();
