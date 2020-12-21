@@ -1,7 +1,7 @@
 /*
   Machine Control - IOExpander Read And Write Example
 
-  This sketch shows how to use the GPIO Expanders on the Machine Control
+  This sketch shows how to use the GPIO Expanders on the Machine Control,
   how to periodically send a value on the PROGRAMMABLE DIGITAL I/O
   output channels and how to periodically read from the PROGRAMMABLE
   DIGITAL I/O input channels.
