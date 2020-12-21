@@ -47,7 +47,7 @@ void loop() {
     Serial.println(" ohm");
   } else {
     resistance_ch0 = -1;
-	Serial.println(" NaN");
+    Serial.println("NaN");
   }
 
   float raw_voltage_ch1 = analog_in.read(1);
