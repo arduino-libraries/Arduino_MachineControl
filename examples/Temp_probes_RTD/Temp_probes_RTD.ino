@@ -3,7 +3,7 @@
 
   This example provides a way to test the 3-wire RTDs
   on the Machine control Carrier. It is possibile to
-  acquire 2-wire RTD simply shorting the RTDx pin
+  acquire 2-wire RTD simply by shorting the RTDx pin
   to the TPx pin. The Machine control carrier has on
   board a precise 400ohm 0.1% reference resistor which
   is used as a reference by the MAX31865.
