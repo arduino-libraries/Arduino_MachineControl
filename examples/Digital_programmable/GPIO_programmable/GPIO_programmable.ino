@@ -89,5 +89,5 @@ void readAll() {
   Serial.println("Pin 08: " + String(digital_programmables.read(IO_READ_CH_PIN_08)));
   Serial.println("Pin 09: " + String(digital_programmables.read(IO_READ_CH_PIN_09)));
   Serial.println("Pin 10: " + String(digital_programmables.read(IO_READ_CH_PIN_10)));
-  Serial.println("Pin 11: " + String(digital_programmables.read(IO_READ_CH_PIN_11)));  
+  Serial.println("Pin 11: " + String(digital_programmables.read(IO_READ_CH_PIN_11)));
 }
