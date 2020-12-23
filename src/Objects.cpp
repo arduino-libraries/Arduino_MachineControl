@@ -1,6 +1,6 @@
-#include "AutomationCarrier.h"
+#include "MachineControl.h"
 
-namespace automation {
+namespace machinecontrol {
 
 RTDClass temp_probes;
 COMMClass comm_protocols;

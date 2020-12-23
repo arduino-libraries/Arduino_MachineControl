@@ -1,21 +1,21 @@
 /*
   RS485 Full duplex communication
 
-  This sketch shows how to use the SP335ECR1 on the Automation
-  Carrier as a full duplex RS485 interface, how to periodically
+  This sketch shows how to use the SP335ECR1 on the Machine
+  Control as a full duplex RS485 interface, how to periodically
   send a string on the RS485 TX channel and how to receive data
   from the interface RX channel.
 
   Circuit:
    - Portenta H7
-   - Automation Carrier
+   - MachineControl
    - A Slave device with RS485 inteface
 
 */
 
-#include "AutomationCarrier.h"
+#include "MachineControl.h"
 
-using namespace automation;
+using namespace machinecontrol;
 
 unsigned long counter = 0;
 

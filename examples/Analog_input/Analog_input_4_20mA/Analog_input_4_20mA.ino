@@ -1,8 +1,8 @@
 /*
-  Automation Carrier - Analog in 4 - 20 mA Example
+  Machine Control - Analog in 4 - 20 mA Example
 
   This example provides the current value acquired by the
-  Automation Carrier. For each channel of the ANALOG IN
+  Machine Control. For each channel of the ANALOG IN
    connector, there is a 120 ohm resistor to GND. The current
   of the 4-20mA sensor flows through it, generating a voltage
   which is sampled by the Portenta's ADC.
@@ -11,13 +11,13 @@
 
   The circuit:
    - Portenta H7
-   - Automation Carrier
+   - Machine Control
 
   This example code is in the public domain.
 */
-#include <AutomationCarrier.h>
+#include <MachineControl.h>
 
-using namespace automation;
+using namespace machinecontrol;
 
 #define SENSE_RES 120
 

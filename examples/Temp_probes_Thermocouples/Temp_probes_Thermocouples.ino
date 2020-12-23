@@ -1,5 +1,5 @@
 /*
-  Automation Carrier - Thermocouples Read Sensors
+  Machine Control - Thermocouples Read Sensors
 
   This example reads the temperatures measured by the thermocouples
   connected to the Machine Control Carrier's temp probe inputs and prints
@@ -9,16 +9,16 @@
    - Portenta H7
    - Portenta Machine Control Carrier
    - Two K Type thermocouple temperature sensors connected to
-      TEMP PROBES CH0 and CH1 on the Automation Carrier
+      TEMP PROBES CH0 and CH1 on the Machine Control
    - A J Type thermocouple temperature sensor connected to
-     TEMP PROBES CH3 on the Automation Carrier
+     TEMP PROBES CH3 on the Machine Control
 
   This example code is in the public domain.
 */
 
-#include <AutomationCarrier.h>
+#include <MachineControl.h>
 
-using namespace automation;
+using namespace machinecontrol;
 
 void setup() {
   Serial.begin(9600);

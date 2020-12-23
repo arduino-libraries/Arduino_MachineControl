@@ -10,10 +10,10 @@
 
   This example code is in the public domain.
 */
-#include <AutomationCarrier.h>
+#include <MachineControl.h>
 #include "Wire.h"
 
-using namespace automation;
+using namespace machinecontrol;
   uint16_t readings = 0;
 
 void setup() {

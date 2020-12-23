@@ -10,9 +10,9 @@
    - Portenta Machine Control Carrier
 
 */
-#include <AutomationCarrier.h>
+#include <MachineControl.h>
 
-using namespace automation;
+using namespace machinecontrol;
 
 int years = 20;
 int months = 9;

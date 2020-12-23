@@ -1,6 +1,6 @@
-#include <AutomationCarrier.h>
+#include <MachineControl.h>
 
-using namespace automation;
+using namespace machinecontrol;
 
 void setup() {
   Serial.begin(9600);

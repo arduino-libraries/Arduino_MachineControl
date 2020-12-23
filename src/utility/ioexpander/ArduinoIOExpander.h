@@ -1,5 +1,5 @@
 /*
-  This file is part of the AutomationCarrier library.
+  This file is part of the MachineControl library.
   Copyright (C) 2020  Arduino AG (http://www.arduino.cc/)
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public

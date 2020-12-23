@@ -13,9 +13,9 @@
   This example code is in the public domain.
 */
 
-#include <AutomationCarrier.h>
+#include <MachineControl.h>
 #include "Wire.h"
-using namespace automation;
+using namespace machinecontrol;
 
 void setup() {
   Serial.begin(9600);
