@@ -8,7 +8,7 @@
 
   Circuit:
    - Portenta H7
-   - MachineControl
+   - Machine Control
    - A Slave device with RS485 inteface
 
 */
