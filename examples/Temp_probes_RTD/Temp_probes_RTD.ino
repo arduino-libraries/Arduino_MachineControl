@@ -1,5 +1,5 @@
 /*
-  Automation Carrier - Temperature probes RTD example
+  Machine Control - Temperature probes RTD example
 
   This example provides a way to test the 3-wire RTDs
   on the Machine control Carrier. It is possibile to
@@ -14,9 +14,9 @@
    - 3-wire RTD or 2-wire RTD
 */
 
-#include <AutomationCarrier.h>
+#include <MachineControl.h>
 
-using namespace automation;
+using namespace machinecontrol;
 
 // The value of the Rref resistor. Use 430.0 for PT100 and 4300.0 for PT1000
 #define RREF      400.0

@@ -15,9 +15,9 @@
 
   This example code is in the public domain.
 */
-#include <AutomationCarrier.h>
+#include <MachineControl.h>
 
-using namespace automation;
+using namespace machinecontrol;
 
 float res_divider = 0.28057;
 float reference = 3;

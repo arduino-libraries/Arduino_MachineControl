@@ -17,8 +17,8 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef _RS485_AUTOMATION_H_INCLUDED
-#define _RS485_AUTOMATION_H_INCLUDED
+#ifndef _RS485_MACHINECONTROL_H_INCLUDED
+#define _RS485_MACHINECONTROL_H_INCLUDED
 
 #include "Arduino.h"
 #include "mbed.h"

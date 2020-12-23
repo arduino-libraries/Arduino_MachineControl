@@ -13,9 +13,9 @@
   This example code is in the public domain.
 */
 
-#include <AutomationCarrier.h>
+#include <MachineControl.h>
 
-using namespace automation;
+using namespace machinecontrol;
 
 void setup() {
   //analog_out.period_ms(CHANNEL, PERIOD_MILLISECONDS);

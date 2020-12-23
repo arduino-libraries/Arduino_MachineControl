@@ -1,8 +1,8 @@
 /*
-  Automation Carrier - Analog in NTC Example
+  Machine Control - Analog in NTC Example
 
   This example provides the resistance value acquired by the
-  Automation Carrier. A 3V voltage reference is connected
+  Machine Control. A 3V voltage reference is connected
   to each channel of the ANALOG IN connector. The reference
   has a 100k resistor in series, so it can provide only a low
   current.
@@ -16,13 +16,13 @@
 
   The circuit:
    - Portenta H7
-   - Automation Carrier
+   - Machine Control
 
   This example code is in the public domain.
 */
-#include <AutomationCarrier.h>
+#include <MachineControl.h>
 
-using namespace automation;
+using namespace machinecontrol;
 
 #define REFERENCE_RES 100000
 

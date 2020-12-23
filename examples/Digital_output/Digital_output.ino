@@ -1,8 +1,8 @@
 /*
-  Automation Carrier - Digital Output Example
+  Machine Control - Digital Output Example
 
   This sketch shows how to send values on the
-  DIGITAL OUT channels on the Automation Carrier.
+  DIGITAL OUT channels on the Machine Control.
   Please remember that pin "24V IN" of the connector
   DIGITAL_OUTPUTS must be connected to 24V.
   The DIGITAL OUT channels are high side switches
@@ -22,14 +22,14 @@
   
   The circuit:
    - Portenta H7
-   - Automation Carrier
+   - Machine Control
 
   This example code is in the public domain.
 */
 
-#include <AutomationCarrier.h>
+#include <MachineControl.h>
 
-using namespace automation;
+using namespace machinecontrol;
 
 void setup() {
   Serial.begin(9600);

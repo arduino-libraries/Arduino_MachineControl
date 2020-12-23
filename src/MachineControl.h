@@ -1,5 +1,5 @@
-#ifndef __PORTENTA_MACHINE_CONTROL_H__
-#define __PORTENTA_MACHINE_CONTROL_H__
+#ifndef __MACHINE_CONTROL_H__
+#define __MACHINE_CONTROL_H__
 
 #include "utility/Adafruit_MAX31865/Adafruit_MAX31865.h"
 #include "utility/THERMOCOUPLE/MAX31855.h"
@@ -11,7 +11,7 @@
 #include "Arduino.h"
 #include "mbed.h"
 
-namespace automation {
+namespace machinecontrol {
 
 class RTDClass {
 public:

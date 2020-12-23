@@ -6,12 +6,12 @@
 
   Circuit:
    - Portenta H7
-   - Automation Carrier
+   - Machine Control
 
 */
-#include <AutomationCarrier.h>
+#include <MachineControl.h>
 #include <CAN.h>
-using namespace automation;
+using namespace machinecontrol;
 
 #define DATARATE_2MB     260000
 #define DATARATE_1_5MB   206000
