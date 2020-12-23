@@ -1,4 +1,4 @@
-= MachineControl Library for Arduino =
+= Machine Control Library for Arduino =
 
 Arduino Library for the Machine Control
 
