@@ -18,7 +18,7 @@ int hours = 12;
 int minutes = 45;
 int seconds = 57;
 
-void calback_alarm ();
+void callback_alarm();
 
 bool alarm_flag = false;
 
