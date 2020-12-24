@@ -47,7 +47,7 @@ void setup() {
   rtc_controller.setMinuteAlarm(46);
 
   // Attach an interrupt to the RTC interrupt pin
-  attachInterrupt(RTC_INT, calback_alarm, FALLING);
+  attachInterrupt(RTC_INT, callback_alarm, FALLING);
 
   Serial.println();
 }
@@ -59,7 +59,7 @@ void loop() {
     rtc_controller.setSeconds(seconds);
     rtc_controller.setMinuteAlarm(minutes + counter);
     rtc_controller.clearAlarm();
-    attachInterrupt(RTC_INT, calback_alarm, FALLING);
+    attachInterrupt(RTC_INT, callback_alarm, FALLING);
     alarm_flag = false;
 
     // To disable the alarm uncomment the following line:
@@ -76,6 +76,6 @@ void loop() {
   delay(1000);
 }
 
-void calback_alarm () {
+void callback_alarm () {
   alarm_flag = true;
 }
