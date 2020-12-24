@@ -57,11 +57,11 @@ enableAlarm	KEYWORD2
 disableAlarm	KEYWORD2
 clearAlarm	KEYWORD2
 setMinuteAlarm	KEYWORD2
-disaleMinuteAlarm	KEYWORD2
+disableMinuteAlarm	KEYWORD2
 setHourAlarm	KEYWORD2
-disaleHourAlarm	KEYWORD2
+disableHourAlarm	KEYWORD2
 setDayAlarm	KEYWORD2
-disaleDayAlarm	KEYWORD2
+disableDayAlarm	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
