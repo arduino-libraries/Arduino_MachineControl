@@ -43,7 +43,7 @@ void setup() {
   // Enables Alarm on PCF8563T
   rtc_controller.enableAlarm();
 
-  // set that minutes at which the alarm should rise
+  // set the minutes at which the alarm should rise
   rtc_controller.setMinuteAlarm(46);
 
   // Attach an interrupt to the RTC interrupt pin
