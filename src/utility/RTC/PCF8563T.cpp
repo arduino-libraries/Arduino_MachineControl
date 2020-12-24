@@ -213,7 +213,7 @@ void PCF8563TClass::setMinuteAlarm(uint8_t minutes) {
   writeByte(PCF8563T_MINUTE_ALARM_REG , min_alarm);
 }
 
-void PCF8563TClass::disaleMinuteAlarm() {
+void PCF8563TClass::disableMinuteAlarm() {
   writeByte(PCF8563T_MINUTE_ALARM_REG, readByte(PCF8563T_MINUTE_ALARM_REG) | PCF8563T_MINUTE_ALARM_AE_M_MASK);
 }
 
@@ -224,7 +224,7 @@ void PCF8563TClass::setHourAlarm(uint8_t hours) {
   writeByte(PCF8563T_HOURS_REG, hour_alarm); //check formula on datasheet val + 6 * (val / 10)
 }
 
-void PCF8563TClass::disaleHourAlarm() {
+void PCF8563TClass::disableHourAlarm() {
   writeByte(PCF8563T_HOUR_ALARM_REG, readByte(PCF8563T_HOUR_ALARM_REG) | PCF8563T_HOUR_ALARM_AE_H_MASK);
 }
 
@@ -235,7 +235,7 @@ void PCF8563TClass::setDayAlarm(uint8_t days) {
   writeByte(PCF8563T_DAY_ALARM_REG, day_alarm);
 }
 
-void PCF8563TClass::disaleDayAlarm() {
+void PCF8563TClass::disableDayAlarm() {
   writeByte(PCF8563T_DAY_ALARM_REG, readByte(PCF8563T_DAY_ALARM_REG) | PCF8563T_DAY_ALARM_AE_D_MASK );
 }
 
