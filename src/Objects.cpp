@@ -11,4 +11,5 @@ DigitalOutputsClass digital_outputs;
 ProgrammableDINClass digital_inputs;
 ProgrammableDIOClass digital_programmables;
 RtcControllerClass rtc_controller;
+USBClass usb_controller;
 }

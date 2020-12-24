@@ -7,9 +7,12 @@
 #include "utility/QEI/QEI.h"
 #include "utility/ioexpander/ArduinoIOExpander.h"
 #include "utility/RTC/PCF8563T.h"
+#include "utility/RTC/PCF8563T.h"
 
 #include "Arduino.h"
 #include "mbed.h"
+
+#include "USBHost.h"
 
 namespace machinecontrol {
 
@@ -484,6 +487,36 @@ private:
 
 extern RtcControllerClass rtc_controller;
 
-}
 
+
+class USBClass {
+public:
+	void init(const tusbh_class_reg_t *class_table) {
+		usb.Init(USB_CORE_ID_FS, class_table);
+	}
+
+	void powerEnable() {
+		power = 0;
+	}
+
+	void powerDisable() {
+		power = 1;
+	}
+
+	bool vflagRead() {
+		return usbflag;
+	}
+
+	USBHost usb;
+
+private:
+	mbed::DigitalOut power = mbed::DigitalOut(PB_14);
+	mbed::DigitalIn usbflag = mbed::DigitalIn(PB_15);
+};
+
+
+extern USBClass usb_controller;
+
+
+}
 #endif
