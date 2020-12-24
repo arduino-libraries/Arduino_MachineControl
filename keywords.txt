@@ -53,6 +53,16 @@ setRetry	KEYWORD2
 getMonths	KEYWORD2
 setMonths	KEYWORD2
 
+enableAlarm	KEYWORD2
+disableAlarm	KEYWORD2
+clearAlarm	KEYWORD2
+setMinuteAlarm	KEYWORD2
+disaleMinuteAlarm	KEYWORD2
+setHourAlarm	KEYWORD2
+disaleHourAlarm	KEYWORD2
+setDayAlarm	KEYWORD2
+disaleDayAlarm	KEYWORD2
+
 #######################################
 # Constants (LITERAL1)
 #######################################

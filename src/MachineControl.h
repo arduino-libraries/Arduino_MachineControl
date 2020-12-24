@@ -477,7 +477,7 @@ extern ProgrammableDINClass digital_inputs;
 
 class RtcControllerClass : public PCF8563TClass {
 public:
-	mbed::DigitalIn int_pin = mbed::DigitalIn(PB_9);
+	mbed::DigitalIn int_pin = mbed::DigitalIn(PB_9,PullUp);
 private:
 
 };

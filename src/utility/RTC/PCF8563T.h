@@ -22,8 +22,10 @@
 
 #include "Arduino.h"
 #include "mbed.h"
+#include "time.h"
+#include "mbed_mktime.h"
 #include "Wire.h"
-
+#define RTC_INT PB_9
 class PCF8563TClass {
 
 public:
@@ -42,6 +44,22 @@ public:
   uint8_t getHours();
   uint8_t getMinutes();
   uint8_t getSeconds();
+
+  void setEpoch();
+  void setEpoch(uint8_t years, uint8_t months, uint8_t days, uint8_t hours, uint8_t minutes, uint8_t seconds);
+  void setEpoch(time_t seconds);
+  time_t getEpoch();
+
+void enableAlarm();
+void disableAlarm();
+void clearAlarm();
+void setMinuteAlarm(uint8_t minutes);
+void disaleMinuteAlarm();
+void setHourAlarm(uint8_t hours);
+void disaleHourAlarm();
+void setDayAlarm(uint8_t days);
+void disaleDayAlarm();
+
 
 private:
   void writeByte(uint8_t regAddres, uint8_t data);
