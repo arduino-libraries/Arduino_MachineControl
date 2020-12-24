@@ -54,11 +54,11 @@ void enableAlarm();
 void disableAlarm();
 void clearAlarm();
 void setMinuteAlarm(uint8_t minutes);
-void disaleMinuteAlarm();
+void disableMinuteAlarm();
 void setHourAlarm(uint8_t hours);
-void disaleHourAlarm();
+void disableHourAlarm();
 void setDayAlarm(uint8_t days);
-void disaleDayAlarm();
+void disableDayAlarm();
 
 
 private:
