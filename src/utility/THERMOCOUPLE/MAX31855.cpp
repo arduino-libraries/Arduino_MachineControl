@@ -99,7 +99,6 @@ float MAX31855Class::readTemperature(int type)
     // conversion factor from K type to J type
     celsius = celsius * 4/5; 
   }
-    Serial.println(celsius);
   return celsius;
 }
 
