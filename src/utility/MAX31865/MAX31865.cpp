@@ -41,7 +41,7 @@ bool MAX31865Class::begin(int wires) {
   // disable bias
   writeByte(MAX31856_CONFIG_REG, readByte(MAX31856_CONFIG_REG) & MAX31856_CONFIG_BIAS_MASK);
 
-  // disable auto conver mode
+  // disable auto convert mode
   writeByte(MAX31856_CONFIG_REG, readByte(MAX31856_CONFIG_REG) & MAX31856_CONFIG_CONV_MODE_MASK);
 
   // clear fault
@@ -212,4 +212,3 @@ uint8_t buffer[2] = {addr, data};
 
   digitalWrite(_cs, HIGH);
 }
-
