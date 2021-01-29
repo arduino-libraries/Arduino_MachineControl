@@ -47,7 +47,7 @@ bool MAX31865Class::begin(int wires) {
   // clear fault
   writeByte(MAX31856_CONFIG_REG, (readByte(MAX31856_CONFIG_REG) & MAX31856_CONFIG_CLEAR_FAULT_CYCLE)| MAX31856_CONFIG_CLEAR_FAULT);
 
-  // set filtere frequency
+  // set filter frequency
   writeByte(MAX31856_CONFIG_REG, readByte(MAX31856_CONFIG_REG) & MAX31856_CONFIG_60_50_HZ_FILTER_MASK);
 
   return true;
