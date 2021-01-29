@@ -202,7 +202,7 @@ uint16_t MAX31865Class::readBytes(uint8_t addr) {
 
 void MAX31865Class::writeByte(uint8_t addr, uint8_t data) {
   addr |= 0x80; // make sure top bit is set
-uint8_t buffer[2] = {addr, data};
+  uint8_t buffer[2] = {addr, data};
   digitalWrite(_cs, LOW);
 
   _spi.beginTransaction(_spiSettings);
