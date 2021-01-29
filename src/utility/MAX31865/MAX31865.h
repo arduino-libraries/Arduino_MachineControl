@@ -49,7 +49,7 @@
 #define MAX31856_CONFIG_FAULT_DECT_CYCLE_MASK 0xF3
 #define MAX31856_CONFIG_CLEAR_FAULT_CYCLE 0xD3
 
-//confog fault status mask
+//config fault status mask
 #define MAX31856_CONFIG_FAULT_STATUS_MASK 0xFD
 #define MAX31856_CONFIG_CLEAR_FAULT 0x02
 
