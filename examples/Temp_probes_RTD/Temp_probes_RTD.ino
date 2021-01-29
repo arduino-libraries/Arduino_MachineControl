@@ -78,7 +78,7 @@ void loop() {
 
   // Check and print any faults
   fault = temp_probes.rtd.readFault();
- if (fault) {
+  if (fault) {
     Serial.print("Fault 0x"); Serial.println(fault, HEX);
     if (temp_probes.rtd.getHighThresholdFault(fault)) {
       Serial.println("RTD High Threshold");
