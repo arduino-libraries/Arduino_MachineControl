@@ -69,7 +69,7 @@ bool MAX31865Class::getHighThresholdFault(uint8_t fault) {
 }
 
 bool MAX31865Class::getLowThresholdFault(uint8_t fault) {
-  if (fault &fault & MAX31865_FAULT_LOW_THRESH) {
+  if (fault & MAX31865_FAULT_LOW_THRESH) {
     return true;
   }
   return false;
