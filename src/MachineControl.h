@@ -1,7 +1,7 @@
 #ifndef __MACHINE_CONTROL_H__
 #define __MACHINE_CONTROL_H__
 
-#include "utility/Adafruit_MAX31865/Adafruit_MAX31865.h"
+#include "utility/MAX31865/MAX31865.h"
 #include "utility/THERMOCOUPLE/MAX31855.h"
 #include "utility/RS485/RS485.h"
 #include "utility/QEI/QEI.h"
@@ -39,7 +39,7 @@ public:
 		digitalWrite(PI_0, HIGH);
 		digitalWrite(PA_6, HIGH);
 	}
-	Adafruit_MAX31865 rtd = Adafruit_MAX31865(PA_6);
+	MAX31865Class rtd = MAX31865Class(PA_6);
 	MAX31855Class tc = MAX31855Class(7);
 
 private:
