@@ -123,7 +123,7 @@ void RS485Class::endTransmission()
   _serial->flush();
 
   if (_dePin != NC) {
-    delayMicroseconds(50);
+    delayMicroseconds(500);
     digitalWrite(_dePin, LOW);
   }
 
