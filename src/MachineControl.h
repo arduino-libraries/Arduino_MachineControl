@@ -55,6 +55,12 @@ static 	mbed::CAN   _can(PB_8, PH_13);
 class COMMClass {
 public:
 	// to be tested: cjeck if can be made a big pin initialization
+
+	 /**
+	 * Shutdown RS485 and CAN LEDS
+	 * @param  none
+	 * @return void
+	 */
 	void init() {
 		//SHUTDOWN OF RS485 LEDS
 		digitalWrite(PA_0, LOW);
@@ -64,9 +70,25 @@ public:
 		digitalWrite(PH_13, LOW);
 	}
 
+	 /**
+	 * Set the CAN transciever in Normal mode. In this mode, the transceiver 
+	 * can transmit and receive data via the bus lines CANH and CANL.
+	 * @param  none
+	 * @return void
+	 */
 	void enableCAN() {
 		can_disable = 0;
 	}
+
+	 /**
+	 * Set the CAN transciever in standby (low power) mode. In this mode the
+	 * transceiver will not be able to transmit or correctly receive data via the bus lines.
+	 * The wake-up filter on the output of the low-power receiver does not latch bus dominant states,
+	 * but ensures that only bus dominant and bus recessive states that persist longer than tfltr(wake)
+	 * bus are reflected on pin RXD.
+	 * @param  none
+	 * @return void
+	 */
 	void disableCAN() {
 		can_disable = 1;
 	}
@@ -396,6 +418,12 @@ static QEI _enc_1(PC_13, PI_7, PJ_10, 0);
 
 class EncoderClass {
 public:
+	 /**
+	 * returns the encoder variable depending on the index
+	 * @param  index integer for selecting the encoder (0 or 1)
+	 * @return enc_0 for index = 0
+	 * 		   enc_1 for index = 1
+	 */
 	QEI& operator[](int index) {
 		switch (index) {
 			case 0:
@@ -491,18 +519,42 @@ extern RtcControllerClass rtc_controller;
 
 class USBClass {
 public:
+	/**
+	 * Configures the USB host by providing the list of callbacks to support the behaviour
+	 * of the host (keyboard, mouse, storage device etc)
+	 * 
+	 * @param  class_table a pointer to the structure containing the list of callbacks 
+	 * @return void
+	 */
 	void init(const tusbh_class_reg_t *class_table) {
 		usb.Init(USB_CORE_ID_FS, class_table);
 	}
 
+	/**
+	 * Enable power to USBA VBUS. 
+	 * @param  None
+	 * @return void
+	 */
 	void powerEnable() {
 		power = 0;
 	}
 
+	/**
+	 * Disable power to USBA VBUS.  
+	 * @param  None
+	 * @return void
+	 */
 	void powerDisable() {
 		power = 1;
 	}
 
+	/**
+	 * Flag to indicate overcurrent, overtemperature, or reverse−voltage conditions on the USBA VBUS. 	 
+	 * Active−low open−drain output.  
+	 * True if OK, False if fault.
+	 * @param  None
+	 * @return bool
+	 */
 	bool vflagRead() {
 		return usbflag;
 	}
