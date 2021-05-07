@@ -321,10 +321,7 @@ public:
 
 	~AnalogOutPWMClass(){}
 
-	 /**
-	 * Set the PWM period (frequency)
-	 * @param  period integer for selecting the period in ms
-	 */
+
 	void period_ms(int period) {
 		sConfig_time_base.Mode = HRTIM_MODE_CONTINUOUS;
 		sConfig_time_base.Period = period;
@@ -369,6 +366,12 @@ extern AnalogOutPWMClass analopwm;
 
 class AnalogOutClass {
 public:
+
+	 /**
+	 * Set output voltage value (PWM)
+	 * @param  index select channel
+	 * @param  voltage desired output voltage (max 10.5V)
+	 */
 	void write(int index, float voltage) {
 		if (voltage < 0) {
 			voltage = 0;
@@ -389,6 +392,12 @@ public:
 				break;
 		}
 	}
+
+	 /**
+	 * Set the PWM period (frequency)
+	 * @param  index select channel
+	 * @param  period integer for selecting the period in ms
+	 */
 	void period_ms(int index, uint8_t period) {
 		switch (index) {
 			case 0:
