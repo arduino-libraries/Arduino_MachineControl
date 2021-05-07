@@ -73,8 +73,6 @@ public:
 	 /**
 	 * Set the CAN transciever in Normal mode. In this mode, the transceiver 
 	 * can transmit and receive data via the bus lines CANH and CANL.
-	 * @param  none
-	 * @return void
 	 */
 	void enableCAN() {
 		can_disable = 0;
@@ -86,8 +84,6 @@ public:
 	 * The wake-up filter on the output of the low-power receiver does not latch bus dominant states,
 	 * but ensures that only bus dominant and bus recessive states that persist longer than tfltr(wake)
 	 * bus are reflected on pin RXD.
-	 * @param  none
-	 * @return void
 	 */
 	void disableCAN() {
 		can_disable = 1;
@@ -120,6 +116,12 @@ extern COMMClass comm_protocols;
 
 class AnalogInClass {
 public:
+
+	 /**
+	 * read the sampled voltage from the selected channel
+	 * @param  channel integer for selecting the analog input (0, 1 or 2)
+	 * @return the analog value between 0.0 and 1.0 normalized to a 16-bit value (uint16_t)
+	 */
 	uint16_t read(int channel) {
         uint16_t value = 0;
         switch (channel) {
@@ -139,6 +141,10 @@ public:
         return value;
     }
 
+	 /**
+	 * Configure the input resistor deviders to have a ratio of 0.28.
+	 * Maximum input voltage is 10V. 
+	 */
 	void set0_10V() {
 		ch0_in1 = 1;
 		ch0_in2 = 1;
@@ -156,6 +162,10 @@ public:
 		ch2_in4 = 1;
 	}
 
+	 /**
+	 * Enable a 120 ohm resitor to GND to convert the 4-20mA sensor currents to voltage. 
+	 * Note: 24V are available from the carrier to power the 4-20mA sensors.   
+	 */
 	void set4_20mA() {
 		ch0_in1 = 1;
 		ch0_in2 = 0;
@@ -173,6 +183,10 @@ public:
 		ch2_in4 = 0;
 	}
 
+	 /**
+	 * Enable a 100K resitor in series with the reference voltage.	 
+	 * The voltage sampled is the voltage division between the 100k resistor and the input resistor (NTC/PTC)  
+	 */
 	void setNTC() {
 		ch0_in1 = 0;
 		ch0_in2 = 0;
@@ -306,6 +320,11 @@ public:
 	}
 
 	~AnalogOutPWMClass(){}
+
+	 /**
+	 * Set the PWM period (frequency)
+	 * @param  period integer for selecting the period in ms
+	 */
 	void period_ms(int period) {
 		sConfig_time_base.Mode = HRTIM_MODE_CONTINUOUS;
 		sConfig_time_base.Period = period;
@@ -450,12 +469,28 @@ extern EncoderClass encoders;
 
 class ProgrammableDIOClass : public ArduinoIOExpanderClass {
 public:
+
+	/**
+	 * Test connection with the IOExpander and set all the pins to the default mode. 
+	 * @return True if OK, False if fault
+	 */
 	bool  init() {
 		return begin(IO_ADD);
 	}
+
+	/**
+	 * Configures the thermal shutdown of the high-side switches (TPS4H160) to operate in latch mode. 
+	 * The output latches off when thermal shutdown occurs. 
+	 */
 	void setLatch() {
 		prog_latch_retry = 0;
 	}
+
+	 /**
+	 * Configures the thermal shutdown of the high-side switches (TPS4H160) to operate in auto-retry mode. 
+	 * The output automatically recovers when TJ < T(SD) – T(hys), but the current is limited to ICL(TSD) 
+	 * to avoid repetitive thermal shutdown. 
+	 */
 	void setRetry() {
 		prog_latch_retry = 1;
 	}
@@ -468,18 +503,42 @@ extern ProgrammableDIOClass digital_programmables;
 
 class DigitalOutputsClass {
 public:
+
+	/**
+	 * Set all digital outputs at the same time. 
+	 * @param val 8 bit integer to set all 8 channels. e.g:
+	 * Set all to HIGH -> val = 255 (0b11111111)
+	 * Set all to LOW  -> val = 0   (0b00000000)
+	 */
 	void setAll(uint8_t val) {
 		for (int i = 0; i < 8; i++) {
 			out[i] = val & 0x1;
 			val = val >> 1;
 		}
 	}
+
+	 /**
+	 * Set a particular digital output
+	 * @param index digital output to be set
+	 * @param val set value (HIGH/LOW)
+	 */
 	void set(int index, bool val) {
 			out[index] = val;
 	}
+
+	/**
+	 * Configures the thermal shutdown of the high-side switches (TPS4H160) to operate in latch mode. 
+	 * The output latches off when thermal shutdown occurs. 
+	 */
 	void setLatch() {
 		dig_out_latch_retry = 0;
 	}
+
+	 /**
+	 * Configures the thermal shutdown of the high-side switches (TPS4H160) to operate in auto-retry mode. 
+	 * The output automatically recovers when TJ < T(SD) – T(hys), but the current is limited to ICL(TSD) 
+	 * to avoid repetitive thermal shutdown. 
+	 */
 	void setRetry() {
 		dig_out_latch_retry = 1;
 	}
@@ -498,6 +557,10 @@ extern DigitalOutputsClass digital_outputs;
 
 class ProgrammableDINClass : public ArduinoIOExpanderClass {
 public:
+	/**
+	 * Test connection with the IOExpander and set all the pins to the default mode. 
+	 * @return True if OK, False if fault
+	 */
 	bool init() {
 		return begin(DIN_ADD);
 	}
@@ -524,7 +587,6 @@ public:
 	 * of the host (keyboard, mouse, storage device etc)
 	 * 
 	 * @param  class_table a pointer to the structure containing the list of callbacks 
-	 * @return void
 	 */
 	void init(const tusbh_class_reg_t *class_table) {
 		usb.Init(USB_CORE_ID_FS, class_table);
@@ -532,8 +594,6 @@ public:
 
 	/**
 	 * Enable power to USBA VBUS. 
-	 * @param  None
-	 * @return void
 	 */
 	void powerEnable() {
 		power = 0;
@@ -541,8 +601,6 @@ public:
 
 	/**
 	 * Disable power to USBA VBUS.  
-	 * @param  None
-	 * @return void
 	 */
 	void powerDisable() {
 		power = 1;
@@ -550,10 +608,8 @@ public:
 
 	/**
 	 * Flag to indicate overcurrent, overtemperature, or reverse−voltage conditions on the USBA VBUS. 	 
-	 * Active−low open−drain output.  
-	 * True if OK, False if fault.
-	 * @param  None
-	 * @return bool
+	 * Active−low open−drain output.
+	 * @return True if OK, False if fault
 	 */
 	bool vflagRead() {
 		return usbflag;
