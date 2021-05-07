@@ -19,43 +19,49 @@ using namespace machinecontrol;
 
 unsigned long counter = 0;
 
-void setup() {
+void setup()
+{
 
-  Serial.begin(9600);
-  while (!Serial) {
-    ; // wait for serial port to connect.
-  }
-  Serial.println("Start RS485 initialization");
+    Serial.begin(115200);
+    while (!Serial) {
+        ; // wait for serial port to connect.
+    }
+    delay(1000);
+    Serial.println("Start RS485 initialization");
 
-  // Initialize the serial interface, enable the 
-  // RS485 on SP335ECR1 and set as full duplex 
-  comm_protocols.rs485.begin(9600);
-  comm_protocols.rs485.enable = 1;
-  comm_protocols.rs485.sel_485 = 1;
-  comm_protocols.rs485.half_duplex = 0;
+    comm_protocols.rs485.begin(115200);
+    comm_protocols.rs485.enable = 1;        // SDHN_N
+    comm_protocols.rs485.sel_485 = 1;       // RS485_RS232_N
+    comm_protocols.rs485.half_duplex = 0;   // HALF_FULL_N
+    comm_protocols.rs485.receive();         // RE_N
+    comm_protocols.rs485.fd_tx_term = 1;    // FD_TX_TERM - 120 Ohm Y-Z termination enabled when both TERM and FD_TX_TERM are high
+    comm_protocols.rs485.term = 1;          // TERM - 120 Ohm A-B termination enabled when high
 
-  Serial.println("Initialization done!");
+    Serial.println("Initialization done!");
 }
 
+constexpr unsigned long sendInterval { 1000 };
+unsigned long sendNow { 0 };
 
-void loop() {
-  // Call receive(); sets the flux control pins properly
-  // and allows receiving data if available
-  comm_protocols.rs485.receive();
-  if (comm_protocols.rs485.available()) {
-    Serial.print("read byte: ");
-    Serial.write(comm_protocols.rs485.read());
-    Serial.println();
-  }
-  // Call beginTransmission(); sets the flux control pins properly
-  // and allows starting a trasnsmission.
-  // If instead of a string, you want
-  // to send bytes, use the API write();
-  comm_protocols.rs485.beginTransmission();
-  comm_protocols.rs485.print("hello ");
-  comm_protocols.rs485.println(counter);
-  comm_protocols.rs485.endTransmission();
-  counter++;
+constexpr unsigned long halfFullInterval { 5000 };
+unsigned long halfFull { 0 };
+byte halfFullStatus { 0 };
 
-  delay(1000);
+void loop()
+{
+    while (comm_protocols.rs485.available())
+        Serial.write(comm_protocols.rs485.read());
+
+    if (millis() > sendNow) {
+        comm_protocols.rs485.noReceive();
+        comm_protocols.rs485.beginTransmission();
+
+        comm_protocols.rs485.print("hello ");
+        comm_protocols.rs485.println(counter++);
+
+        comm_protocols.rs485.endTransmission();
+        comm_protocols.rs485.receive();
+
+        sendNow = millis() + sendInterval;
+    }
 }

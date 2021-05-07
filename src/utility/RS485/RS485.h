@@ -50,7 +50,7 @@ class RS485Class : public HardwareSerial {
 
     void setPins(PinName txPin, PinName dePin, PinName rePin);
 
-    mbed::DigitalOut half_duplex = mbed::DigitalOut(PA_9);
+    mbed::DigitalInOut half_duplex = mbed::DigitalInOut(PA_9);
     mbed::DigitalOut sel_485 = mbed::DigitalOut(PA_10);
     mbed::DigitalOut slew_n = mbed::DigitalOut(PG_14);
     mbed::DigitalOut fd_tx_term = mbed::DigitalOut(PI_15);

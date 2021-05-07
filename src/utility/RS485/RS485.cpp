@@ -50,6 +50,8 @@ void RS485Class::begin(unsigned long baudrate, uint16_t config)
 
   _transmisionBegun = false;
 
+  half_duplex.output();
+
   _serial->begin(baudrate, config);
 }
 
@@ -123,7 +125,7 @@ void RS485Class::endTransmission()
   _serial->flush();
 
   if (_dePin != NC) {
-    delayMicroseconds(50);
+    delayMicroseconds(500);
     digitalWrite(_dePin, LOW);
   }
 
