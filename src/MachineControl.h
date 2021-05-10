@@ -18,23 +18,44 @@ namespace machinecontrol {
 
 class RTDClass {
 public:
+
+	/*
+	*  Set the channel to allocate the reads
+	*  
+	*  @param channel (0-2)
+	*/   
 	void selectChannel(int channel) {
 		for (int i=0; i<3; i++) {
 			ch_sel[i] = (i == channel ? 1 : 0);
 		}
 		delay(150);
 	}
+
+	/*
+	*  Enable Thermo Couple
+	*  
+	*/   
 	void enableTC() {
 		rtd_th = 0;
 		digitalWrite(PI_0, LOW);
 		digitalWrite(PA_6, HIGH);
 	}
+
+	/*
+	*  Enable RTD
+	*  
+	*/   
 	void enableRTD() {
 		rtd_th = 1;
 		digitalWrite(PI_0, HIGH);
 		digitalWrite(PA_6, LOW);
 
 	}
+
+	/*
+	*  Disable Chip Select, RTD and TC turned off
+	*  
+	*/   
 	void disableCS() {
 		digitalWrite(PI_0, HIGH);
 		digitalWrite(PA_6, HIGH);
