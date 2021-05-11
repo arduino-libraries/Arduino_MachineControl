@@ -13,10 +13,10 @@
 #include <CAN.h>
 using namespace machinecontrol;
 
-#define DATARATE_2MB     260000
-#define DATARATE_1_5MB   206000
-#define DATARATE_1MB     125000
-#define DATARATE_800KB   100000
+#define DATARATE_2MB     2000000
+#define DATARATE_1_5MB   1500000
+#define DATARATE_1MB     1000000
+#define DATARATE_800KB   800000
 
 
 void setup() {
