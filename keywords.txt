@@ -4,7 +4,7 @@
 # Class (KEYWORD1)
 #######################################
 
-MachineControl	KEYWORD1
+Arduino_MachineControl	KEYWORD1
 machinecontrol	KEYWORD1
 temp_probes	KEYWORD1
 comm_protocols	KEYWORD1

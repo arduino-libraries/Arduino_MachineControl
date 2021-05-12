@@ -10,7 +10,7 @@
 
   This example code is in the public domain.
 */
-#include <MachineControl.h>
+#include <Arduino_MachineControl.h>
 #include "Wire.h"
 
 using namespace machinecontrol;

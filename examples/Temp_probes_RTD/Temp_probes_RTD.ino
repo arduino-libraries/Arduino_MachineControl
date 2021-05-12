@@ -14,7 +14,7 @@
    - 3-wire RTD or 2-wire RTD
 */
 
-#include <MachineControl.h>
+#include <Arduino_MachineControl.h>
 
 using namespace machinecontrol;
 
