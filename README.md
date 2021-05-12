@@ -1,5 +1,7 @@
 = Machine Control Library for Arduino =
 
+[![Compile Examples status](https://github.com/arduino-libraries/AutomationCarrierLibrary/actions/workflows/compile-examples.yml/badge.svg)](https://github.com/arduino-libraries/AutomationCarrierLibrary/actions/workflows/compile-examples.yml)
+
 Arduino Library for the Machine Control
 
 For more information about this library please visit us at https://www.arduino.cc/en/Reference/MachineControl
