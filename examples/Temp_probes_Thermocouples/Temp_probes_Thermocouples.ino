@@ -31,7 +31,7 @@ void setup() {
 }
 
 void loop() {
-  //Set CH0, has internal 150ms delay
+  //Set CH0, has internal 150 ms delay
   temp_probes.selectChannel(0);
   //Take CH0 measurement
   float temp_ch0 = temp_probes.tc.readTemperature();
@@ -39,7 +39,7 @@ void loop() {
   Serial.print(temp_ch0);
   Serial.println();
 
-  //Set CH1, has internal 150ms delay
+  //Set CH1, has internal 150 ms delay
   temp_probes.selectChannel(1);
   //Take CH1 measurement
   float temp_ch1 = temp_probes.tc.readTemperature();
@@ -47,7 +47,7 @@ void loop() {
   Serial.print(temp_ch1);
   Serial.println();
  
-  //Set CH2, has internal 150ms delay
+  //Set CH2, has internal 150 ms delay
   temp_probes.selectChannel(2);
   //Take CH2 measurement
   float temp_ch2 = temp_probes.tc.readTemperature();

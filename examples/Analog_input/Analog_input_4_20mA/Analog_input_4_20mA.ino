@@ -3,7 +3,7 @@
 
   This example provides the current value acquired by the
   Machine Control. For each channel of the ANALOG IN
-   connector, there is a 120 ohm resistor to GND. The current
+  connector, there is a 120 ohm resistor to GND. The current
   of the 4-20mA sensor flows through it, generating a voltage
   which is sampled by the Portenta's ADC.
   To use the 4-20mA functionality, a 24V supply on

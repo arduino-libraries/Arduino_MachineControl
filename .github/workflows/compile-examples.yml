@@ -4,11 +4,13 @@ on:
   pull_request:
     paths:
       - ".github/workflows/compile-examples.yml"
+      - "library.properties"
       - "src/**"
       - "examples/**"
   push:
     paths:
       - ".github/workflows/compile-examples.yml"
+      - "library.properties"
       - "src/**"
       - "examples/**"
   # Scheduled trigger checks for breakage caused by changes to external resources (libraries, platforms)
@@ -30,42 +32,16 @@ jobs:
   compile-examples:
     runs-on: ubuntu-latest
 
-    env:
-      ARDUINOCORE_MBED_STAGING_PATH: extras/ArduinoCore-mbed
-      ARDUINOCORE_API_STAGING_PATH: extras/ArduinoCore-API
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # It's necessary to checkout the platform before installing it so that the ArduinoCore-API dependency can be added
-      - name: Checkout ArduinoCore-mbed
-        uses: actions/checkout@v2
-        with:
-          repository: arduino/ArduinoCore-mbed
-          # The arduino/actions/libraries/compile-examples action will install the platform from this path
-          path: ${{ env.ARDUINOCORE_MBED_STAGING_PATH }}
-
-      - name: Checkout ArduinoCore-API
-        uses: actions/checkout@v2
-        with:
-          repository: arduino/ArduinoCore-API
-          path: ${{ env.ARDUINOCORE_API_STAGING_PATH }}
-
-      - name: Install ArduinoCore-API
-        run: |
-          mv "${{ env.ARDUINOCORE_API_STAGING_PATH }}/api" "${{ env.ARDUINOCORE_MBED_STAGING_PATH }}/cores/arduino"
-
       - name: Compile example sketches
-        uses: arduino/compile-sketches@main
+        uses: arduino/compile-sketches@v1
         with:
-          fqbn: arduino:mbed:envie_m7
+          fqbn: arduino:mbed_portenta:envie_m7
           platforms: |
-            # Install Arduino mbed-Enabled Boards via Boards Manager for the toolchain
-            - name: arduino:mbed
-            # Overwrite the Arduino mbed-Enabled Boards release version with version from the tip of the master branch (located in local path because of the need to first install ArduinoCore-API)
-            - source-path: extras/ArduinoCore-mbed
-              name: arduino:mbed
+            - name: arduino:mbed_portenta
           enable-deltas-report: true
           enable-warnings-report: true
           sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}
@@ -74,21 +50,27 @@ jobs:
       - name: Save memory usage change report as artifact
         uses: actions/upload-artifact@v2
         with:
+          if-no-files-found: error
           path: ${{ env.SKETCHES_REPORTS_PATH }}
           name: ${{ env.SKETCHES_REPORTS_ARTIFACT_NAME }}
 
   report:
     needs: compile-examples
     # Only run the job when the workflow is triggered by a pull request from this repository (because arduino/report-size-deltas requires write permissions)
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    if: always() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - name: Download sketches reports artifact
+        id: download-artifact
+        continue-on-error: true # If compilation failed for all boards then there are no artifacts
         uses: actions/download-artifact@v2
         with:
           name: ${{ env.SKETCHES_REPORTS_ARTIFACT_NAME }}
           path: ${{ env.SKETCHES_REPORTS_PATH }}
 
-      - uses: arduino/report-size-deltas@main
+      - name: Comment size deltas report to PR
+        uses: arduino/report-size-deltas@v1
+        # If actions/download-artifact failed, there are no artifacts to report from.
+        if: steps.download-artifact.outcome == 'success'
         with:
           sketches-reports-source: ${{ env.SKETCHES_REPORTS_PATH }}

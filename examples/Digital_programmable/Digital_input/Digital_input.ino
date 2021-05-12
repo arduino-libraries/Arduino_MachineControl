@@ -18,7 +18,7 @@ using namespace machinecontrol;
 
 void setup() {
   Serial.begin(9600);
-  //The loop starts only when the serial monitor is opened.
+  //The loop starts only when the Serial Monitor is opened.
   while(!Serial);
   Wire.begin();
 

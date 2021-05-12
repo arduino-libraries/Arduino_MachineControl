@@ -36,7 +36,7 @@ void setup() {
 
   Serial.println("Initialization Done!");
 
-  // APIs to set date's fields:hours, minutes and seconds
+  // APIs to set date's fields: hours, minutes and seconds
   rtc_controller.setHours(hours);
   rtc_controller.setMinutes(minutes);
   rtc_controller.setSeconds(seconds);

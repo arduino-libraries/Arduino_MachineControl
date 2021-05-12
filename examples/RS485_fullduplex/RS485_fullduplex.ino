@@ -9,7 +9,7 @@
   Circuit:
    - Portenta H7
    - Machine Control
-   - A Slave device with RS485 inteface
+   - A Slave device with RS485 interface
 
 */
 
@@ -34,8 +34,8 @@ void setup()
     comm_protocols.rs485.sel_485 = 1;       // RS485_RS232_N
     comm_protocols.rs485.half_duplex = 0;   // HALF_FULL_N
     comm_protocols.rs485.receive();         // RE_N
-    comm_protocols.rs485.fd_tx_term = 1;    // FD_TX_TERM - 120 Ohm Y-Z termination enabled when both TERM and FD_TX_TERM are high
-    comm_protocols.rs485.term = 1;          // TERM - 120 Ohm A-B termination enabled when high
+    comm_protocols.rs485.fd_tx_term = 1;    // FD_TX_TERM - 120 ohm Y-Z termination enabled when both TERM and FD_TX_TERM are high
+    comm_protocols.rs485.term = 1;          // TERM - 120 ohm A-B termination enabled when high
 
     Serial.println("Initialization done!");
 }

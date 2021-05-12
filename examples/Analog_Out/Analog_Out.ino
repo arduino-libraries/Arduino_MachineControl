@@ -45,7 +45,7 @@ void loop() {
   if (counter >= 10.5)
   {
     counter = 0;
-    //Additional 100ms delay introduced to manage 10.5V -> 0V fall time of 150ms
+    //Additional 100 ms delay introduced to manage 10.5V -> 0V fall time of 150 ms
     delay(100);
   }
   delay(100);
