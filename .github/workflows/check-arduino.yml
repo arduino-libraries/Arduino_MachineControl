@@ -22,7 +22,7 @@ jobs:
         uses: arduino/arduino-lint-action@v1
         with:
           compliance: strict
-          library-manager: submit
+          library-manager: update
           # Always use this setting for official repositories. Remove for 3rd party projects.
           official: true
           project-type: library
