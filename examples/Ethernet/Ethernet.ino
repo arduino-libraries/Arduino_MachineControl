@@ -4,8 +4,6 @@ EthernetInterface net;
 void setup() {
 
   /* ETH */
-  mbed::Watchdog::get_instance().start(10000);
-
   int retry_count = 0;
   eth_restart:
   net.set_blocking(false);
@@ -13,7 +11,6 @@ void setup() {
   int start = millis();
   while ((millis() - start < 20000) && (net.get_connection_status() != NSAPI_STATUS_GLOBAL_UP)) {
     delay(10);
-    mbed::Watchdog::get_instance().kick();
   }
   if (net.get_connection_status() != NSAPI_STATUS_GLOBAL_UP && retry_count++ < 2) {
     net.disconnect();
