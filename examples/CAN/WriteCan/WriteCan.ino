@@ -9,7 +9,7 @@
    - Machine Control
 
 */
-#include <MachineControl.h>
+#include <Arduino_MachineControl.h>
 #include <CAN.h>
 using namespace machinecontrol;
 

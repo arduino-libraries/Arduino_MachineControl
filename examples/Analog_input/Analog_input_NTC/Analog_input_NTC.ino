@@ -20,7 +20,7 @@
 
   This example code is in the public domain.
 */
-#include <MachineControl.h>
+#include <Arduino_MachineControl.h>
 
 using namespace machinecontrol;
 

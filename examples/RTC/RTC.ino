@@ -10,7 +10,7 @@
    - Machine Control
 
 */
-#include <MachineControl.h>
+#include <Arduino_MachineControl.h>
 
 using namespace machinecontrol;
 
