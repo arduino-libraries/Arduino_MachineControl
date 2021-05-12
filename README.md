@@ -1,8 +1,8 @@
 # Machine Control Library for Arduino
 
-[![Check Arduino](https://github.com/bcmi-labs/Arduino_MachineControl/actions/workflows/check-arduino.yml/badge.svg)](https://github.com/bcmi-labs/Arduino_MachineControl/actions/workflows/check-arduino.yml)
-[![Compile Examples](https://github.com/bcmi-labs/Arduino_MachineControl/actions/workflows/compile-examples.yml/badge.svg)](https://github.com/bcmi-labs/Arduino_MachineControl/actions/workflows/compile-examples.yml)
-[![Spell Check](https://github.com/bcmi-labs/Arduino_MachineControl/actions/workflows/spell-check.yml/badge.svg)](https://github.com/bcmi-labs/Arduino_MachineControl/actions/workflows/spell-check.yml)
+[![Check Arduino status](https://github.com/arduino-libraries/Arduino_MachineControl/actions/workflows/check-arduino.yml/badge.svg)](https://github.com/arduino-libraries/Arduino_MachineControl/actions/workflows/check-arduino.yml)
+[![Compile Examples status](https://github.com/arduino-libraries/Arduino_MachineControl/actions/workflows/compile-examples.yml/badge.svg)](https://github.com/arduino-libraries/Arduino_MachineControl/actions/workflows/compile-examples.yml)
+[![Spell Check status](https://github.com/arduino-libraries/Arduino_MachineControl/actions/workflows/spell-check.yml/badge.svg)](https://github.com/arduino-libraries/Arduino_MachineControl/actions/workflows/spell-check.yml)
 
 Arduino Library for the Machine Control
 
