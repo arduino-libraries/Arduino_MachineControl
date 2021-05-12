@@ -59,7 +59,7 @@ jobs:
           mv "${{ env.ARDUINOCORE_API_STAGING_PATH }}/api" "${{ env.ARDUINOCORE_MBED_STAGING_PATH }}/cores/arduino"
 
       - name: Compile example sketches
-        uses: arduino/compile-sketches@main
+        uses: arduino/compile-sketches@v1
         with:
           fqbn: arduino:mbed:envie_m7
           platforms: |
@@ -91,6 +91,6 @@ jobs:
           name: ${{ env.SKETCHES_REPORTS_ARTIFACT_NAME }}
           path: ${{ env.SKETCHES_REPORTS_PATH }}
 
-      - uses: arduino/report-size-deltas@main
+      - uses: arduino/report-size-deltas@v1
         with:
           sketches-reports-source: ${{ env.SKETCHES_REPORTS_PATH }}
