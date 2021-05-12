@@ -13,11 +13,11 @@
   different behaviors, and it is the same for all channels:
     1) Latch mode: when the over current is detected
        the channel is opened, and will remain opened until
-       it will be toggle via software.
+       it is toggled via software.
     2) Auto retry: when the over current is detected
-       the channel is openend, but after some tents of
+       the channel is opened, but after some tens of
        milliseconds the channel will automatically try
-       to close itself again. In case of a persistant
+       to close itself again. In case of a persistent
        overcurrent the channel will continuously toggle.
   
   The circuit:
@@ -33,7 +33,7 @@ using namespace machinecontrol;
 
 void setup() {
   Serial.begin(9600);
-  // The loop starts only when the serial monitor is opened.
+  // The loop starts only when the Serial Monitor is opened.
   while (!Serial);
 
   //Set over current behavior of all channels to latch mode:
@@ -53,7 +53,7 @@ void loop() {
   
   // Set all channels to CLOSED
   digital_outputs.setAll(255);
-  Serial.print("All channels are CLOSED for 1s...");
+  Serial.print("All channels are CLOSED for 1 s...");
   delay(1000);
   
   // Set all channels to OPEN
@@ -61,52 +61,52 @@ void loop() {
   Serial.println("now they are OPEN.");
   delay(1000);
 
-  // Toggle each channel for 1s, one by one
+  // Toggle each channel for 1 s, one by one
   
   digital_outputs.set(0, HIGH);
-  Serial.print("CH0 is CLOSED for 1s...");
+  Serial.print("CH0 is CLOSED for 1 s...");
   delay(1000);
   digital_outputs.set(0, LOW);
   Serial.println("now is OPEN.");
 
   digital_outputs.set(1, HIGH);
-  Serial.print("CH1 is CLOSED for 1s...");
+  Serial.print("CH1 is CLOSED for 1 s...");
   delay(1000);
   digital_outputs.set(1, LOW);
   Serial.println("now is OPEN.");
 
   digital_outputs.set(2, HIGH);
-  Serial.print("CH2 is CLOSED for 1s...");
+  Serial.print("CH2 is CLOSED for 1 s...");
   delay(1000);
   digital_outputs.set(2, LOW);
   Serial.println("now is OPEN.");
 
   digital_outputs.set(3, HIGH);
-  Serial.print("CH3 is CLOSED for 1s...");
+  Serial.print("CH3 is CLOSED for 1 s...");
   delay(1000);
   digital_outputs.set(3, LOW);
   Serial.println("now is OPEN.");
 
   digital_outputs.set(4, HIGH);
-  Serial.print("CH4 is CLOSED for 1s...");
+  Serial.print("CH4 is CLOSED for 1 s...");
   delay(1000);
   digital_outputs.set(4, LOW);
   Serial.println("now is OPEN.");
 
   digital_outputs.set(5, HIGH);
-  Serial.print("CH5 is CLOSED for 1s...");
+  Serial.print("CH5 is CLOSED for 1 s...");
   delay(1000);
   digital_outputs.set(5, LOW);
   Serial.println("now is OPEN.");
 
   digital_outputs.set(6, HIGH);
-  Serial.print("CH6 is CLOSED for 1s...");
+  Serial.print("CH6 is CLOSED for 1 s...");
   delay(1000);
   digital_outputs.set(6, LOW);
   Serial.println("now is OPEN.");
 
   digital_outputs.set(7, HIGH);
-  Serial.print("CH7 is CLOSED for 1s...");
+  Serial.print("CH7 is CLOSED for 1 s...");
   delay(1000);
   digital_outputs.set(7, LOW);
   Serial.println("now is OPEN.");

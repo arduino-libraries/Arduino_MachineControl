@@ -28,7 +28,7 @@
 #define PCF8563T_MONTHS_REG     0x07
 #define PCF8563T_YEARS_REG      0x08
 
-// allarm managemet
+// allarm management
 #define PCF8563T_MINUTE_ALARM_REG 0x09
 #define PCF8563T_MINUTE_ALARM_AE_M_MASK 0x80
 #define PCF8563T_MINUTE_ALARM_ON 0x7F

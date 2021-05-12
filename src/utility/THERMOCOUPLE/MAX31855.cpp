@@ -84,7 +84,7 @@ float MAX31855Class::readTemperature(int type)
     return NAN; 
   }
   // The temperature is stored in the last 14 word's bits 
-  // sendend by the Thermocouple-to-Digital Converter
+  // sent by the Thermocouple-to-Digital Converter
   if (rawword & 0x80000000) {
     // Negative value, drop the lower 18 bits and explicitly extend sign bits.
     rawword = 0xFFFFC000 | ((rawword >> 18) & 0x00003FFFF);
@@ -113,7 +113,7 @@ float MAX31855Class::readReferenceTemperature(int type)
   rawword >>= 4;
 
   // The cold junction reference temperature is stored in the first 11 word's bits
-  // sendend by the Thermocouple-to-Digital Converter
+  // sent by the Thermocouple-to-Digital Converter
   rawword = rawword & 0x7FF;
   // check sign bit  and convert to negative value.
   if (rawword & 0x800) {
