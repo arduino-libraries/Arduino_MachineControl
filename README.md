@@ -6,7 +6,7 @@
 
 Arduino Library for the Machine Control
 
-For more information about this library please visit us at https://www.arduino.cc/en/Reference/MachineControl
+For more information about this library please visit us at https://www.arduino.cc/en/Reference/Arduino_MachineControl
 
 
 == License ==
