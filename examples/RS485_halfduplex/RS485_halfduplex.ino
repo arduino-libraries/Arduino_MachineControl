@@ -1,8 +1,8 @@
 /*
-  RS485 Full duplex communication
+  RS485 Half Duplex communication
 
   This sketch shows how to use the SP335ECR1 on the Machine
-  Control as a full duplex (AB and YZ) RS485 interface, how to periodically
+  Control as a half duplex (AB) RS485 interface, how to periodically
   send a string on the RS485 TX channel and how to receive data
   from the interface RX channel.
 
@@ -11,7 +11,6 @@
    - Machine Control
    - A Slave device with RS485 interface
    - Connect TXP to A(+) and TXN to B(-)
-   - Connect RXP to Y(+) and RXN to Z(-)
 
 */
 
@@ -21,20 +20,23 @@ using namespace machinecontrol;
 
 constexpr unsigned long sendInterval { 1000 };
 unsigned long sendNow { 0 };
-unsigned long counter = 0;
+
+unsigned long counter { 0 };
 
 void setup()
 {
 
     Serial.begin(115200);
-    while (!Serial) {
-        ; // wait for serial port to connect.
-    }
-    delay(1000);
+    // Wait for Serial or start after 2.5s
+    for (auto const timeout = millis() + 2500; !Serial && timeout < millis(); delay(500))
+        ;
+
+    delay(2500);
     Serial.println("Start RS485 initialization");
 
     // Set the PMC Communication Protocols to default config
     comm_protocols.init();
+
     // RS485/RS232 default config is:
     // - RS485 mode
     // - Half Duplex
@@ -43,16 +45,10 @@ void setup()
     // Enable the RS485/RS232 system
     comm_protocols.rs485Enable(true);
 
-    // Enable Full Duplex mode
-    // This will also enable A/B and Y/Z 120 Ohm termination resistors
-    comm_protocols.rs485FullDuplex(true);
-    
     // Specify baudrate, and preamble and postamble times for RS485 communication
     comm_protocols.rs485.begin(115200, 0, 500);
-    
     // Start in receive mode
     comm_protocols.rs485.receive();
-    
 
     Serial.println("Initialization done!");
 }
@@ -72,7 +68,7 @@ void loop()
         comm_protocols.rs485.println(counter++);
 
         comm_protocols.rs485.endTransmission();
-        
+
         // Re-enable receive mode after transmission
         comm_protocols.rs485.receive();
 

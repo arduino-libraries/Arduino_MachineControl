@@ -3,13 +3,14 @@
 
 #include "utility/MAX31865/MAX31865.h"
 #include "utility/THERMOCOUPLE/MAX31855.h"
-#include "utility/RS485/RS485.h"
+#include <ArduinoRS485.h>
 #include "utility/QEI/QEI.h"
 #include "utility/ioexpander/ArduinoIOExpander.h"
 #include "utility/RTC/PCF8563T.h"
 #include "utility/RTC/PCF8563T.h"
 
 #include "Arduino.h"
+#include "pinDefinitions.h"
 #include "mbed.h"
 
 #include "USBHost.h"
@@ -57,11 +58,19 @@ public:
 	// to be tested: check if can be made a big pin initialization
 	void init() {
 		//SHUTDOWN OF RS485 LEDS
-		digitalWrite(PA_0, LOW);
-		digitalWrite(PI_9, LOW);
+		digitalWrite(PinNameToIndex(PA_0), LOW);
+		digitalWrite(PinNameToIndex(PI_9), LOW);
 		//SHUTDOWN OF CAN LEDS
-		digitalWrite(PB_8, LOW);
-		digitalWrite(PH_13, LOW);
+		digitalWrite(PinNameToIndex(PB_8), LOW);
+		digitalWrite(PinNameToIndex(PH_13), LOW);
+
+		// SET DEFAULTS for RS485
+		rs485Enable(false);
+		rs485ModeRS232(false);
+		rs485FullDuplex(false);
+		rs485YZTerm(false);
+		rs485ABTerm(false);
+		rs485Slew(false);
 	}
 
 	void enableCAN() {
@@ -74,11 +83,24 @@ public:
 	UART _UART4_ = arduino::UART(PA_0, PI_9, NC, NC);
 	mbed::CAN& can = _can;
 
-	RS485Class rs485 = RS485Class(_UART4_,PA_0, PI_13,PI_10);
+	RS485Class rs485 = RS485Class(_UART4_, PinNameToIndex(PA_0), PinNameToIndex(PI_13), PinNameToIndex(PI_10));
+
+	void rs485Enable(bool enable) 		{ digitalWrite(PinNameToIndex(PG_9),  enable ? 	HIGH : LOW); }
+	void rs485ModeRS232(bool enable) 	{ digitalWrite(PinNameToIndex(PA_10), enable ? 	LOW : HIGH); }
+	void rs485YZTerm(bool enable) 		{ digitalWrite(PinNameToIndex(PI_15), enable ? 	HIGH : LOW); }
+	void rs485ABTerm(bool enable) 		{ digitalWrite(PinNameToIndex(PI_14), enable ? 	HIGH : LOW); }
+    void rs485Slew(bool enable)  		{ digitalWrite(PinNameToIndex(PG_14), enable ? 	LOW : HIGH); }
+	void rs485FullDuplex(bool enable) 	{
+		digitalWrite(PinNameToIndex(PA_9), enable ? LOW : HIGH);
+		if (enable) {
+			// RS485 Full Duplex require YZ and AB 120 Ohm termination enabled
+			rs485YZTerm(true);
+			rs485ABTerm(true);
+		}
+	}
+
 private:
 	mbed::DigitalOut can_disable = mbed::DigitalOut(PA_13, 0);
-
-
 };
 
 extern COMMClass comm_protocols;
