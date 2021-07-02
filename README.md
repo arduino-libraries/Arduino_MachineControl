@@ -8,7 +8,7 @@ Arduino Library for the Portenta Machine Control
 
 The Portenta Machine Control enhances existing products with minimal effort, allowing companies to implement a standard platform across different equipment models. It is now easy to create an infrastructure of interconnected machines, which can be controlled onsite or via the cloud when needed; moreover, human-machine interaction can be further enahnced via mobile apps thanks to BLE connectivity.
 
-For more information about this library please visit us at https://www.arduino.cc/en/Reference/Arduino_MachineControl
+For more information about this library please visit us at https://www.arduino.cc/reference/en/libraries/arduino_machinecontrol/
 For more information about this product: https://www.arduino.cc/pro/hardware/product/portenta-machine-control
 
 ## License
