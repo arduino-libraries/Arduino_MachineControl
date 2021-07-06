@@ -16,25 +16,50 @@
 
 namespace machinecontrol {
 
+/**
+ * The RTDClass allow enabling and selecting the different temperature sensor inputs
+ * (RTD and thermocouples)
+ */
 class RTDClass {
 public:
+
+	/**
+	*  Select the input channel to be read (3 channels available)
+	*  
+	*  @param channel (0-2)
+	*/   
 	void selectChannel(int channel) {
 		for (int i=0; i<3; i++) {
 			ch_sel[i] = (i == channel ? 1 : 0);
 		}
 		delay(150);
 	}
+
+	/**
+	*  Enable the CS of the Thermocouple to digital converter
+	*  Disable the CS for the RTD to digital converter
+	*/   
 	void enableTC() {
 		rtd_th = 0;
 		digitalWrite(PI_0, LOW);
 		digitalWrite(PA_6, HIGH);
 	}
+
+	/**
+	*  Enable the CS of the RDT to digital converter. 
+	*  Disable the CS of the Thermocouple to digital converter
+	*/   
 	void enableRTD() {
 		rtd_th = 1;
 		digitalWrite(PI_0, HIGH);
 		digitalWrite(PA_6, LOW);
 
 	}
+
+	/**
+	*  Disable Chip select for both RTD and thermo couple digital converters. 
+	*  
+	*/   
 	void disableCS() {
 		digitalWrite(PI_0, HIGH);
 		digitalWrite(PA_6, HIGH);
@@ -52,9 +77,18 @@ extern RTDClass temp_probes;
 
 static 	mbed::CAN   _can(PB_8, PH_13);
 
+
+/**
+ * The COMMClass is used to initialize the CAN and RS485 LEDs and 
+ * establish the power mode of the CAN bus. 
+ */
 class COMMClass {
 public:
 	// to be tested: check if can be made a big pin initialization
+
+	 /**
+	 * Shutdown RS485 and CAN LEDS
+	 */
 	void init() {
 		//SHUTDOWN OF RS485 LEDS
 		digitalWrite(PA_0, LOW);
@@ -64,9 +98,21 @@ public:
 		digitalWrite(PH_13, LOW);
 	}
 
+	 /**
+	 * Set the CAN transciever in Normal mode. In this mode, the transceiver 
+	 * can transmit and receive data via the bus lines CANH and CANL.
+	 */
 	void enableCAN() {
 		can_disable = 0;
 	}
+
+	 /**
+	 * Set the CAN transciever in standby (low power) mode. In this mode the
+	 * transceiver will not be able to transmit or correctly receive data via the bus lines.
+	 * The wake-up filter on the output of the low-power receiver does not latch bus dominant states,
+	 * but ensures that only bus dominant and bus recessive states that persist longer than tfltr(wake)
+	 * bus are reflected on pin RXD.
+	 */
 	void disableCAN() {
 		can_disable = 1;
 	}
@@ -96,8 +142,18 @@ extern COMMClass comm_protocols;
 #define ch2_in3		ch_in[10]
 #define ch2_in4		ch_in[11]
 
+/**
+ * The AnalogInClass is used to set the resistor configuration for the right type of analog sensor
+ * i.e. NTC sensors, 4-10mA or 0-10V. 
+ */
 class AnalogInClass {
 public:
+
+	 /**
+	 * read the sampled voltage from the selected channel
+	 * @param  channel integer for selecting the analog input (0, 1 or 2)
+	 * @return the analog value between 0.0 and 1.0 normalized to a 16-bit value (uint16_t)
+	 */
 	uint16_t read(int channel) {
         uint16_t value = 0;
         switch (channel) {
@@ -117,6 +173,10 @@ public:
         return value;
     }
 
+	 /**
+	 * Configure the input resistor deviders to have a ratio of 0.28.
+	 * Maximum input voltage is 10V. 
+	 */
 	void set0_10V() {
 		ch0_in1 = 1;
 		ch0_in2 = 1;
@@ -134,6 +194,10 @@ public:
 		ch2_in4 = 1;
 	}
 
+	 /**
+	 * Enable a 120 ohm resitor to GND to convert the 4-20mA sensor currents to voltage. 
+	 * Note: 24V are available from the carrier to power the 4-20mA sensors.   
+	 */
 	void set4_20mA() {
 		ch0_in1 = 1;
 		ch0_in2 = 0;
@@ -151,6 +215,10 @@ public:
 		ch2_in4 = 0;
 	}
 
+	 /**
+	 * Enable a 100K resitor in series with the reference voltage.	 
+	 * The voltage sampled is the voltage division between the 100k resistor and the input resistor (NTC/PTC)  
+	 */
 	void setNTC() {
 		ch0_in1 = 0;
 		ch0_in2 = 0;
@@ -284,6 +352,8 @@ public:
 	}
 
 	~AnalogOutPWMClass(){}
+
+
 	void period_ms(int period) {
 		sConfig_time_base.Mode = HRTIM_MODE_CONTINUOUS;
 		sConfig_time_base.Period = period;
@@ -322,12 +392,20 @@ private:
 	HRTIM_CompareCfgTypeDef             sConfig_compare;
 };
 
-
 extern AnalogOutPWMClass analopwm;
 
-
+/**
+ * The AnalogOutClass allows configuring the specified channel with the right PWM duty cycle and 
+ * frequency
+ */
 class AnalogOutClass {
 public:
+
+	 /**
+	 * Set output voltage value (PWM)
+	 * @param  index select channel
+	 * @param  voltage desired output voltage (max 10.5V)
+	 */
 	void write(int index, float voltage) {
 		if (voltage < 0) {
 			voltage = 0;
@@ -348,6 +426,12 @@ public:
 				break;
 		}
 	}
+
+	 /**
+	 * Set the PWM period (frequency)
+	 * @param  index select channel
+	 * @param  period integer for selecting the period in ms
+	 */
 	void period_ms(int index, uint8_t period) {
 		switch (index) {
 			case 0:
@@ -394,8 +478,16 @@ extern AnalogOutClass analog_out;
 static QEI _enc_0(PJ_8, PH_12, PH_11, 0);
 static QEI _enc_1(PC_13, PI_7, PJ_10, 0);
 
+/**
+ * The EncoderClass is a wrapper for manipulating Quadrature Encoder Interface devices.
+ */
 class EncoderClass {
 public:
+	 /**
+	 * returns the encoder variable depending on the index
+	 * @param  index integer for selecting the encoder (0 or 1)
+	 * @return enc_0 for index = 0, enc_1 for index = 1
+	 */
 	QEI& operator[](int index) {
 		switch (index) {
 			case 0:
@@ -420,14 +512,35 @@ extern EncoderClass encoders;
   TODO: check if Wire and address are correct
 */
 
+
+/**
+ * The ProgrammableDIOClass is used to initialize the IOExpanders and configure the 
+ * thermal shutdown mode of the high side switches.
+ */
 class ProgrammableDIOClass : public ArduinoIOExpanderClass {
 public:
+
+	/**
+	 * Test connection with the IOExpander and set all the pins to the default mode. 
+	 * @return True if OK, False if fault
+	 */
 	bool  init() {
 		return begin(IO_ADD);
 	}
+
+	/**
+	 * Configures the thermal shutdown of the high-side switches (TPS4H160) to operate in latch mode. 
+	 * The output latches off when thermal shutdown occurs. 
+	 */
 	void setLatch() {
 		prog_latch_retry = 0;
 	}
+
+	 /**
+	 * Configures the thermal shutdown of the high-side switches (TPS4H160) to operate in auto-retry mode. 
+	 * The output automatically recovers when TJ < T(SD) – T(hys), but the current is limited to ICL(TSD) 
+	 * to avoid repetitive thermal shutdown. 
+	 */
 	void setRetry() {
 		prog_latch_retry = 1;
 	}
@@ -438,20 +551,48 @@ private:
 extern ProgrammableDIOClass digital_programmables;
 
 
+/**
+ * The DigitalOutputClass is used to interface with the IO Expander and
+ * set the digital outputs.
+ */
 class DigitalOutputsClass {
 public:
+
+	/**
+	 * Set all digital outputs at the same time. 
+	 * @param val 8 bit integer to set all 8 channels. e.g:
+	 * Set all to HIGH -> val = 255 (0b11111111)
+	 * Set all to LOW  -> val = 0   (0b00000000)
+	 */
 	void setAll(uint8_t val) {
 		for (int i = 0; i < 8; i++) {
 			out[i] = val & 0x1;
 			val = val >> 1;
 		}
 	}
+
+	 /**
+	 * Set a particular digital output
+	 * @param index digital output to be set
+	 * @param val set value (HIGH/LOW)
+	 */
 	void set(int index, bool val) {
 			out[index] = val;
 	}
+
+	/**
+	 * Configures the thermal shutdown of the high-side switches (TPS4H160) to operate in latch mode. 
+	 * The output latches off when thermal shutdown occurs. 
+	 */
 	void setLatch() {
 		dig_out_latch_retry = 0;
 	}
+
+	 /**
+	 * Configures the thermal shutdown of the high-side switches (TPS4H160) to operate in auto-retry mode. 
+	 * The output automatically recovers when TJ < T(SD) – T(hys), but the current is limited to ICL(TSD) 
+	 * to avoid repetitive thermal shutdown. 
+	 */
 	void setRetry() {
 		dig_out_latch_retry = 1;
 	}
@@ -470,6 +611,10 @@ extern DigitalOutputsClass digital_outputs;
 
 class ProgrammableDINClass : public ArduinoIOExpanderClass {
 public:
+	/**
+	 * Test connection with the IOExpander and set all the pins to the default mode. 
+	 * @return True if OK, False if fault
+	 */
 	bool init() {
 		return begin(DIN_ADD);
 	}
@@ -477,7 +622,11 @@ public:
 
 extern ProgrammableDINClass digital_inputs;
 
-
+/**
+ * The RtcControllerClass is a wrapper for the PCF8563TClass() that is used to 
+ * set and get the time to/from the PCF8563T RTC.
+ *  
+ */
 class RtcControllerClass : public PCF8563TClass {
 public:
 	mbed::DigitalIn int_pin = mbed::DigitalIn(PB_9,PullUp);
@@ -488,21 +637,41 @@ private:
 extern RtcControllerClass rtc_controller;
 
 
-
+/**
+ * The USB Class is used to enable/disable the power of the USBA (Host) and configure
+ * the callbacks for the different host types (i.e. Keyboard, mouse, storage device etc). 
+ */
 class USBClass {
 public:
+	/**
+	 * Configures the USB host by providing the list of callbacks to support the behaviour
+	 * of the host (keyboard, mouse, storage device etc)
+	 * 
+	 * @param  class_table a pointer to the structure containing the list of callbacks 
+	 */
 	void init(const tusbh_class_reg_t *class_table) {
 		usb.Init(USB_CORE_ID_FS, class_table);
 	}
 
+	/**
+	 * Enable power to USBA VBUS. 
+	 */
 	void powerEnable() {
 		power = 0;
 	}
 
+	/**
+	 * Disable power to USBA VBUS.  
+	 */
 	void powerDisable() {
 		power = 1;
 	}
 
+	/**
+	 * Flag to indicate overcurrent, overtemperature, or reverse−voltage conditions on the USBA VBUS. 	 
+	 * Active−low open−drain output.
+	 * @return True if OK, False if fault
+	 */
 	bool vflagRead() {
 		return usbflag;
 	}
