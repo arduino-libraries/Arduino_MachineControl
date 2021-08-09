@@ -390,12 +390,11 @@ extern AnalogOutClass analog_out;
   TODO: writeme 
   Use QEI library for mbed since it implements index pin
 */
-
-static QEI _enc_0(PJ_8, PH_12, PH_11, 0);
-static QEI _enc_1(PC_13, PI_7, PJ_10, 0);
-
 class EncoderClass {
 public:
+	EncoderClass()
+		: enc_0{PJ_8, PH_12, PH_11, 0}
+		, enc_1{PC_13, PI_7, PJ_10, 0} {};
 	QEI& operator[](int index) {
 		switch (index) {
 			case 0:
@@ -405,8 +404,8 @@ public:
 		}
 	}
 private:
-	QEI& enc_0 = _enc_0;
-	QEI& enc_1 = _enc_1;
+	QEI enc_0;
+	QEI enc_1;
 };
 
 extern EncoderClass encoders;
