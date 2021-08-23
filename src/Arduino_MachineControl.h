@@ -261,7 +261,6 @@ private:
 
 extern AnalogInClass analog_in;
 
-
 class AnalogOutClass {
 public:
 
@@ -338,7 +337,6 @@ extern AnalogOutClass analog_out;
   TODO: writeme 
   Use QEI library for mbed since it implements index pin
 */
-
  /**
  * The EncoderClass is a wrapper for manipulating Quadrature Encoder Interface devices.
  */
@@ -352,6 +350,7 @@ public:
 	EncoderClass()
 		: enc_0{PJ_8, PH_12, PH_11, 0}
 		, enc_1{PC_13, PI_7, PJ_10, 0} {};
+
 
 	QEI& operator[](int index) {
 		switch (index) {
