@@ -17,7 +17,7 @@
 namespace machinecontrol {
 
 /**
- * The RTDClass allow enabling and selecting the different temperature sensor inputs
+ * The RTDClass allows enabling and selecting the different temperature sensor inputs
  * (RTD and thermocouples)
  */
 class RTDClass {
@@ -57,7 +57,7 @@ public:
 	}
 
 	/**
-	*  Disable Chip select for both RTD and thermo couple digital converters. 
+	*  Disable Chip select for both RTD and thermocouple digital converters. 
 	*  
 	*/   
 	void disableCS() {
@@ -87,7 +87,7 @@ public:
 	// to be tested: check if can be made a big pin initialization
 
 	 /**
-	 * Shutdown RS485 and CAN LEDS
+	 * Shutdown RS485 and CAN LEDs
 	 */
 	void init() {
 		//SHUTDOWN OF RS485 LEDS
@@ -99,7 +99,7 @@ public:
 	}
 
 	 /**
-	 * Set the CAN transciever in Normal mode. In this mode, the transceiver 
+	 * Set the CAN transceiver in Normal mode. In this mode, the transceiver 
 	 * can transmit and receive data via the bus lines CANH and CANL.
 	 */
 	void enableCAN() {
@@ -107,7 +107,7 @@ public:
 	}
 
 	 /**
-	 * Set the CAN transciever in standby (low power) mode. In this mode the
+	 * Set the CAN transceiver in standby (low power) mode. In this mode the
 	 * transceiver will not be able to transmit or correctly receive data via the bus lines.
 	 * The wake-up filter on the output of the low-power receiver does not latch bus dominant states,
 	 * but ensures that only bus dominant and bus recessive states that persist longer than tfltr(wake)
@@ -174,7 +174,7 @@ public:
     }
 
 	 /**
-	 * Configure the input resistor deviders to have a ratio of 0.28.
+	 * Configure the input resistor dividers to have a ratio of 0.28.
 	 * Maximum input voltage is 10V. 
 	 */
 	void set0_10V() {
@@ -195,7 +195,7 @@ public:
 	}
 
 	 /**
-	 * Enable a 120 ohm resitor to GND to convert the 4-20mA sensor currents to voltage. 
+	 * Enable a 120 ohm resistor to GND to convert the 4-20mA sensor currents to voltage. 
 	 * Note: 24V are available from the carrier to power the 4-20mA sensors.   
 	 */
 	void set4_20mA() {
@@ -216,7 +216,7 @@ public:
 	}
 
 	 /**
-	 * Enable a 100K resitor in series with the reference voltage.	 
+	 * Enable a 100K resistor in series with the reference voltage.	 
 	 * The voltage sampled is the voltage division between the 100k resistor and the input resistor (NTC/PTC)  
 	 */
 	void setNTC() {
@@ -522,7 +522,7 @@ public:
 
 	/**
 	 * Test connection with the IOExpander and set all the pins to the default mode. 
-	 * @return True if OK, False if fault
+	 * @return true if OK, false if fault
 	 */
 	bool  init() {
 		return begin(IO_ADD);
@@ -613,7 +613,7 @@ class ProgrammableDINClass : public ArduinoIOExpanderClass {
 public:
 	/**
 	 * Test connection with the IOExpander and set all the pins to the default mode. 
-	 * @return True if OK, False if fault
+	 * @return true if OK, false if fault
 	 */
 	bool init() {
 		return begin(DIN_ADD);
@@ -670,7 +670,7 @@ public:
 	/**
 	 * Flag to indicate overcurrent, overtemperature, or reverse−voltage conditions on the USBA VBUS. 	 
 	 * Active−low open−drain output.
-	 * @return True if OK, False if fault
+	 * @return true if OK, false if fault
 	 */
 	bool vflagRead() {
 		return usbflag;
