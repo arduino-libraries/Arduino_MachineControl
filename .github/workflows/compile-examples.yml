@@ -42,6 +42,11 @@ jobs:
           fqbn: arduino:mbed_portenta:envie_m7
           platforms: |
             - name: arduino:mbed_portenta
+          libraries: |
+            - source-path: ./
+            - name: ArduinoRS485
+          sketch-paths: |
+            - examples            
           enable-deltas-report: true
           enable-warnings-report: true
           sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}
