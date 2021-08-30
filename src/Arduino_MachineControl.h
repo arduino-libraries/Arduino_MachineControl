@@ -13,8 +13,6 @@
 #include "pinDefinitions.h"
 #include "mbed.h"
 
-#include "USBHost.h"
-
 namespace machinecontrol {
 
 /**
@@ -530,16 +528,6 @@ extern RtcControllerClass rtc_controller;
 class USBClass {
 public:
 	/**
-	 * Configures the USB host by providing the list of callbacks to support the behaviour
-	 * of the host (keyboard, mouse, storage device etc)
-	 * 
-	 * @param  class_table a pointer to the structure containing the list of callbacks 
-	 */
-	void init(const tusbh_class_reg_t *class_table) {
-		usb.Init(USB_CORE_ID_FS, class_table);
-	}
-
-	/**
 	 * Enable power to USBA VBUS. 
 	 */
 	void powerEnable() {
@@ -561,8 +549,6 @@ public:
 	bool vflagRead() {
 		return usbflag;
 	}
-
-	USBHost usb;
 
 private:
 	mbed::DigitalOut power = mbed::DigitalOut(PB_14);
