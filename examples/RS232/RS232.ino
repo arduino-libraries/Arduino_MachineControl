@@ -7,15 +7,15 @@
   from the interface RX channel.
 
   Circuit:
-   - Portenta H7
-   - Machine Control
-   - A Slave device with RS232 interface
-   - Connect TXN to RXD Slave RS232 channel
-   - Connect RSXN to TXD Slave RS232 channel
+   - Arduino Portenta Machine Control (PMC)
+   - Device with RS232 interface
+   - Connect PMC TXN to RS232 Device RXD
+   - Connect PMC RXP to RS232 Device TXD
+   - Connect PMC GND to RS232 Device GND
 
 */
 
-#include "Arduino_MachineControl.h"
+#include <Arduino_MachineControl.h>
 
 using namespace machinecontrol;
 
@@ -39,15 +39,18 @@ void setup()
     comm_protocols.init();
 
     // RS485/RS232 default config is:
+    // - RS485/RS232 system disabled
     // - RS485 mode
     // - Half Duplex
     // - No A/B and Y/Z 120 Ohm termination enabled
 
     // Enable the RS485/RS232 system
-    comm_protocols.rs485Enable(false);
+    comm_protocols.rs485Enable(true);
+    // Enable the RS232 mode
+    comm_protocols.rs485ModeRS232(true);
 
-    // Specify baudrate, and preamble and postamble times for RS485 communication
-    comm_protocols.rs485.begin(115200, 0, 500);
+    // Specify baudrate for RS232 communication
+    comm_protocols.rs485.begin(115200);
     // Start in receive mode
     comm_protocols.rs485.receive();
 
@@ -60,14 +63,21 @@ void loop()
         Serial.write(comm_protocols.rs485.read());
 
     if (millis() > sendNow) {
+        String log = "[";
+        log += sendNow;
+        log += "] ";
+
+        String msg = "hello ";
+        msg += counter++;
+
+        log += msg;
+        Serial.println(log);
+
         // Disable receive mode before transmission
         comm_protocols.rs485.noReceive();
 
         comm_protocols.rs485.beginTransmission();
-
-        comm_protocols.rs485.print("hello ");
-        comm_protocols.rs485.println(counter++);
-
+        comm_protocols.rs485.println(msg);
         comm_protocols.rs485.endTransmission();
 
         // Re-enable receive mode after transmission
