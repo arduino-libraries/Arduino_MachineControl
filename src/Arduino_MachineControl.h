@@ -95,8 +95,8 @@ public:
 		digitalWrite(PinNameToIndex(PA_0), LOW);
 		digitalWrite(PinNameToIndex(PI_9), LOW);
 		//SHUTDOWN OF CAN LEDS
-		digitalWrite(PinNameToIndex(PB_8), LOW);
-		digitalWrite(PinNameToIndex(PH_13), LOW);
+		digitalWrite(PinNameToIndex(PB_8), HIGH);
+		digitalWrite(PinNameToIndex(PH_13), HIGH);
 
 		// SET DEFAULTS for RS485
 		rs485Enable(false);
