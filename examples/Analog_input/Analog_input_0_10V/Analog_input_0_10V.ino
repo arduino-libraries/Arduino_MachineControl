@@ -20,7 +20,7 @@
 using namespace machinecontrol;
 
 float res_divider = 0.28057;
-float reference = 3;
+float reference = 3.3;
 
 void setup() {
   analogReadResolution(16);

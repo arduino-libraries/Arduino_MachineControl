@@ -189,7 +189,6 @@ public:
             default:
                 break;
             }
-        delay(20);
         return value;
     }
 
