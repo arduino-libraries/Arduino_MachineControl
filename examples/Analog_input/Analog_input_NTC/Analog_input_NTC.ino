@@ -26,7 +26,7 @@ using namespace machinecontrol;
 
 #define REFERENCE_RES 100000
 
-float reference = 3;
+float reference = 3.3;
 float lowest_voltage = 2.7;
 
 void setup() {
