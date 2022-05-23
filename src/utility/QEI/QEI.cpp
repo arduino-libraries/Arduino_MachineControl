@@ -262,10 +262,10 @@ void QEI::encode(void) {
          
     if(encoding_ == X1_ENCODING){
         if(currState_ == 0x3){
-            pulses++;
+            pulses_++;
         }
         if(currState_ == 0x2){
-            pulses--;
+            pulses_--;
         }
     } else if (encoding_ == X2_ENCODING) {
 
