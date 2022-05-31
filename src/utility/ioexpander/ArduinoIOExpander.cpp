@@ -83,6 +83,14 @@ int ArduinoIOExpanderClass::read(int pin)
   return -1;
 }
 
+uint32_t ArduinoIOExpanderClass::readAll()
+{
+  uint8_t banks[3];
+  _tca.readAll(banks);
+  return *(uint32_t*)banks;
+}
+
+
 void ArduinoIOExpanderClass::initPins()
 {
 
