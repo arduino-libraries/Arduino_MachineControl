@@ -79,6 +79,7 @@ public:
     bool set(int pin, int status) { return set( pin, (PinStatus)status); };
 
     int read(int pin);
+    uint32_t readAll();
     bool pinMode(int pin, PinMode direction);
 
 private:

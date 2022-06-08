@@ -28,7 +28,7 @@ void setup() {
 }
 
 void loop() {
-  //Reads and Prints all channels and 
+  //Reads and Prints all channels (in a single operation)
   readAll();
 
   //Read one-by-one each channel and print them one-by-one
@@ -62,13 +62,14 @@ void loop() {
 }
 
 uint8_t readAll() {
-  Serial.println("CH00: " + String(digital_inputs.read(DIN_READ_CH_PIN_00)));
-  Serial.println("CH01: " + String(digital_inputs.read(DIN_READ_CH_PIN_01)));
-  Serial.println("CH02: " + String(digital_inputs.read(DIN_READ_CH_PIN_02)));
-  Serial.println("CH03: " + String(digital_inputs.read(DIN_READ_CH_PIN_03)));
-  Serial.println("CH04: " + String(digital_inputs.read(DIN_READ_CH_PIN_04)));
-  Serial.println("CH05: " + String(digital_inputs.read(DIN_READ_CH_PIN_05)));
-  Serial.println("CH06: " + String(digital_inputs.read(DIN_READ_CH_PIN_06)));
-  Serial.println("CH07: " + String(digital_inputs.read(DIN_READ_CH_PIN_07)));
+  uint32_t inputs = digital_inputs.readAll();
+  Serial.println("CH00: " + String((inputs & (1 << DIN_READ_CH_PIN_00)) >> DIN_READ_CH_PIN_00));
+  Serial.println("CH01: " + String((inputs & (1 << DIN_READ_CH_PIN_01)) >> DIN_READ_CH_PIN_01));
+  Serial.println("CH02: " + String((inputs & (1 << DIN_READ_CH_PIN_02)) >> DIN_READ_CH_PIN_02));
+  Serial.println("CH03: " + String((inputs & (1 << DIN_READ_CH_PIN_03)) >> DIN_READ_CH_PIN_03));
+  Serial.println("CH04: " + String((inputs & (1 << DIN_READ_CH_PIN_04)) >> DIN_READ_CH_PIN_04));
+  Serial.println("CH05: " + String((inputs & (1 << DIN_READ_CH_PIN_05)) >> DIN_READ_CH_PIN_05));
+  Serial.println("CH06: " + String((inputs & (1 << DIN_READ_CH_PIN_06)) >> DIN_READ_CH_PIN_06));
+  Serial.println("CH07: " + String((inputs & (1 << DIN_READ_CH_PIN_07)) >> DIN_READ_CH_PIN_07));
   Serial.println();
 }
