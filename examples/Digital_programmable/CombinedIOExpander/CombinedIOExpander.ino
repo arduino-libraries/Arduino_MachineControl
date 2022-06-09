@@ -53,14 +53,14 @@ void loop() {
 
   Serial.println();
   // Write the status value to On to all the Output Pins
-  setAll(SWITCH_ON);
+  digital_programmables.writeAll(SWITCH_ON_ALL);
 
   // Reads from all Input Pins
   readAll();
   delay(1000);
 
   // Write the status value to Off all to all the Output Pins
-  setAll(SWITCH_OFF);
+  digital_programmables.writeAll(SWITCH_OFF_ALL);
 
   // Reads from all Input Pins
   readAll();
@@ -69,43 +69,30 @@ void loop() {
 
 }
 
-void setAll(PinStatus status) {
-  // Write the status value to each Pin
-  digital_programmables.set(IO_WRITE_CH_PIN_00, status);
-  digital_programmables.set(IO_WRITE_CH_PIN_01, status);
-  digital_programmables.set(IO_WRITE_CH_PIN_02, status);
-  digital_programmables.set(IO_WRITE_CH_PIN_03, status);
-  digital_programmables.set(IO_WRITE_CH_PIN_04, status);
-  digital_programmables.set(IO_WRITE_CH_PIN_05, status);
-  digital_programmables.set(IO_WRITE_CH_PIN_06, status);
-  digital_programmables.set(IO_WRITE_CH_PIN_07, status);
-  digital_programmables.set(IO_WRITE_CH_PIN_08, status);
-  digital_programmables.set(IO_WRITE_CH_PIN_09, status);
-  digital_programmables.set(IO_WRITE_CH_PIN_10, status);
-  digital_programmables.set(IO_WRITE_CH_PIN_11, status);
-}
 
 void readAll() {
-  // Reads from input pins. This API returns -1 if you try to read from a write channel.
-  Serial.println("IO Pin 00: " + String(digital_programmables.read(IO_READ_CH_PIN_00)));
-  Serial.println("IO Pin 01: " + String(digital_programmables.read(IO_READ_CH_PIN_01)));
-  Serial.println("IO Pin 02: " + String(digital_programmables.read(IO_READ_CH_PIN_02)));
-  Serial.println("IO Pin 03: " + String(digital_programmables.read(IO_READ_CH_PIN_03)));
-  Serial.println("IO Pin 04: " + String(digital_programmables.read(IO_READ_CH_PIN_04)));
-  Serial.println("IO Pin 05: " + String(digital_programmables.read(IO_READ_CH_PIN_05)));
-  Serial.println("IO Pin 06: " + String(digital_programmables.read(IO_READ_CH_PIN_06)));
-  Serial.println("IO Pin 07: " + String(digital_programmables.read(IO_READ_CH_PIN_07)));
-  Serial.println("IO Pin 08: " + String(digital_programmables.read(IO_READ_CH_PIN_08)));
-  Serial.println("IO Pin 09: " + String(digital_programmables.read(IO_READ_CH_PIN_09)));
-  Serial.println("IO Pin 10: " + String(digital_programmables.read(IO_READ_CH_PIN_10)));
-  Serial.println("IO Pin 11: " + String(digital_programmables.read(IO_READ_CH_PIN_11)));  
+  uint32_t inputs = digital_programmables.readAll();
+  Serial.println("CH00: " + String((inputs & (1 << IO_READ_CH_PIN_00)) >> IO_READ_CH_PIN_00));
+  Serial.println("CH01: " + String((inputs & (1 << IO_READ_CH_PIN_01)) >> IO_READ_CH_PIN_01));
+  Serial.println("CH02: " + String((inputs & (1 << IO_READ_CH_PIN_02)) >> IO_READ_CH_PIN_02));
+  Serial.println("CH03: " + String((inputs & (1 << IO_READ_CH_PIN_03)) >> IO_READ_CH_PIN_03));
+  Serial.println("CH04: " + String((inputs & (1 << IO_READ_CH_PIN_04)) >> IO_READ_CH_PIN_04));
+  Serial.println("CH05: " + String((inputs & (1 << IO_READ_CH_PIN_05)) >> IO_READ_CH_PIN_05));
+  Serial.println("CH06: " + String((inputs & (1 << IO_READ_CH_PIN_06)) >> IO_READ_CH_PIN_06));
+  Serial.println("CH07: " + String((inputs & (1 << IO_READ_CH_PIN_07)) >> IO_READ_CH_PIN_07));
+  Serial.println("CH08: " + String((inputs & (1 << IO_READ_CH_PIN_08)) >> IO_READ_CH_PIN_08));
+  Serial.println("CH09: " + String((inputs & (1 << IO_READ_CH_PIN_09)) >> IO_READ_CH_PIN_09));
+  Serial.println("CH10: " + String((inputs & (1 << IO_READ_CH_PIN_10)) >> IO_READ_CH_PIN_10));
+  Serial.println("CH11: " + String((inputs & (1 << IO_READ_CH_PIN_11)) >> IO_READ_CH_PIN_11));
   Serial.println();
-  Serial.println("DIN Pin 00: " + String(digital_inputs.read(DIN_READ_CH_PIN_00)));
-  Serial.println("DIN Pin 01: " + String(digital_inputs.read(DIN_READ_CH_PIN_01)));
-  Serial.println("DIN Pin 02: " + String(digital_inputs.read(DIN_READ_CH_PIN_02)));
-  Serial.println("DIN Pin 03: " + String(digital_inputs.read(DIN_READ_CH_PIN_03)));
-  Serial.println("DIN Pin 04: " + String(digital_inputs.read(DIN_READ_CH_PIN_04)));
-  Serial.println("DIN Pin 05: " + String(digital_inputs.read(DIN_READ_CH_PIN_05)));
-  Serial.println("DIN Pin 06: " + String(digital_inputs.read(DIN_READ_CH_PIN_06)));
-  Serial.println("DIN Pin 07: " + String(digital_inputs.read(DIN_READ_CH_PIN_07)));
+  inputs = digital_inputs.readAll();
+  Serial.println("CH00: " + String((inputs & (1 << DIN_READ_CH_PIN_00)) >> DIN_READ_CH_PIN_00));
+  Serial.println("CH01: " + String((inputs & (1 << DIN_READ_CH_PIN_01)) >> DIN_READ_CH_PIN_01));
+  Serial.println("CH02: " + String((inputs & (1 << DIN_READ_CH_PIN_02)) >> DIN_READ_CH_PIN_02));
+  Serial.println("CH03: " + String((inputs & (1 << DIN_READ_CH_PIN_03)) >> DIN_READ_CH_PIN_03));
+  Serial.println("CH04: " + String((inputs & (1 << DIN_READ_CH_PIN_04)) >> DIN_READ_CH_PIN_04));
+  Serial.println("CH05: " + String((inputs & (1 << DIN_READ_CH_PIN_05)) >> DIN_READ_CH_PIN_05));
+  Serial.println("CH06: " + String((inputs & (1 << DIN_READ_CH_PIN_06)) >> DIN_READ_CH_PIN_06));
+  Serial.println("CH07: " + String((inputs & (1 << DIN_READ_CH_PIN_07)) >> DIN_READ_CH_PIN_07));
+  Serial.println();
 }
