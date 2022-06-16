@@ -9,9 +9,9 @@
 #include "utility/RTC/PCF8563T.h"
 #include "utility/RTC/PCF8563T.h"
 
-#include "Arduino.h"
-#include "pinDefinitions.h"
-#include "mbed.h"
+#include <Arduino.h>
+#include <pinDefinitions.h>
+#include <mbed.h>
 
 namespace machinecontrol {
 
@@ -74,9 +74,6 @@ private:
 
 extern RTDClass temp_probes;
 
-static 	mbed::CAN   _can(PB_8, PH_13);
-
-
 /**
  * The COMMClass is used to initialize the CAN and RS485 LEDs and 
  * establish the power mode of the CAN bus. 
@@ -124,10 +121,10 @@ public:
 		can_disable = 1;
 	}
 
-	UART _UART4_ = arduino::UART(PA_0, PI_9, NC, NC);
-	mbed::CAN& can = _can;
+	arduino::UART _UART4_ {PA_0, PI_9, NC, NC};
+	mbed::CAN can {PB_8, PH_13};
 
-	RS485Class rs485 = RS485Class(_UART4_, PinNameToIndex(PA_0), PinNameToIndex(PI_13), PinNameToIndex(PI_10));
+	RS485Class rs485 {_UART4_, PinNameToIndex(PA_0), PinNameToIndex(PI_13), PinNameToIndex(PI_10)};
 
 	void rs485Enable(bool enable) 		{ digitalWrite(PinNameToIndex(PG_9),  enable ? 	HIGH : LOW); }
 	void rs485ModeRS232(bool enable) 	{ digitalWrite(PinNameToIndex(PA_10), enable ? 	LOW : HIGH); }
