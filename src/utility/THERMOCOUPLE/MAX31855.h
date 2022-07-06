@@ -36,10 +36,11 @@ public:
 
   float readTemperature(int type = PROBE_K);
   float readReferenceTemperature(int type = PROBE_K);
+  void setColdOffset(float offset);
 
 private:
   uint32_t readSensor();
-
+  float    _coldOffset;
   int _cs;
   SPIClass* _spi;
   SPISettings _spiSettings;

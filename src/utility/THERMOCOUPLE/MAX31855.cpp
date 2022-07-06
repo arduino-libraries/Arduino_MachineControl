@@ -41,7 +41,8 @@ const MAX31855Class::coefftable MAX31855Class::InvCoeffK[];
 MAX31855Class::MAX31855Class(int cs, SPIClass& spi) :
   _cs(cs),
   _spi(&spi),
-  _spiSettings(4000000, MSBFIRST, SPI_MODE0)
+  _spiSettings(4000000, MSBFIRST, SPI_MODE0),
+  _coldOffset(2.10f)
 {
 }
 
@@ -194,8 +195,7 @@ float MAX31855Class::readTemperature(int type)
   }
 
   // convert it to degrees
-  measuredCold = measuredColdInt/16.0f;
-
+  measuredCold = (measuredColdInt/16.0f);
   // now the tricky part... since MAX31855K is considering a linear response 
   // and is trimemd for K thermocouples, we have to convert the reading back
   // to mV and then use NIST polynomial approximation to determine temperature
@@ -208,7 +208,7 @@ float MAX31855Class::readTemperature(int type)
   // this way we calculate the voltage we would have measured if cold junction 
   // was at 0 degrees celsius
 
-  measuredVolt = coldTempTomv(type, measuredCold)+(measuredTemp-measuredCold) * 0.041276f;
+  measuredVolt = coldTempTomv(type, measuredCold - _coldOffset)+(measuredTemp - measuredCold) * 0.041276f;
 
   // finally from the cold junction compensated voltage we calculate the temperature
   // using NIST polynomial approximation for the thermocouple type we are using
@@ -237,6 +237,11 @@ float MAX31855Class::readReferenceTemperature(int type)
   }
   Serial.println(ref);
   return ref;
+}
+
+void MAX31855Class::setColdOffset(float offset)
+{
+  _coldOffset = offset;
 }
 
 MAX31855Class THERM;
