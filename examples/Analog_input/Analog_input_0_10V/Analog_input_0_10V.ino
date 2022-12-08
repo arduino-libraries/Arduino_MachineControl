@@ -26,13 +26,7 @@ void setup() {
   analogReadResolution(16);
 
   Serial.begin(9600);
-  /* Set all channels to 0_10V mode
-    WARNING - read documentation before changing analog mode, risk of board damage
-    https://docs.arduino.cc/static/4312887f7762913eb5aa3c8a1a2880cd/AKX00032-full-pinout.pdf page 2
-  */
-  analog_in.set0_10V(0);
-  analog_in.set0_10V(1);
-  analog_in.set0_10V(2);
+  analog_in.set0_10V();
 }
 
 void loop() {
