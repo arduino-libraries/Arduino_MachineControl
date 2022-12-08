@@ -220,6 +220,23 @@ public:
 	 * Configure the input resistor dividers to have a ratio of 0.28.
 	 * Maximum input voltage is 10V. 
 	 */
+	void set0_10V() {
+		ch0_in1 = 1;
+		ch0_in2 = 1;
+		ch0_in3 = 0;
+		ch0_in4 = 1;
+
+		ch1_in1 = 1;
+		ch1_in2 = 1;
+		ch1_in3 = 0;
+		ch1_in4 = 1;
+
+		ch2_in1 = 1;
+		ch2_in2 = 1;
+		ch2_in3 = 0;
+		ch2_in4 = 1;
+	}
+
 	void set0_10V(int channel) {
 		switch (channel) {
 			case 0:
@@ -247,6 +264,23 @@ public:
 	 * Enable a 120 ohm resistor to GND to convert the 4-20mA sensor currents to voltage. 
 	 * Note: 24V are available from the carrier to power the 4-20mA sensors.   
 	 */
+	void set4_20mA() {
+		ch0_in1 = 1;
+		ch0_in2 = 0;
+		ch0_in3 = 1;
+		ch0_in4 = 0;
+
+		ch1_in1 = 1;
+		ch1_in2 = 0;
+		ch1_in3 = 1;
+		ch1_in4 = 0;
+
+		ch2_in1 = 1;
+		ch2_in2 = 0;
+		ch2_in3 = 1;
+		ch2_in4 = 0;
+	}
+
 	void set4_20mA(int channel) {
 		switch (channel) {
 			case 0:
@@ -274,6 +308,23 @@ public:
 	 * Enable a 100K resistor in series with the reference voltage.	 
 	 * The voltage sampled is the voltage division between the 100k resistor and the input resistor (NTC/PTC)  
 	 */
+	void setNTC() {
+		ch0_in1 = 0;
+		ch0_in2 = 0;
+		ch0_in3 = 1;
+		ch0_in4 = 1;
+
+		ch1_in1 = 0;
+		ch1_in2 = 0;
+		ch1_in3 = 1;
+		ch1_in4 = 1;
+
+		ch2_in1 = 0;
+		ch2_in2 = 0;
+		ch2_in3 = 1;
+		ch2_in4 = 1;
+	}
+
 	void setNTC(int channel) {
 		switch (channel) {
 			case 0:
