@@ -13,6 +13,8 @@
 #include <pinDefinitions.h>
 #include <mbed.h>
 
+#include "AnalogInClass.h"
+
 #if __has_include("portenta_info.h")
 #include "portenta_info.h"
 #define TRY_REV2_RECOGNITION
@@ -172,137 +174,6 @@ private:
 };
 
 extern COMMClass comm_protocols;
-
-#define ch0_in1		ch_in[0]
-#define ch0_in2		ch_in[1]
-#define ch0_in3		ch_in[2]
-#define ch0_in4		ch_in[3]
-#define ch1_in1		ch_in[4]
-#define ch1_in2		ch_in[5]
-#define ch1_in3		ch_in[6]
-#define ch1_in4		ch_in[7]
-#define ch2_in1		ch_in[8]
-#define ch2_in2		ch_in[9]
-#define ch2_in3		ch_in[10]
-#define ch2_in4		ch_in[11]
-
-/**
- * The AnalogInClass is used to set the resistor configuration for the right type of analog sensor
- * i.e. NTC sensors, 4-10mA or 0-10V. 
- */
-class AnalogInClass {
-public:
-
-	 /**
-	 * read the sampled voltage from the selected channel
-	 * @param  channel integer for selecting the analog input (0, 1 or 2)
-	 * @return the analog value between 0.0 and 1.0 normalized to a 16-bit value (uint16_t)
-	 */
-	uint16_t read(int channel) {
-        uint16_t value = 0;
-        switch (channel) {
-            case 0:
-                value = in_0.read_u16();
-                break;
-            case 1:
-                value =  in_1.read_u16();
-                break;
-            case 2:
-                value =  in_2.read_u16();
-                break;
-            default:
-                break;
-            }
-        return value;
-    }
-
-	 /**
-	 * Configure the input resistor dividers to have a ratio of 0.28.
-	 * Maximum input voltage is 10V. 
-	 */
-	void set0_10V() {
-		ch0_in1 = 1;
-		ch0_in2 = 1;
-		ch0_in3 = 0;
-		ch0_in4 = 1;
-
-		ch1_in1 = 1;
-		ch1_in2 = 1;
-		ch1_in3 = 0;
-		ch1_in4 = 1;
-
-		ch2_in1 = 1;
-		ch2_in2 = 1;
-		ch2_in3 = 0;
-		ch2_in4 = 1;
-	}
-
-	 /**
-	 * Enable a 120 ohm resistor to GND to convert the 4-20mA sensor currents to voltage. 
-	 * Note: 24V are available from the carrier to power the 4-20mA sensors.   
-	 */
-	void set4_20mA() {
-		ch0_in1 = 1;
-		ch0_in2 = 0;
-		ch0_in3 = 1;
-		ch0_in4 = 0;
-
-		ch1_in1 = 1;
-		ch1_in2 = 0;
-		ch1_in3 = 1;
-		ch1_in4 = 0;
-
-		ch2_in1 = 1;
-		ch2_in2 = 0;
-		ch2_in3 = 1;
-		ch2_in4 = 0;
-	}
-
-	 /**
-	 * Enable a 100K resistor in series with the reference voltage.	 
-	 * The voltage sampled is the voltage division between the 100k resistor and the input resistor (NTC/PTC)  
-	 */
-	void setNTC() {
-		ch0_in1 = 0;
-		ch0_in2 = 0;
-		ch0_in3 = 1;
-		ch0_in4 = 1;
-
-		ch1_in1 = 0;
-		ch1_in2 = 0;
-		ch1_in3 = 1;
-		ch1_in4 = 1;
-
-		ch2_in1 = 0;
-		ch2_in2 = 0;
-		ch2_in3 = 1;
-		ch2_in4 = 1;
-	}
-
-	mbed::AnalogIn& operator[](int index) {
-		switch (index) {
-			case 0:
-				return in_0;
-			case 1:
-				return in_1;
-			case 2:
-				return in_2;
-		}
-	}
-
-	mbed::DigitalOut ch_in[12] = { 
-		mbed::DigitalOut(PD_4), mbed::DigitalOut(PD_5), mbed::DigitalOut(PE_3), mbed::DigitalOut(PG_3),
-		mbed::DigitalOut(PD_7), mbed::DigitalOut(PH_6), mbed::DigitalOut(PJ_7), mbed::DigitalOut(PH_15),
-		mbed::DigitalOut(PH_10), mbed::DigitalOut(PA_4), mbed::DigitalOut(PA_8), mbed::DigitalOut(PC_6) 
-	};
-
-private:
-	mbed::AnalogIn in_0 = mbed::AnalogIn(PC_3C);
-	mbed::AnalogIn in_1 = mbed::AnalogIn(PC_2C);
-	mbed::AnalogIn in_2 = mbed::AnalogIn(PA_1C);
-};
-
-extern AnalogInClass analog_in;
 
 class AnalogOutClass {
 public:

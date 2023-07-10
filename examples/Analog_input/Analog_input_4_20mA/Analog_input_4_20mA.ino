@@ -17,34 +17,30 @@
 */
 #include <Arduino_MachineControl.h>
 
-using namespace machinecontrol;
-
 #define SENSE_RES 120
 
 float reference = 3.3;
 
 void setup() {
-  analogReadResolution(16);
-
   Serial.begin(9600);
-  analog_in.set4_20mA();
+  MachineControl_AnalogIn.begin(MCAI_SENSOR_4_20MA);
 }
 
 void loop() {
-  float raw_voltage_ch0 = analog_in.read(0);
+  float raw_voltage_ch0 = MachineControl_AnalogIn.read(0);
   float voltage_ch0 = (raw_voltage_ch0 * reference) / 65535;
   float current_ch0 = (voltage_ch0 / SENSE_RES) * 1000;
   Serial.print("Measured Current CH0: ");
   Serial.print(current_ch0);
   Serial.println("mA");
 
-  float raw_voltage_ch1 = analog_in.read(1);
+  float raw_voltage_ch1 = MachineControl_AnalogIn.read(1);
   float voltage_ch1 = (raw_voltage_ch1 * reference) / 65535;
   float current_ch1 = (voltage_ch1 / SENSE_RES) * 1000;
   Serial.print("Measured Current CH1: ");
   Serial.print(current_ch1);
   Serial.println("mA");
-  float raw_voltage_ch2 = analog_in.read(2);
+  float raw_voltage_ch2 = MachineControl_AnalogIn.read(2);
   float voltage_ch2 = (raw_voltage_ch2 * reference) / 65535;
   float current_ch2 = (voltage_ch2 / SENSE_RES) * 1000;
   Serial.print("Measured Current CH2: ");

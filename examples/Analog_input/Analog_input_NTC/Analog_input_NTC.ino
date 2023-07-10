@@ -22,22 +22,18 @@
 */
 #include <Arduino_MachineControl.h>
 
-using namespace machinecontrol;
-
 #define REFERENCE_RES 100000
 
 float reference = 3.3;
 float lowest_voltage = 2.7;
 
 void setup() {
-  analogReadResolution(16);
-
   Serial.begin(9600);
-  analog_in.setNTC();
+  MachineControl_AnalogIn.begin(MCAI_SENSOR_NTC);
 }
 
 void loop() {
-  float raw_voltage_ch0 = analog_in.read(0);
+  float raw_voltage_ch0 = MachineControl_AnalogIn.read(0);
   float voltage_ch0 = (raw_voltage_ch0 * reference) / 65535;
   float resistance_ch0;
   Serial.print("Resistance CH0: ");
@@ -50,7 +46,7 @@ void loop() {
     Serial.println("NaN");
   }
 
-  float raw_voltage_ch1 = analog_in.read(1);
+  float raw_voltage_ch1 = MachineControl_AnalogIn.read(1);
   float voltage_ch1 = (raw_voltage_ch1 * reference) / 65535;
   float resistance_ch1;
   Serial.print("Resistance CH1: ");
@@ -63,7 +59,7 @@ void loop() {
     Serial.println("NaN");
   }
 
-  float raw_voltage_ch2 = analog_in.read(2);
+  float raw_voltage_ch2 = MachineControl_AnalogIn.read(2);
   float voltage_ch2 = (raw_voltage_ch2 * reference) / 65535;
   float resistance_ch2;
   Serial.print("Resistance CH2: ");
