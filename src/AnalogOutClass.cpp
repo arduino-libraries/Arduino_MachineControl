@@ -1,64 +1,74 @@
 /**
  * @file AnalogOutClass.cpp
  * @author Leonardo Cavagnis
- * @brief Source file for the 
+ * @brief Source file for the Analog OUT connector of the Portenta Machine Control library. 
  */
 
 /* Includes -----------------------------------------------------------------*/
 #include "AnalogOutClass.h"
 
+/* Private defines -----------------------------------------------------------*/
+#define MCAO_MAX_VOLTAGE    10.5
+
 /* Functions -----------------------------------------------------------------*/
-void AnalogOutClass::write(int index, float voltage) {
+AnalogOutClass::AnalogOutClass(PinName ao0_pin, PinName ao1_pin, PinName ao2_pin, PinName ao3_pin)
+                : _ao0{mbed::PwmOut(ao0_pin)}, _ao1{mbed::PwmOut(ao1_pin)}, _ao2{mbed::PwmOut(ao2_pin)}, _ao3{mbed::PwmOut(ao3_pin)}
+{ }
+
+AnalogOutClass::~AnalogOutClass() 
+{ }
+
+bool AnalogOutClass::begin() {
+  setPeriod(0, 2); //2ms - 500Hz
+  setPeriod(1, 2);
+  setPeriod(2, 2);
+  setPeriod(3, 2);
+
+  return true;
+}
+
+void AnalogOutClass::setPeriod(int channel, uint8_t period_ms) {
+    switch (channel) {
+        case 0:
+            _ao0.period_ms(period_ms);
+            break;
+        case 1:
+            _ao1.period_ms(period_ms);
+            break;
+        case 2:
+            _ao2.period_ms(period_ms);
+            break;
+        case 3:
+            _ao3.period_ms(period_ms);
+            break;
+    }
+}
+
+void AnalogOutClass::write(int channel, float voltage) {
     if (voltage < 0) {
         voltage = 0;
     }
 
-    switch (index) {
+    if (voltage > MCAO_MAX_VOLTAGE) {
+        voltage = MCAO_MAX_VOLTAGE;
+    }
+
+    switch (channel) {
         case 0:
-            out_0.write(voltage / 10.5);
+            _ao0.write(voltage / MCAO_MAX_VOLTAGE);
             break;
         case 1:
-            out_1.write(voltage / 10.5);
+            _ao1.write(voltage / MCAO_MAX_VOLTAGE);
             break;
         case 2:
-            out_2.write(voltage / 10.5);
+            _ao2.write(voltage / MCAO_MAX_VOLTAGE);
             break;
         case 3:
-            out_3.write(voltage / 10.5);
+            _ao3.write(voltage / MCAO_MAX_VOLTAGE);
             break;
     }
 }
 
-void AnalogOutClass::period_ms(int index, uint8_t period) {
-    switch (index) {
-        case 0:
-            out_0.period_ms(period);
-            break;
-        case 1:
-            out_1.period_ms(period);
-            break;
-        case 2:
-            out_2.period_ms(period);
-            break;
-        case 3:
-            out_3.period_ms(period);
-            break;
-    }
-}
-
-mbed::PwmOut& AnalogOutClass::operator[](int index) {
-    switch (index) {
-        case 0:
-            return out_0;
-        case 1:
-            return out_1;
-        case 2:
-            return out_2;
-        case 3:
-            return out_3;
-    }
-}
-
-AnalogOutClass analog_out;
+AnalogOutClass MachineControl_AnalogOut;
 
 /**** END OF FILE ****/

@@ -1,9 +1,9 @@
 /**
- * @file AnalogInClass.h
+ * @file AnalogOutClass.h
  * @author Leonardo Cavagnis
- * @brief Header file for the 
+ * @brief Header file for the Analog OUT connector of the Portenta Machine Control library.
  *
- * This library allows to 
+ * This library allows to configure the analog channels as PWM, to set frequency and value.
  */
 #ifndef __ANALOGOUT_CLASS_H
 #define __ANALOGOUT_CLASS_H
@@ -16,33 +16,49 @@
 
 /**
  * @class AnalogOutClass
- * @brief Class for the 
+ * @brief Class for the Analog OUT connector of the Portenta Machine Control.
  */
 class AnalogOutClass {
     public:
         /**
-         * Set output voltage value (PWM)
-         * @param  index select channel
-         * @param  voltage desired output voltage (max 10.5V)
+         * @brief Construct an Analog Output writer for the Portenta Machine Control.
+         *
+         * @param ao0_pin The analog pin number of the channel 0
+         * @param ao1_pin The analog pin number of the channel 1
+         * @param ao2_pin The analog pin number of the channel 2
+         * @param ao3_pin The analog pin number of the channel 2
          */
-        void write(int index, float voltage);
+        AnalogOutClass(PinName ao0_pin = PJ_11, PinName ao1_pin = PK_1, PinName ao2_pin = PG_7, PinName ao3_pin = PC_7);
+        ~AnalogOutClass();
 
         /**
-         * Set the PWM period (frequency)
-         * @param  index select channel
-         * @param  period integer for selecting the period in ms
+         * @brief Initialize the PWM, configure the default frequency for all channels (500Hz)
+         *  
+         * @return true If the PWM is successfully initialized, false Otherwise
          */
-        void period_ms(int index, uint8_t period);
+        bool begin();
 
-        mbed::PwmOut& operator[](int index);
+        /**
+         * Set the PWM period (frequency) on the selected channel
+         * @param channel selected channel
+         * @param period_ms PWM period in ms
+         */
+        void setPeriod(int channel, uint8_t period_ms);
+
+        /**
+         * Set output voltage value on the selected channel
+         * @param channel selected channel
+         * @param voltage desired output voltage (max 10.5V)
+         */
+        void write(int channel, float voltage);
 
     private:
-        mbed::PwmOut out_0 = mbed::PwmOut(PJ_11);
-        mbed::PwmOut out_1 = mbed::PwmOut(PK_1);
-        mbed::PwmOut out_2 = mbed::PwmOut(PG_7);
-        mbed::PwmOut out_3 = mbed::PwmOut(PC_7);
+        mbed::PwmOut _ao0;
+        mbed::PwmOut _ao1;
+        mbed::PwmOut _ao2;
+        mbed::PwmOut _ao3;
 };
 
-extern AnalogOutClass analog_out;
+extern AnalogOutClass MachineControl_AnalogOut;
 
 #endif /* __ANALOGOUT_CLASS_H */

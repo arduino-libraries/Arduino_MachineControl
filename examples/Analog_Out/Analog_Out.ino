@@ -15,38 +15,33 @@
 
 #include <Arduino_MachineControl.h>
 
-using namespace machinecontrol;
+float voltage = 0;
 
 void setup() {
-  //analog_out.period_ms(CHANNEL, PERIOD_MILLISECONDS);
-  analog_out.period_ms(0, 4);
-  analog_out.period_ms(1, 4);
-  analog_out.period_ms(2, 4);
-  analog_out.period_ms(3, 4);
+  MachineControl_AnalogOut.begin();
+
+  MachineControl_AnalogOut.setPeriod(0, 4); //4ms - 250Hz
+  MachineControl_AnalogOut.setPeriod(1, 4);
+  MachineControl_AnalogOut.setPeriod(2, 4);
+  MachineControl_AnalogOut.setPeriod(3, 4);
   
   Serial.begin(9600);
   Serial.println("Analog out test");
-
 }
 
-//Output values which will be changed with this variable
-float counter = 1;
-
 void loop() {
-  //analog_out.write(CHANNEL, OUTPUT_VOLTAGE_VALUE);
-  analog_out.write(0, counter);
-  analog_out.write(1, counter);
-  analog_out.write(2, counter);
-  analog_out.write(3, counter);
-  Serial.println("All channels set at "+String(counter)+"V");
+  MachineControl_AnalogOut.write(0, voltage);
+  MachineControl_AnalogOut.write(1, voltage);
+  MachineControl_AnalogOut.write(2, voltage);
+  MachineControl_AnalogOut.write(3, voltage);
+
+  Serial.println("All channels set at " + String(voltage) + "V");
   
-  counter = counter + 0.1;
-  //Maximum output value is 10.4V
-  if (counter >= 10.5)
-  {
-    counter = 0;
-    //Additional 100 ms delay introduced to manage 10.5V -> 0V fall time of 150 ms
-    delay(100);
+  voltage = voltage + 0.1;
+  //Maximum output value is 10.5V
+  if (voltage >= 10.5) {
+    voltage = 0;
+    delay(100); //Additional 100 ms delay introduced to manage 10.5V -> 0V fall time of 150 ms
   }
   delay(100);
 }
