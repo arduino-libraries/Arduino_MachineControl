@@ -14,6 +14,7 @@
 #include <mbed.h>
 
 #include "AnalogInClass.h"
+#include "AnalogOutClass.h"
 
 #if __has_include("portenta_info.h")
 #include "portenta_info.h"
@@ -174,78 +175,6 @@ private:
 };
 
 extern COMMClass comm_protocols;
-
-class AnalogOutClass {
-public:
-
-	 /**
-	 * Set output voltage value (PWM)
-	 * @param  index select channel
-	 * @param  voltage desired output voltage (max 10.5V)
-	 */
-	void write(int index, float voltage) {
-		if (voltage < 0) {
-			voltage = 0;
-		}
-
-		switch (index) {
-			case 0:
-				out_0.write(voltage / 10.5);
-				break;
-			case 1:
-				out_1.write(voltage / 10.5);
-				break;
-			case 2:
-				out_2.write(voltage / 10.5);
-				break;
-			case 3:
-				out_3.write(voltage / 10.5);
-				break;
-		}
-	}
-
-	 /**
-	 * Set the PWM period (frequency)
-	 * @param  index select channel
-	 * @param  period integer for selecting the period in ms
-	 */
-	void period_ms(int index, uint8_t period) {
-		switch (index) {
-			case 0:
-				out_0.period_ms(period);
-				break;
-			case 1:
-				out_1.period_ms(period);
-				break;
-			case 2:
-				out_2.period_ms(period);
-				break;
-			case 3:
-				out_3.period_ms(period);
-				break;
-		}
-	}
-	mbed::PwmOut& operator[](int index) {
-		switch (index) {
-			case 0:
-				return out_0;
-			case 1:
-				return out_1;
-			case 2:
-				return out_2;
-			case 3:
-				return out_3;
-		}
-	}
-private:
-	mbed::PwmOut out_0 = mbed::PwmOut(PJ_11);
-	mbed::PwmOut out_1 = mbed::PwmOut(PK_1);
-	mbed::PwmOut out_2 = mbed::PwmOut(PG_7);
-	mbed::PwmOut out_3 = mbed::PwmOut(PC_7);
-};
-
-extern AnalogOutClass analog_out;
-
 
 /* 
   TODO: writeme 

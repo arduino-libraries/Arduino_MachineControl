@@ -1,10 +1,8 @@
 #include "Arduino_MachineControl.h"
 
 namespace machinecontrol {
-
 RTDClass temp_probes;
 COMMClass comm_protocols;
-AnalogOutClass analog_out;
 EncoderClass encoders;
 DigitalOutputsClass digital_outputs;
 ProgrammableDINClass digital_inputs;
