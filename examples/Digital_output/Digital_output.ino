@@ -29,22 +29,22 @@
 
 #include <Arduino_MachineControl.h>
 
-using namespace machinecontrol;
-
 void setup() {
   Serial.begin(9600);
   // The loop starts only when the Serial Monitor is opened.
   while (!Serial);
 
+  MachineControl_DigitalOutputs.begin();
+
   //Set over current behavior of all channels to latch mode:
-  digital_outputs.setLatch();
+  MachineControl_DigitalOutputs.setLatch();
 
   // Uncomment this line to set over current behavior of all
   // channels to auto retry mode instead of latch mode:
-  //digital_outputs.setRetry();
+  //MachineControl_DigitalOutputs.setRetry();
   
   //At startup set all channels to OPEN
-  digital_outputs.setAll(0);
+  MachineControl_DigitalOutputs.writeAll(0);
 }
 
 
@@ -52,63 +52,63 @@ void loop() {
   Serial.println("DIGITAL OUT:");
   
   // Set all channels to CLOSED
-  digital_outputs.setAll(255);
+  MachineControl_DigitalOutputs.writeAll(255);
   Serial.print("All channels are CLOSED for 1 s...");
   delay(1000);
   
   // Set all channels to OPEN
-  digital_outputs.setAll(0);
+  MachineControl_DigitalOutputs.writeAll(0);
   Serial.println("now they are OPEN.");
   delay(1000);
 
   // Toggle each channel for 1 s, one by one
   
-  digital_outputs.set(0, HIGH);
+  MachineControl_DigitalOutputs.write(0, HIGH);
   Serial.print("CH0 is CLOSED for 1 s...");
   delay(1000);
-  digital_outputs.set(0, LOW);
+  MachineControl_DigitalOutputs.write(0, LOW);
   Serial.println("now is OPEN.");
 
-  digital_outputs.set(1, HIGH);
+  MachineControl_DigitalOutputs.write(1, HIGH);
   Serial.print("CH1 is CLOSED for 1 s...");
   delay(1000);
-  digital_outputs.set(1, LOW);
+  MachineControl_DigitalOutputs.write(1, LOW);
   Serial.println("now is OPEN.");
 
-  digital_outputs.set(2, HIGH);
+  MachineControl_DigitalOutputs.write(2, HIGH);
   Serial.print("CH2 is CLOSED for 1 s...");
   delay(1000);
-  digital_outputs.set(2, LOW);
+  MachineControl_DigitalOutputs.write(2, LOW);
   Serial.println("now is OPEN.");
 
-  digital_outputs.set(3, HIGH);
+  MachineControl_DigitalOutputs.write(3, HIGH);
   Serial.print("CH3 is CLOSED for 1 s...");
   delay(1000);
-  digital_outputs.set(3, LOW);
+  MachineControl_DigitalOutputs.write(3, LOW);
   Serial.println("now is OPEN.");
 
-  digital_outputs.set(4, HIGH);
+  MachineControl_DigitalOutputs.write(4, HIGH);
   Serial.print("CH4 is CLOSED for 1 s...");
   delay(1000);
-  digital_outputs.set(4, LOW);
+  MachineControl_DigitalOutputs.write(4, LOW);
   Serial.println("now is OPEN.");
 
-  digital_outputs.set(5, HIGH);
+  MachineControl_DigitalOutputs.write(5, HIGH);
   Serial.print("CH5 is CLOSED for 1 s...");
   delay(1000);
-  digital_outputs.set(5, LOW);
+  MachineControl_DigitalOutputs.write(5, LOW);
   Serial.println("now is OPEN.");
 
-  digital_outputs.set(6, HIGH);
+  MachineControl_DigitalOutputs.write(6, HIGH);
   Serial.print("CH6 is CLOSED for 1 s...");
   delay(1000);
-  digital_outputs.set(6, LOW);
+  MachineControl_DigitalOutputs.write(6, LOW);
   Serial.println("now is OPEN.");
 
-  digital_outputs.set(7, HIGH);
+  MachineControl_DigitalOutputs.write(7, HIGH);
   Serial.print("CH7 is CLOSED for 1 s...");
   delay(1000);
-  digital_outputs.set(7, LOW);
+  MachineControl_DigitalOutputs.write(7, LOW);
   Serial.println("now is OPEN.");
 
   Serial.println();
