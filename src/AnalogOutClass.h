@@ -39,14 +39,16 @@ class AnalogOutClass {
         bool begin();
 
         /**
-         * Set the PWM period (frequency) on the selected channel
+         * @brief Set the PWM period (frequency) on the selected channel
+         * 
          * @param channel selected channel
          * @param period_ms PWM period in ms
          */
         void setPeriod(int channel, uint8_t period_ms);
 
         /**
-         * Set output voltage value on the selected channel
+         * @brief Set output voltage value on the selected channel
+         * 
          * @param channel selected channel
          * @param voltage desired output voltage (max 10.5V)
          */
