@@ -21,9 +21,19 @@
 class DigitalOutputsClass {
     public:
         /**
-         * @brief Construct an 
+         * @brief Construct a DigitalOutputsClass object.
          *
-         * @param 
+         * This constructor initializes a DigitalOutputsClass object with the specified pin assignments for digital outputs.
+         *
+         * @param do0_pin The pin number for the digital output channel 0.
+         * @param do1_pin The pin number for the digital output channel 1.
+         * @param do2_pin The pin number for the digital output channel 2.
+         * @param do3_pin The pin number for the digital output channel 3.
+         * @param do4_pin The pin number for the digital output channel 4.
+         * @param do5_pin The pin number for the digital output channel 5.
+         * @param do6_pin The pin number for the digital output channel 6.
+         * @param do7_pin The pin number for the digital output channel 7.
+         * @param latch_pin The pin number for the latch mode control.
          */
         DigitalOutputsClass(PinName do0_pin = PI_6, 
                             PinName do1_pin = PH_9, 
@@ -37,41 +47,30 @@ class DigitalOutputsClass {
         ~DigitalOutputsClass();
 
         /**
-         * @brief Initialize the
-         *  
-         * @return true If the X is successfully initialized, false Otherwise
+         * @brief Initialize the DigitalOutputs module with the specified latch mode.
+         * 
+         * @param latch_mode The latch mode for thermal shutdown. If true, thermal shutdown operates in the latch mode. Otherwise, it operates in the auto-retry mode.
+         * @return true If the DigitalOutputs module is successfully initialized, false Otherwise
          */
-        bool begin();
+        bool begin(bool latch_mode = true);
 
         /**
-         * @brief Set a particular digital output
-         * 
-         * @param index digital output to be set
-         * @param val set value (HIGH/LOW)
+         * @brief Write the output value for the given channel.
+         *
+         * @param channel The channel number to write to.
+         * @param val The value to write. It can be either PinStatus::HIGH or PinStatus::LOW.
          */
         void write(uint8_t channel, PinStatus val);
         
         /**
-         * @brief Set all digital outputs at the same time.
-         *  
-         * @param val 8 bit integer to set all 8 channels. e.g:
-         * Set all to HIGH -> val = 255 (0b11111111)
-         * Set all to LOW  -> val = 0   (0b00000000)
+         * @brief Set the state of all digital outputs simultaneously.
+         *
+         * @param val_mask An 8-bit integer representing the state of all 8 channels. Each bit corresponds to a channel, where 1 represents HIGH and 0 represents LOW.
+         * For example:
+         * - To set all channels to HIGH: val_mask = 255 (0b11111111)
+         * - To set all channels to LOW: val_mask = 0 (0b00000000)
          */
-        void writeAll(uint8_t val);
-
-        /**
-         * @brief Configures the thermal shutdown of the high-side switches (TPS4H160) to operate in latch mode. 
-         * The output latches off when thermal shutdown occurs. 
-         */
-        void setLatch();
-
-        /**
-         * @brief Configures the thermal shutdown of the high-side switches (TPS4H160) to operate in auto-retry mode. 
-         * The output automatically recovers when TJ < T(SD) – T(hys), but the current is limited to ICL(TSD) 
-         * to avoid repetitive thermal shutdown. 
-         */
-        void setRetry();
+        void writeAll(uint8_t val_mask);
 private:
         PinName _do0;
         PinName _do1;
@@ -82,6 +81,19 @@ private:
         PinName _do6;
         PinName _do7;
         PinName _latch;
+
+        /**
+         * @brief Configures the thermal shutdown of the high-side switches (TPS4H160) to operate in latch mode. 
+         * The output latches off when thermal shutdown occurs. 
+         */
+        void _setLatchMode();
+
+        /**
+         * @brief Configures the thermal shutdown of the high-side switches (TPS4H160) to operate in auto-retry mode. 
+         * The output automatically recovers when TJ < T(SD) – T(hys), but the current is limited to ICL(TSD) 
+         * to avoid repetitive thermal shutdown. 
+         */
+        void _setAutoRetryMode();
 };
 
 extern DigitalOutputsClass MachineControl_DigitalOutputs;

@@ -34,14 +34,12 @@ void setup() {
   // The loop starts only when the Serial Monitor is opened.
   while (!Serial);
 
-  MachineControl_DigitalOutputs.begin();
-
   //Set over current behavior of all channels to latch mode:
-  MachineControl_DigitalOutputs.setLatch();
+  MachineControl_DigitalOutputs.begin(true);
 
   // Uncomment this line to set over current behavior of all
   // channels to auto retry mode instead of latch mode:
-  //MachineControl_DigitalOutputs.setRetry();
+  //MachineControl_DigitalOutputs.begin(false);
   
   //At startup set all channels to OPEN
   MachineControl_DigitalOutputs.writeAll(0);

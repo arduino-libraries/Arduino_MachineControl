@@ -23,7 +23,7 @@ DigitalOutputsClass::DigitalOutputsClass(PinName do0_pin,
 DigitalOutputsClass::~DigitalOutputsClass() 
 { }
 
-bool DigitalOutputsClass::begin() {
+bool DigitalOutputsClass::begin(bool latch_mode) {
     pinMode(_do0, OUTPUT);
     pinMode(_do1, OUTPUT);
     pinMode(_do2, OUTPUT);
@@ -34,6 +34,12 @@ bool DigitalOutputsClass::begin() {
     pinMode(_do7, OUTPUT);
 
     pinMode(_latch, OUTPUT);
+
+    if(latch_mode) {
+        _setLatchMode();
+    } else {
+        _setAutoRetryMode();
+    }
 
     return true;
 }
@@ -69,9 +75,9 @@ void DigitalOutputsClass::write(uint8_t channel, PinStatus val) {
     }
 }
 
-void DigitalOutputsClass::writeAll(uint8_t val) {
+void DigitalOutputsClass::writeAll(uint8_t val_mask) {
     for (uint8_t ch = 0; ch < 8; ch++) {
-        if (val && (1 << ch)) {
+        if (val_mask && (1 << ch)) {
             write(ch, HIGH);
         } else {
             write(ch, LOW);
@@ -79,12 +85,12 @@ void DigitalOutputsClass::writeAll(uint8_t val) {
     }
 }
 
-void DigitalOutputsClass::setLatch() {
-    digitalWrite(_latch, LOW);
+void DigitalOutputsClass::_setLatchMode() {
+    digitalWrite(_latch, HIGH);
 }
 
-void DigitalOutputsClass::setRetry() {
-    digitalWrite(_latch, HIGH);
+void DigitalOutputsClass::_setAutoRetryMode() {
+    digitalWrite(_latch, LOW);
 }
 
 DigitalOutputsClass MachineControl_DigitalOutputs;
