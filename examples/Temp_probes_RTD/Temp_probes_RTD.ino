@@ -25,121 +25,120 @@
 void setup() {
   Serial.begin(9600);
   Serial.println("MAX31865 PT100 Sensor Test!");
-  temp_probes.rtd.begin(THREE_WIRE);
-  temp_probes.enableRTD();
+  MachineControl_TempProbes.begin(TEMPPROBE_RTD, THREE_WIRE);
 }
 
 void loop() {
-  temp_probes.selectChannel(0);
+  MachineControl_TempProbes.selectChannel(0);
   Serial.println("CHANNEL 0 SELECTED");
-  uint16_t rtd = temp_probes.rtd.readRTD();
+  uint16_t rtd = MachineControl_TempProbes.RTD.readRTD();
   float ratio = rtd;
   ratio /= 32768;
 
   // Check and print any faults
-  uint8_t fault = temp_probes.rtd.readFault();
+  uint8_t fault = MachineControl_TempProbes.RTD.readFault();
   if (fault) {
     Serial.print("Fault 0x"); Serial.println(fault, HEX);
-    if (temp_probes.rtd.getHighThresholdFault(fault)) {
+    if (MachineControl_TempProbes.RTD.getHighThresholdFault(fault)) {
       Serial.println("RTD High Threshold");
     }
-    if (temp_probes.rtd.getLowThresholdFault(fault)) {
+    if (MachineControl_TempProbes.RTD.getLowThresholdFault(fault)) {
       Serial.println("RTD Low Threshold");
     }
-    if (temp_probes.rtd.getLowREFINFault(fault)) {
+    if (MachineControl_TempProbes.RTD.getLowREFINFault(fault)) {
       Serial.println("REFIN- > 0.85 x Bias");
     }
-    if (temp_probes.rtd.getHighREFINFault(fault)) {
+    if (MachineControl_TempProbes.RTD.getHighREFINFault(fault)) {
       Serial.println("REFIN- < 0.85 x Bias - FORCE- open");
     }
-    if (temp_probes.rtd.getLowRTDINFault(fault)) {
+    if (MachineControl_TempProbes.RTD.getLowRTDINFault(fault)) {
       Serial.println("RTDIN- < 0.85 x Bias - FORCE- open");
     }
-    if (temp_probes.rtd.getVoltageFault(fault)) {
+    if (MachineControl_TempProbes.RTD.getVoltageFault(fault)) {
       Serial.println("Under/Over voltage");
     }
-    temp_probes.rtd.clearFault();
+    MachineControl_TempProbes.RTD.clearFault();
   } else {
     Serial.print("RTD value: "); Serial.println(rtd);
     Serial.print("Ratio = "); Serial.println(ratio, 8);
     Serial.print("Resistance = "); Serial.println(RREF * ratio, 8);
-    Serial.print("Temperature = "); Serial.println(temp_probes.rtd.readTemperature(RNOMINAL, RREF));
+    Serial.print("Temperature = "); Serial.println(MachineControl_TempProbes.RTD.readTemperature(RNOMINAL, RREF));
   }
   Serial.println();
   delay(100);
 
-  temp_probes.selectChannel(1);
+  MachineControl_TempProbes.selectChannel(1);
   Serial.println("CHANNEL 1 SELECTED");
-  rtd = temp_probes.rtd.readRTD();
+  rtd = MachineControl_TempProbes.RTD.readRTD();
   ratio = rtd;
   ratio /= 32768;
 
   // Check and print any faults
-  fault = temp_probes.rtd.readFault();
+  fault = MachineControl_TempProbes.RTD.readFault();
   if (fault) {
     Serial.print("Fault 0x"); Serial.println(fault, HEX);
-    if (temp_probes.rtd.getHighThresholdFault(fault)) {
+    if (MachineControl_TempProbes.RTD.getHighThresholdFault(fault)) {
       Serial.println("RTD High Threshold");
     }
-    if (temp_probes.rtd.getLowThresholdFault(fault)) {
+    if (MachineControl_TempProbes.RTD.getLowThresholdFault(fault)) {
       Serial.println("RTD Low Threshold");
     }
-    if (temp_probes.rtd.getLowREFINFault(fault)) {
+    if (MachineControl_TempProbes.RTD.getLowREFINFault(fault)) {
       Serial.println("REFIN- > 0.85 x Bias");
     }
-    if (temp_probes.rtd.getHighREFINFault(fault)) {
+    if (MachineControl_TempProbes.RTD.getHighREFINFault(fault)) {
       Serial.println("REFIN- < 0.85 x Bias - FORCE- open");
     }
-    if (temp_probes.rtd.getLowRTDINFault(fault)) {
+    if (MachineControl_TempProbes.RTD.getLowRTDINFault(fault)) {
       Serial.println("RTDIN- < 0.85 x Bias - FORCE- open");
     }
-    if (temp_probes.rtd.getVoltageFault(fault)) {
+    if (MachineControl_TempProbes.RTD.getVoltageFault(fault)) {
       Serial.println("Under/Over voltage");
     }
-    temp_probes.rtd.clearFault();
+    MachineControl_TempProbes.RTD.clearFault();
   } else {
     Serial.print("RTD value: "); Serial.println(rtd);
     Serial.print("Ratio = "); Serial.println(ratio, 8);
     Serial.print("Resistance = "); Serial.println(RREF * ratio, 8);
-    Serial.print("Temperature = "); Serial.println(temp_probes.rtd.readTemperature(RNOMINAL, RREF));
+    Serial.print("Temperature = "); Serial.println(MachineControl_TempProbes.RTD.readTemperature(RNOMINAL, RREF));
   }
   Serial.println();
   delay(100);
 
-  temp_probes.selectChannel(2);
+  MachineControl_TempProbes.selectChannel(2);
   Serial.println("CHANNEL 2 SELECTED");
-  rtd = temp_probes.rtd.readRTD();
+  rtd = MachineControl_TempProbes.RTD.readRTD();
   ratio = rtd;
   ratio /= 32768;
 
   // Check and print any faults
-  fault = temp_probes.rtd.readFault();
+  fault = MachineControl_TempProbes.RTD.readFault();
   if (fault) {
     Serial.print("Fault 0x"); Serial.println(fault, HEX);
-    if (temp_probes.rtd.getHighThresholdFault(fault)) {
+    if (MachineControl_TempProbes.RTD.getHighThresholdFault(fault)) {
       Serial.println("RTD High Threshold");
     }
-    if (temp_probes.rtd.getLowThresholdFault(fault)) {
+    if (MachineControl_TempProbes.RTD.getLowThresholdFault(fault)) {
       Serial.println("RTD Low Threshold");
     }
-    if (temp_probes.rtd.getLowREFINFault(fault)) {
+    if (MachineControl_TempProbes.RTD.getLowREFINFault(fault)) {
       Serial.println("REFIN- > 0.85 x Bias");
     }
-    if (temp_probes.rtd.getHighREFINFault(fault)) {
+    if (MachineControl_TempProbes.RTD.getHighREFINFault(fault)) {
       Serial.println("REFIN- < 0.85 x Bias - FORCE- open");
     }
-    if (temp_probes.rtd.getLowRTDINFault(fault)) {
+    if (MachineControl_TempProbes.RTD.getLowRTDINFault(fault)) {
       Serial.println("RTDIN- < 0.85 x Bias - FORCE- open");
     }
-    if (temp_probes.rtd.getVoltageFault(fault)) {
+    if (MachineControl_TempProbes.RTD.getVoltageFault(fault)) {
       Serial.println("Under/Over voltage");
     }
-    temp_probes.rtd.clearFault();
+    MachineControl_TempProbes.RTD.clearFault();
   } else {
     Serial.print("RTD value: "); Serial.println(rtd);
     Serial.print("Ratio = "); Serial.println(ratio, 8);
     Serial.print("Resistance = "); Serial.println(RREF * ratio, 8);
-    Serial.print("Temperature = "); Serial.println(temp_probes.rtd.readTemperature(RNOMINAL, RREF));
+    Serial.print("Temperature = "); Serial.println(MachineControl_TempProbes.RTD.readTemperature(RNOMINAL, RREF));
   }
   Serial.println();
   delay(1000);
