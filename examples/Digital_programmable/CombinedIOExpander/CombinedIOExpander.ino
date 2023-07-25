@@ -21,26 +21,22 @@ void setup() {
   Serial.begin(9600);
   while (!Serial);
   Wire.begin();
+
   if (!digital_inputs.init()){
     Serial.println("GPIO expander initialization fail!!");
- }
- if (!digital_programmables.init()){
+  }
+  if (!MachineControl_DigitalProgrammables.begin()){
     Serial.println("GPIO expander initialization fail!!");
- }
-
-  Serial.println("GPIO expander initialization done");
-  digital_programmables.setLatch();
-  Serial.println("GPIO expander initialization done");
-//  digital_inputs.setLatch();
+  }
 }
 
 void loop() {
   // Write the status value to On to Pin 3
-  digital_programmables.set(IO_WRITE_CH_PIN_03, SWITCH_ON);
+  MachineControl_DigitalProgrammables.set(IO_WRITE_CH_PIN_03, SWITCH_ON);
   delay(1000);
 
   // Read from PROGRAMMABLE DIGITAL I/O Pin 3
-  Serial.println("Read IO Pin 03: " + String(digital_programmables.read(IO_READ_CH_PIN_03)));
+  Serial.println("Read IO Pin 03: " + String(MachineControl_DigitalProgrammables.read(IO_READ_CH_PIN_03)));
   delay(1000);
 
   // Read from DIGITAL INPUT Expander Pin 3 
@@ -48,19 +44,19 @@ void loop() {
   delay(1000);
 
   // Write the status value to Off to Pin 3
-  digital_programmables.set(IO_WRITE_CH_PIN_03, SWITCH_OFF);
+  MachineControl_DigitalProgrammables.set(IO_WRITE_CH_PIN_03, SWITCH_OFF);
   delay(1000);
 
   Serial.println();
   // Write the status value to On to all the Output Pins
-  digital_programmables.writeAll(SWITCH_ON_ALL);
+  MachineControl_DigitalProgrammables.writeAll(SWITCH_ON_ALL);
 
   // Reads from all Input Pins
   readAll();
   delay(1000);
 
   // Write the status value to Off all to all the Output Pins
-  digital_programmables.writeAll(SWITCH_OFF_ALL);
+  MachineControl_DigitalProgrammables.writeAll(SWITCH_OFF_ALL);
 
   // Reads from all Input Pins
   readAll();
@@ -71,7 +67,7 @@ void loop() {
 
 
 void readAll() {
-  uint32_t inputs = digital_programmables.readAll();
+  uint32_t inputs = MachineControl_DigitalProgrammables.readAll();
   Serial.println("CH00: " + String((inputs & (1 << IO_READ_CH_PIN_00)) >> IO_READ_CH_PIN_00));
   Serial.println("CH01: " + String((inputs & (1 << IO_READ_CH_PIN_01)) >> IO_READ_CH_PIN_01));
   Serial.println("CH02: " + String((inputs & (1 << IO_READ_CH_PIN_02)) >> IO_READ_CH_PIN_02));

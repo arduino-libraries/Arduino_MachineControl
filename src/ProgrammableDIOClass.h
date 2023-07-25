@@ -1,43 +1,64 @@
-/* 
-  using gpio expander class https://www.i2cdevlib.com/devices/tca6424a#source
-  Ask Giampaolo for proper porting
-  Expander interrupt is PI_5
-  prog_latch_retry (AKA TERM ? ) is PH_14
+/**
+ * @file ProgrammableDIOClass.h
+ * @author Leonardo Cavagnis
+ * @brief Header file for the Programmable Digital IO connector of the Portenta Machine Control library.
+ *
+ * This library allows interfacing with the IO Expander and configuring the thermal shutdown mode of the high-side switches.
+ */
 
-  TODO: check if Wire and address are correct
-*/
+#ifndef __PROGRAMMABLE_DIO_CLASS_H
+#define __PROGRAMMABLE_DIO_CLASS_H
 
+/* Includes -------------------------------------------------------------------*/
 #include "utility/ioexpander/ArduinoIOExpander.h"
 #include <Arduino.h>
 #include <mbed.h>
 
+/* Class ----------------------------------------------------------------------*/
+
 /**
- * The ProgrammableDIOClass is used to initialize the IOExpanders and configure the 
- * thermal shutdown mode of the high side switches.
+ * @class ProgrammableDIOClass
+ * @brief Class for the Programmable Digital IO connector of the Portenta Machine Control.
+ *
+ * This class extends the ArduinoIOExpanderClass to interface with the IO Expander and provides methods to configure thermal shutdown modes.
  */
 class ProgrammableDIOClass : public ArduinoIOExpanderClass {
 public:
+    /**
+     * @brief Construct a ProgrammableDIOClass object.
+     *
+     * This constructor initializes a ProgrammableDIOClass object with the specified pin assignment for the latch pin.
+     *
+     * @param latch_pin The pin number for the latch mode control.
+     */
+    ProgrammableDIOClass(PinName latch_pin = PH_14);
+    ~ProgrammableDIOClass();
 
-	/**
-	 * Test connection with the IOExpander and set all the pins to the default mode. 
-	 * @return true if OK, false if fault
-	 */
-	bool init();
+    /**
+     * @brief Initialize the ProgrammableDIO module with the specified latch mode.
+     *
+     * @param latch_mode The latch mode for thermal shutdown. If true, thermal shutdown operates in the latch mode. Otherwise, it operates in the auto-retry mode.
+     * @return true If the ProgrammableDIO module is successfully initialized, false otherwise.
+     */
+    bool begin(bool latch_mode = true);
 
-	/**
-	 * Configures the thermal shutdown of the high-side switches (TPS4H160) to operate in latch mode. 
-	 * The output latches off when thermal shutdown occurs. 
-	 */
-	void setLatch();
-
-	 /**
-	 * Configures the thermal shutdown of the high-side switches (TPS4H160) to operate in auto-retry mode. 
-	 * The output automatically recovers when TJ < T(SD) – T(hys), but the current is limited to ICL(TSD) 
-	 * to avoid repetitive thermal shutdown. 
-	 */
-	void setRetry();
 private:
-	mbed::DigitalOut prog_latch_retry = mbed::DigitalOut(PH_14);
+    PinName _latch;
+
+    /**
+     * @brief Configures the thermal shutdown of the high-side switches (TPS4H160) to operate in latch mode.
+     * The output latches off when thermal shutdown occurs.
+     */
+    void _setLatchMode();
+
+    /**
+     * @brief Configures the thermal shutdown of the high-side switches (TPS4H160) to operate in auto-retry mode.
+     * The output automatically recovers when TJ < T(SD) – T(hys), but the current is limited to ICL(TSD)
+     * to avoid repetitive thermal shutdown.
+     */
+    void _setAutoRetryMode();
 };
 
-extern ProgrammableDIOClass digital_programmables;
+extern ProgrammableDIOClass MachineControl_DigitalProgrammables;
+
+#endif /* __PROGRAMMABLE_DIO_CLASS_H */
