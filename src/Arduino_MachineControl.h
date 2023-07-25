@@ -18,94 +18,9 @@
 #include "DigitalOutputsClass.h"
 #include "ProgrammableDIOClass.h"
 #include "ProgrammableDINClass.h"
-
-#if __has_include("portenta_info.h")
-#include "portenta_info.h"
-#define TRY_REV2_RECOGNITION
-uint8_t* boardInfo();
-#define PMC_R2_SKU  (24 << 8 | 3)
-#endif
+#include "RTDClass.h"
 
 namespace machinecontrol {
-
-/**
- * The RTDClass allows enabling and selecting the different temperature sensor inputs
- * (RTD and thermocouples)
- */
-class RTDClass {
-public:
-
-	/**
-	*  Select the input channel to be read (3 channels available)
-	*  
-	*  @param channel (0-2)
-	*/   
-	void selectChannel(int channel) {
-
-#ifdef TRY_REV2_RECOGNITION
-		// check if OTP data is present AND the board is mounted on a r2 carrier
-		auto info = (PortentaBoardInfo*)boardInfo();
-		if (info->magic == 0xB5 && info->carrier == PMC_R2_SKU) {
-			// reverse channels 0 and 2
-			switch (channel) {
-				case 0:
-					channel = 2;
-					break;
-				case 2:
-					channel = 0;
-					break;
-				default:
-					break;
-			}
-		}
-#endif
-#undef TRY_REV2_RECOGNITION
-
-		for (int i=0; i<3; i++) {
-			ch_sel[i] = (i == channel ? 1 : 0);
-		}
-		delay(150);
-	}
-
-	/**
-	*  Enable the CS of the Thermocouple to digital converter
-	*  Disable the CS for the RTD to digital converter
-	*/   
-	void enableTC() {
-		rtd_th = 0;
-		digitalWrite(PI_0, LOW);
-		digitalWrite(PA_6, HIGH);
-	}
-
-	/**
-	*  Enable the CS of the RDT to digital converter. 
-	*  Disable the CS of the Thermocouple to digital converter
-	*/   
-	void enableRTD() {
-		rtd_th = 1;
-		digitalWrite(PI_0, HIGH);
-		digitalWrite(PA_6, LOW);
-
-	}
-
-	/**
-	*  Disable Chip select for both RTD and thermocouple digital converters. 
-	*  
-	*/   
-	void disableCS() {
-		digitalWrite(PI_0, HIGH);
-		digitalWrite(PA_6, HIGH);
-	}
-	MAX31865Class rtd = MAX31865Class(PA_6);
-	MAX31855Class tc = MAX31855Class(7);
-
-private:
-	mbed::DigitalOut ch_sel[3] = { mbed::DigitalOut(PD_6), mbed::DigitalOut(PI_4), mbed::DigitalOut(PG_10)};
-	mbed::DigitalOut rtd_th = mbed::DigitalOut(PC_15);
-
-};
-
-extern RTDClass temp_probes;
 
 /**
  * The COMMClass is used to initialize the CAN and RS485 LEDs and 

@@ -18,8 +18,6 @@
 
 #include <Arduino_MachineControl.h>
 
-using namespace machinecontrol;
-
 void setup() {
   Serial.begin(9600);
   // Initialize temperature probes
