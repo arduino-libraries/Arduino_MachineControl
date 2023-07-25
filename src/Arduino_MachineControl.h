@@ -17,6 +17,7 @@
 #include "AnalogOutClass.h"
 #include "DigitalOutputsClass.h"
 #include "ProgrammableDIOClass.h"
+#include "ProgrammableDINClass.h"
 
 #if __has_include("portenta_info.h")
 #include "portenta_info.h"
@@ -211,19 +212,6 @@ private:
 };
 
 extern EncoderClass encoders;
-
-class ProgrammableDINClass : public ArduinoIOExpanderClass {
-public:
-	/**
-	 * Test connection with the IOExpander and set all the pins to the default mode. 
-	 * @return true if OK, false if fault
-	 */
-	bool init() {
-		return begin(DIN_ADD);
-	}
-};
-
-extern ProgrammableDINClass digital_inputs;
 
 /**
  * The RtcControllerClass is a wrapper for the PCF8563TClass() that is used to 
