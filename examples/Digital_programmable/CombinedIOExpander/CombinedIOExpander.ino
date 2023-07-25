@@ -15,14 +15,13 @@
 
 #include <Arduino_MachineControl.h>
 #include "Wire.h"
-using namespace machinecontrol;
 
 void setup() {
   Serial.begin(9600);
   while (!Serial);
   Wire.begin();
 
-  if (!digital_inputs.init()){
+  if (!MachineControl_DigitalInputs.begin()){
     Serial.println("GPIO expander initialization fail!!");
   }
   if (!MachineControl_DigitalProgrammables.begin()){
@@ -40,7 +39,7 @@ void loop() {
   delay(1000);
 
   // Read from DIGITAL INPUT Expander Pin 3 
-  Serial.println("Read DIN Pin 03: " + String(digital_inputs.read(DIN_READ_CH_PIN_03)));
+  Serial.println("Read DIN Pin 03: " + String(MachineControl_DigitalInputs.read(DIN_READ_CH_PIN_03)));
   delay(1000);
 
   // Write the status value to Off to Pin 3
@@ -81,7 +80,7 @@ void readAll() {
   Serial.println("CH10: " + String((inputs & (1 << IO_READ_CH_PIN_10)) >> IO_READ_CH_PIN_10));
   Serial.println("CH11: " + String((inputs & (1 << IO_READ_CH_PIN_11)) >> IO_READ_CH_PIN_11));
   Serial.println();
-  inputs = digital_inputs.readAll();
+  inputs = MachineControl_DigitalInputs.readAll();
   Serial.println("CH00: " + String((inputs & (1 << DIN_READ_CH_PIN_00)) >> DIN_READ_CH_PIN_00));
   Serial.println("CH01: " + String((inputs & (1 << DIN_READ_CH_PIN_01)) >> DIN_READ_CH_PIN_01));
   Serial.println("CH02: " + String((inputs & (1 << DIN_READ_CH_PIN_02)) >> DIN_READ_CH_PIN_02));

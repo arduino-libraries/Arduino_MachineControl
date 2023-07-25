@@ -15,7 +15,6 @@
  
 #include <Arduino_MachineControl.h>
 #include "Wire.h"
-using namespace machinecontrol;
 
 void setup() {
   Serial.begin(9600);

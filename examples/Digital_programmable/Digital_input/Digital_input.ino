@@ -13,8 +13,7 @@
 #include <Arduino_MachineControl.h>
 #include "Wire.h"
 
-using namespace machinecontrol;
-  uint16_t readings = 0;
+uint16_t readings = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -22,7 +21,7 @@ void setup() {
   while(!Serial);
   Wire.begin();
 
-  if (!digital_inputs.init()) {
+  if (!MachineControl_DigitalInputs.begin()) {
     Serial.println("Digital input GPIO expander initialization fail!!");
  }
 }
@@ -32,28 +31,28 @@ void loop() {
   readAll();
 
   //Read one-by-one each channel and print them one-by-one
-  readings = digital_inputs.read(DIN_READ_CH_PIN_00);
+  readings = MachineControl_DigitalInputs.read(DIN_READ_CH_PIN_00);
   Serial.println("CH00: "+String(readings));
 
-  readings = digital_inputs.read(DIN_READ_CH_PIN_01);
+  readings = MachineControl_DigitalInputs.read(DIN_READ_CH_PIN_01);
   Serial.println("CH01: "+String(readings));
 
-  readings = digital_inputs.read(DIN_READ_CH_PIN_02);
+  readings = MachineControl_DigitalInputs.read(DIN_READ_CH_PIN_02);
   Serial.println("CH02: "+String(readings));
 
-  readings = digital_inputs.read(DIN_READ_CH_PIN_03);
+  readings = MachineControl_DigitalInputs.read(DIN_READ_CH_PIN_03);
   Serial.println("CH03: "+String(readings));
 
-  readings = digital_inputs.read(DIN_READ_CH_PIN_04);
+  readings = MachineControl_DigitalInputs.read(DIN_READ_CH_PIN_04);
   Serial.println("CH04: "+String(readings));
 
-  readings = digital_inputs.read(DIN_READ_CH_PIN_05);
+  readings = MachineControl_DigitalInputs.read(DIN_READ_CH_PIN_05);
   Serial.println("CH05: "+String(readings));
 
-  readings = digital_inputs.read(DIN_READ_CH_PIN_06);
+  readings = MachineControl_DigitalInputs.read(DIN_READ_CH_PIN_06);
   Serial.println("CH06: "+String(readings));
 
-  readings = digital_inputs.read(DIN_READ_CH_PIN_07);
+  readings = MachineControl_DigitalInputs.read(DIN_READ_CH_PIN_07);
   Serial.println("CH07: "+String(readings));
 
   Serial.println();
@@ -62,7 +61,7 @@ void loop() {
 }
 
 uint8_t readAll() {
-  uint32_t inputs = digital_inputs.readAll();
+  uint32_t inputs = MachineControl_DigitalInputs.readAll();
   Serial.println("CH00: " + String((inputs & (1 << DIN_READ_CH_PIN_00)) >> DIN_READ_CH_PIN_00));
   Serial.println("CH01: " + String((inputs & (1 << DIN_READ_CH_PIN_01)) >> DIN_READ_CH_PIN_01));
   Serial.println("CH02: " + String((inputs & (1 << DIN_READ_CH_PIN_02)) >> DIN_READ_CH_PIN_02));
