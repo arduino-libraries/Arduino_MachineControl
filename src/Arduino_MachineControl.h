@@ -18,7 +18,7 @@
 #include "DigitalOutputsClass.h"
 #include "ProgrammableDIOClass.h"
 #include "ProgrammableDINClass.h"
-#include "RTDClass.h"
+#include "TempProbesClass.h"
 
 namespace machinecontrol {
 

@@ -1,4 +1,4 @@
-#include "RTDClass.h"
+#include "TempProbesClass.h"
 
 #if __has_include("portenta_info.h")
 #include "portenta_info.h"
@@ -7,7 +7,7 @@ uint8_t* boardInfo();
 #define PMC_R2_SKU  (24 << 8 | 3)
 #endif
 
-void RTDClass::selectChannel(int channel) {
+void TempProbesClass::selectChannel(int channel) {
 
 #ifdef TRY_REV2_RECOGNITION
     // check if OTP data is present AND the board is mounted on a r2 carrier
@@ -34,21 +34,21 @@ void RTDClass::selectChannel(int channel) {
     delay(150);
 }
 
-void RTDClass::enableTC() {
+void TempProbesClass::enableTC() {
     rtd_th = 0;
     digitalWrite(PI_0, LOW);
     digitalWrite(PA_6, HIGH);
 }
 
-void RTDClass::enableRTD() {
+void TempProbesClass::enableRTD() {
     rtd_th = 1;
     digitalWrite(PI_0, HIGH);
     digitalWrite(PA_6, LOW);
 }
 
-void RTDClass::disableCS() {
+void TempProbesClass::disableCS() {
     digitalWrite(PI_0, HIGH);
     digitalWrite(PA_6, HIGH);
 }
 
-RTDClass temp_probes;
+TempProbesClass temp_probes;

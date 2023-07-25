@@ -4,10 +4,10 @@
 #include <mbed.h>
 
 /**
- * The RTDClass allows enabling and selecting the different temperature sensor inputs
+ * The TempProbesClass allows enabling and selecting the different temperature sensor inputs
  * (RTD and thermocouples)
  */
-class RTDClass {
+class TempProbesClass {
 public:
 
 	/**
@@ -40,7 +40,6 @@ public:
 private:
 	mbed::DigitalOut ch_sel[3] = { mbed::DigitalOut(PD_6), mbed::DigitalOut(PI_4), mbed::DigitalOut(PG_10)};
 	mbed::DigitalOut rtd_th = mbed::DigitalOut(PC_15);
-
 };
 
-extern RTDClass temp_probes;
+extern TempProbesClass temp_probes;
