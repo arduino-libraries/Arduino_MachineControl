@@ -17,8 +17,6 @@
 
 #include <Arduino_MachineControl.h>
 
-using namespace machinecontrol;
-
 constexpr unsigned long sendInterval { 1000 };
 unsigned long sendNow { 0 };
 

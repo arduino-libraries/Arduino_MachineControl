@@ -11,7 +11,6 @@
 */
 #include <Arduino_MachineControl.h>
 #include <CAN.h>
-using namespace machinecontrol;
 
 #define DATARATE_2MB     2000000
 #define DATARATE_1_5MB   1500000

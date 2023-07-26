@@ -59,8 +59,8 @@ public:
     QEI& operator[](int index);
 
 private:
-    QEI enc_0;  // QEI object for encoder 0
-    QEI enc_1;  // QEI object for encoder 1
+    QEI _enc0;  // QEI object for encoder 0
+    QEI _enc1;  // QEI object for encoder 1
 };
 
 extern EncoderClass MachineControl_Encoders;
