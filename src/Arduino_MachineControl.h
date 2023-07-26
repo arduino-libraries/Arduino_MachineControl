@@ -19,6 +19,7 @@
 #include "ProgrammableDINClass.h"
 #include "TempProbesClass.h"
 #include "RtcControllerClass.h"
+#include "USBClass.h"
 
 namespace machinecontrol {
 
@@ -127,49 +128,6 @@ private:
 };
 
 extern EncoderClass encoders;
-
-/**
- * The USB Class is used to enable/disable the power of the USBA (Host) and configure
- * the callbacks for the different host types (i.e. Keyboard, mouse, storage device etc). 
- */
-class USBClass {
-public:
-	USBClass()
-		: _power{PB_14, 0}
-		, _usbflag{PB_15}
-		{};
-		
-	/**
-	 * Enable power to USBA VBUS. 
-	 */
-	void powerEnable() {
-		_power = 0;
-	}
-
-	/**
-	 * Disable power to USBA VBUS.  
-	 */
-	void powerDisable() {
-		_power = 1;
-	}
-
-	/**
-	 * Flag to indicate overcurrent, overtemperature, or reverse−voltage conditions on the USBA VBUS. 	 
-	 * Active−low open−drain output.
-	 * @return true if OK, false if fault
-	 */
-	bool vflagRead() {
-		return _usbflag;
-	}
-
-private:
-	mbed::DigitalOut _power;
-	mbed::DigitalIn _usbflag;
-};
-
-
-extern USBClass usb_controller;
-
 
 }
 #endif
