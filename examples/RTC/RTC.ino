@@ -12,8 +12,6 @@
 */
 #include <Arduino_MachineControl.h>
 
-using namespace machinecontrol;
-
 int years = 20;
 int months = 9;
 int days = 24;
@@ -28,38 +26,38 @@ void setup() {
   }
 
   Serial.println("Initialization");
-  if(!rtc_controller.begin()) {
+  if(!MachineControl_RTCController.begin()) {
     Serial.println("Initialization fail!");
   }
   Serial.println("Initialization Done!");
 
   // APIs to set date's fields: years, months, days, hours, minutes and seconds
   // The RTC time can be set as epoch, using one of the following two options:
-  // - Calendar time: rtc_controller.setEpoch(years,  months,  days, hours, minutes, seconds);
-  // - UTC time: rtc_controller.setEpoch(date_in_seconds);
-  rtc_controller.setYears(years);
-  rtc_controller.setMonths(months);
-  rtc_controller.setDays(days);
-  rtc_controller.setHours(hours);
-  rtc_controller.setMinutes(minutes);
-  rtc_controller.setSeconds(seconds);
-  rtc_controller.setEpoch();
+  // - Calendar time: MachineControl_RTCController.setEpoch(years,  months,  days, hours, minutes, seconds);
+  // - UTC time: MachineControl_RTCController.setEpoch(date_in_seconds);
+  MachineControl_RTCController.setYears(years);
+  MachineControl_RTCController.setMonths(months);
+  MachineControl_RTCController.setDays(days);
+  MachineControl_RTCController.setHours(hours);
+  MachineControl_RTCController.setMinutes(minutes);
+  MachineControl_RTCController.setSeconds(seconds);
+  MachineControl_RTCController.setEpoch();
 }
 
 void loop() {
   // APIs to get date's fields.
   Serial.print("Date: ");
-  Serial.print(rtc_controller.getYears());
+  Serial.print(MachineControl_RTCController.getYears());
   Serial.print("/");
-  Serial.print(rtc_controller.getMonths());
+  Serial.print(MachineControl_RTCController.getMonths());
   Serial.print("/");
-  Serial.print(rtc_controller.getDays());
+  Serial.print(MachineControl_RTCController.getDays());
   Serial.print(" - ");
-  Serial.print(rtc_controller.getHours());
+  Serial.print(MachineControl_RTCController.getHours());
   Serial.print(":");
-  Serial.print(rtc_controller.getMinutes());
+  Serial.print(MachineControl_RTCController.getMinutes());
   Serial.print(":");
-  Serial.println(rtc_controller.getSeconds());
+  Serial.println(MachineControl_RTCController.getSeconds());
   time_t utc_time = time(NULL);
   Serial.print("Date as UTC time: ");
   Serial.println(utc_time);

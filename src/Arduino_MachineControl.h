@@ -7,7 +7,6 @@
 #include "utility/QEI/QEI.h"
 #include "utility/ioexpander/ArduinoIOExpander.h"
 #include "utility/RTC/PCF8563T.h"
-#include "utility/RTC/PCF8563T.h"
 
 #include <Arduino.h>
 #include <pinDefinitions.h>
@@ -19,6 +18,7 @@
 #include "ProgrammableDIOClass.h"
 #include "ProgrammableDINClass.h"
 #include "TempProbesClass.h"
+#include "RtcControllerClass.h"
 
 namespace machinecontrol {
 
@@ -127,21 +127,6 @@ private:
 };
 
 extern EncoderClass encoders;
-
-/**
- * The RtcControllerClass is a wrapper for the PCF8563TClass() that is used to 
- * set and get the time to/from the PCF8563T RTC.
- *  
- */
-class RtcControllerClass : public PCF8563TClass {
-public:
-	mbed::DigitalIn int_pin = mbed::DigitalIn(PB_9,PullUp);
-private:
-
-};
-
-extern RtcControllerClass rtc_controller;
-
 
 /**
  * The USB Class is used to enable/disable the power of the USBA (Host) and configure

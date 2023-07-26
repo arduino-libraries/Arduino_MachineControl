@@ -29,7 +29,7 @@ void setup() {
   }
   Serial.println("Initialization");
 
-  if (!rtc_controller.begin()) {
+  if (!MachineControl_RTCController.begin()) {
     Serial.println("Initialization fail!");
   }
 
@@ -37,14 +37,14 @@ void setup() {
   Serial.println("Initialization Done!");
 
   // APIs to set date's fields: hours, minutes and seconds
-  rtc_controller.setHours(hours);
-  rtc_controller.setMinutes(minutes);
-  rtc_controller.setSeconds(seconds);
+  MachineControl_RTCController.setHours(hours);
+  MachineControl_RTCController.setMinutes(minutes);
+  MachineControl_RTCController.setSeconds(seconds);
   // Enables Alarm on PCF8563T
-  rtc_controller.enableAlarm();
+  MachineControl_RTCController.enableAlarm();
 
   // set the minutes at which the alarm should rise
-  rtc_controller.setMinuteAlarm(46);
+  MachineControl_RTCController.setMinuteAlarm(46);
 
   // Attach an interrupt to the RTC interrupt pin
   attachInterrupt(RTC_INT, callback_alarm, FALLING);
@@ -56,23 +56,23 @@ void loop() {
   if (alarm_flag) {
     Serial.println("Alarm!!");
     detachInterrupt(RTC_INT);
-    rtc_controller.setSeconds(seconds);
-    rtc_controller.setMinuteAlarm(minutes + counter);
-    rtc_controller.clearAlarm();
+    MachineControl_RTCController.setSeconds(seconds);
+    MachineControl_RTCController.setMinuteAlarm(minutes + counter);
+    MachineControl_RTCController.clearAlarm();
     attachInterrupt(RTC_INT, callback_alarm, FALLING);
     alarm_flag = false;
 
     // To disable the alarm uncomment the following line:
-    // rtc_controller.disableAlarm();
+    // MachineControl_RTCController.disableAlarm();
   }
 
   // APIs to get date's fields.
-  //Serial.println(digitalRead(rtc_controller.int_pin));
-  Serial.print(rtc_controller.getHours());
+  //Serial.println(digitalRead(MachineControl_RTCController.int_pin));
+  Serial.print(MachineControl_RTCController.getHours());
   Serial.print(":");
-  Serial.print(rtc_controller.getMinutes());
+  Serial.print(MachineControl_RTCController.getMinutes());
   Serial.print(":");
-  Serial.println(rtc_controller.getSeconds());
+  Serial.println(MachineControl_RTCController.getSeconds());
   delay(1000);
 }
 
