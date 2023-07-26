@@ -20,6 +20,7 @@
 #include "TempProbesClass.h"
 #include "RtcControllerClass.h"
 #include "USBClass.h"
+#include "EncoderClass.h"
 
 namespace machinecontrol {
 
@@ -94,40 +95,6 @@ private:
 };
 
 extern COMMClass comm_protocols;
-
-/* 
-  TODO: writeme 
-  Use QEI library for mbed since it implements index pin
-*/
- /**
- * The EncoderClass is a wrapper for manipulating Quadrature Encoder Interface devices.
- */
-class EncoderClass {
-public:
-  /**
-	 * returns the encoder variable depending on the index
-	 * @param  index integer for selecting the encoder (0 or 1)
-	 * @return enc_0 for index = 0, enc_1 for index = 1
-	 */
-	EncoderClass()
-		: enc_0{PJ_8, PH_12, PH_11, 0}
-		, enc_1{PC_13, PI_7, PJ_10, 0} {};
-
-
-	QEI& operator[](int index) {
-		switch (index) {
-			case 0:
-				return enc_0;
-			case 1:
-				return enc_1;
-		}
-	}
-private:
-	QEI enc_0;
-	QEI enc_1;
-};
-
-extern EncoderClass encoders;
 
 }
 #endif
