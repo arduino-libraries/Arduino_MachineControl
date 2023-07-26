@@ -1,19 +1,53 @@
+/**
+ * @file USBClass.cpp
+ * @author Leonardo Cavagnis
+ * @brief Source file for the USB Controller of the Portenta Machine Control.
+ */
+
+/* Includes -----------------------------------------------------------------*/
 #include "USBClass.h"
 
-USBClass::USBClass()
-		: _power{PB_14, 0}, _usbflag{PB_15}
+/* Functions -----------------------------------------------------------------*/
+USBClass::USBClass(PinName power_pin, PinName usbflag_pin)
+		: _power{power_pin}, _usbflag{usbflag_pin}
 { }
 
-void USBClass::powerEnable() {
-    _power = 0;
+USBClass::~USBClass() 
+{ }
+
+bool USBClass::begin() {
+    pinMode(_power, OUTPUT);
+    pinMode(_usbflag, INPUT);
+
+    _powerEnable();
+
+    return true;
 }
 
-void USBClass::powerDisable() {
-    _power = 1;
+void USBClass::end() {
+    _powerDisable();
 }
 
-bool USBClass::vflagRead() {
-    return _usbflag;
+bool USBClass::getFaultStatus() {
+    bool res = false;
+
+    if (digitalRead(_usbflag) == LOW) {
+        /* Active−low, asserted during overcurrent, overtemperature, or reverse−voltage conditions. */
+        res = true;
+    } else {
+        res = false;
+    }
+
+    return res;
 }
 
-USBClass usb_controller;
+void USBClass::_powerEnable() {
+    digitalWrite(_power, LOW);
+}
+
+void USBClass::_powerDisable() {
+    digitalWrite(_power, HIGH);
+}
+
+USBClass MachineControl_USBController;
+/**** END OF FILE ****/

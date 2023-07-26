@@ -1,34 +1,91 @@
+/**
+ * @file USBControllerClass.h
+ * @author Leonardo Cavagnis
+ * @brief Header file for the USB Controller of the Portenta Machine Control.
+ *
+ * This library provides a class to manage the USB functionality of the Portenta Machine Control.
+ * It enables or disables the power of the USB Host (USBA) and provides methods to check the fault status.
+ */
+
+#ifndef __USB_CONTROLLER_CLASS_H
+#define __USB_CONTROLLER_CLASS_H
+
+/* Includes -------------------------------------------------------------------*/
 #include <Arduino.h>
 #include <mbed.h>
 
+/* Class ----------------------------------------------------------------------*/
+
 /**
- * The USB Class is used to enable/disable the power of the USBA (Host) and configure
- * the callbacks for the different host types (i.e. Keyboard, mouse, storage device etc). 
+ * @class USBClass
+ * @brief Class for managing the USB functionality of the Portenta Machine Control.
+ *
+ * This class allows enabling or disabling the power of the USB Host (USBA) and checking for any fault status.
  */
 class USBClass {
 public:
-	USBClass();
-		
-	/**
-	 * Enable power to USBA VBUS. 
-	 */
-	void powerEnable();
+    /**
+     * @brief Construct a USBClass object.
+     *
+     * This constructor initializes a USBClass object with the specified pin assignments for power control and fault status.
+     *
+     * @param power_pin The pin number for controlling the power to the USBA VBUS.
+     * @param usbflag_pin The pin number for reading the fault status of the USBA VBUS.
+     */
+    USBClass(PinName power_pin = PB_14, PinName usbflag_pin = PB_15);
 
-	/**
-	 * Disable power to USBA VBUS.  
-	 */
-	void powerDisable();
+    /**
+     * @brief Destruct the USBClass object.
+     *
+     * This destructor releases any resources used by the USBClass object.
+     */
+    ~USBClass();
 
-	/**
-	 * Flag to indicate overcurrent, overtemperature, or reverse−voltage conditions on the USBA VBUS. 	 
-	 * Active−low open−drain output.
-	 * @return true if OK, false if fault
-	 */
-	bool vflagRead();
+    /**
+     * @brief Begin the USB functionality.
+     *
+     * This method initializes the USB functionality by enabling power to the USBA VBUS.
+     *
+     * @return true If the initialization is successful, false otherwise.
+     */
+    bool begin();
+
+    /**
+     * @brief End the USB functionality.
+     *
+     * This method disables power to the USBA VBUS and releases any resources used by the USBClass object.
+     */
+    void end();
+
+    /**
+     * @brief Get the fault status of the USBA VBUS.
+     *
+     * This method reads the fault status of the USBA VBUS to check for overcurrent, overtemperature,
+     * or reverse-voltage conditions.
+     *
+     * @return true if there is a fault, false if everything is okay.
+     */
+    bool getFaultStatus();
 
 private:
-	mbed::DigitalOut _power;
-	mbed::DigitalIn _usbflag;
+    PinName _power;     // Pin for controlling the power to the USBA VBUS
+    PinName _usbflag;   // Pin for reading the fault status of the USBA VBUS
+
+    /**
+     * @brief Enable power to the USBA VBUS.
+     *
+     * This private method is used to enable power to the USBA VBUS.
+     */
+    void _powerEnable();
+
+    /**
+     * @brief Disable power to the USBA VBUS.
+     *
+     * This private method is used to disable power to the USBA VBUS.
+     */
+    void _powerDisable();
 };
 
-extern USBClass usb_controller;
+extern USBClass MachineControl_USBController;
+
+#endif /* __USB_CONTROLLER_CLASS_H */
