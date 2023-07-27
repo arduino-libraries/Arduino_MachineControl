@@ -17,7 +17,6 @@
 #define DATARATE_1MB     1000000
 #define DATARATE_800KB   800000
 
-
 void setup() {
   Serial.begin(9600);
   while (!Serial) {
@@ -25,8 +24,10 @@ void setup() {
   }
 
   Serial.println("Start CAN initialization");
-  comm_protocols.enableCAN();
-  comm_protocols.can.frequency(DATARATE_800KB);
+
+  MachineControl_CommProtocols.begin();
+  MachineControl_CommProtocols.CANEnable();
+  MachineControl_CommProtocols.CAN.frequency(DATARATE_800KB);
   Serial.println("Initialization done");
 }
 
@@ -37,12 +38,12 @@ int payload_size = 1;
 void loop() {
 
   mbed::CANMessage msg = mbed::CANMessage(13ul, &payload, payload_size);
-  if (comm_protocols.can.write(msg)) {
+  if (MachineControl_CommProtocols.CAN.write(msg)) {
     Serial.println("Message sent");
   } else {
     Serial.println("Transmission Error: ");
-    Serial.println(comm_protocols.can.tderror());
-    comm_protocols.can.reset();
+    Serial.println(MachineControl_CommProtocols.CAN.tderror());
+    MachineControl_CommProtocols.CAN.reset();
   }
 
   delay(100);

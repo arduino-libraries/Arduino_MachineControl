@@ -33,7 +33,7 @@ void setup()
     Serial.println("Start RS485 initialization");
 
     // Set the PMC Communication Protocols to default config
-    comm_protocols.init();
+    MachineControl_CommProtocols.begin();
 
     // RS485/RS232 default config is:
     // - RS485 mode
@@ -41,34 +41,34 @@ void setup()
     // - No A/B and Y/Z 120 Ohm termination enabled
 
     // Enable the RS485/RS232 system
-    comm_protocols.rs485Enable(true);
+    MachineControl_CommProtocols.RS485Enable();
 
     // Specify baudrate, and preamble and postamble times for RS485 communication
-    comm_protocols.rs485.begin(115200, 0, 500);
+    MachineControl_CommProtocols.RS485.begin(115200, 0, 500);
     // Start in receive mode
-    comm_protocols.rs485.receive();
+    MachineControl_CommProtocols.RS485.receive();
 
     Serial.println("Initialization done!");
 }
 
 void loop()
 {
-    if (comm_protocols.rs485.available())
-        Serial.write(comm_protocols.rs485.read());
+    if (MachineControl_CommProtocols.RS485.available())
+        Serial.write(MachineControl_CommProtocols.RS485.read());
 
     if (millis() > sendNow) {
         // Disable receive mode before transmission
-        comm_protocols.rs485.noReceive();
+        MachineControl_CommProtocols.RS485.noReceive();
 
-        comm_protocols.rs485.beginTransmission();
+        MachineControl_CommProtocols.RS485.beginTransmission();
 
-        comm_protocols.rs485.print("hello ");
-        comm_protocols.rs485.println(counter++);
+        MachineControl_CommProtocols.RS485.print("hello ");
+        MachineControl_CommProtocols.RS485.println(counter++);
 
-        comm_protocols.rs485.endTransmission();
+        MachineControl_CommProtocols.RS485.endTransmission();
 
         // Re-enable receive mode after transmission
-        comm_protocols.rs485.receive();
+        MachineControl_CommProtocols.RS485.receive();
 
         sendNow = millis() + sendInterval;
     }
