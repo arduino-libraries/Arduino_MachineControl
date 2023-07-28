@@ -140,5 +140,4 @@ uint16_t AnalogInClass::read(int channel) {
 }
 
 AnalogInClass MachineControl_AnalogIn;
-
 /**** END OF FILE ****/

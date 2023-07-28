@@ -5,6 +5,7 @@
  *
  * This library allows to interface with the IO Expander and set the digital outputs.
  */
+
 #ifndef __DIGITALOUTPUTS_CLASS_H
 #define __DIGITALOUTPUTS_CLASS_H
 
@@ -44,6 +45,12 @@ class DigitalOutputsClass {
                             PinName do6_pin = PD_3,
                             PinName do7_pin = PA_14,
                             PinName latch_pin = PB_2);
+
+        /**
+         * @brief Destruct the DigitalOutputsClass object.
+         *
+         * This destructor releases any resources used by the DigitalOutputsClass object.
+         */               
         ~DigitalOutputsClass();
 
         /**
@@ -71,16 +78,17 @@ class DigitalOutputsClass {
          * - To set all channels to LOW: val_mask = 0 (0b00000000)
          */
         void writeAll(uint8_t val_mask);
-private:
-        PinName _do0;
-        PinName _do1;
-        PinName _do2;
-        PinName _do3;
-        PinName _do4;
-        PinName _do5;
-        PinName _do6;
-        PinName _do7;
-        PinName _latch;
+        
+    private:
+        PinName _do0;      // Digital output pin for DO (Digital Out) channel 0
+        PinName _do1;      // Digital output pin for DO (Digital Out) channel 1
+        PinName _do2;      // Digital output pin for DO (Digital Out) channel 2
+        PinName _do3;      // Digital output pin for DO (Digital Out) channel 3
+        PinName _do4;      // Digital output pin for DO (Digital Out) channel 4
+        PinName _do5;      // Digital output pin for DO (Digital Out) channel 5
+        PinName _do6;      // Digital output pin for DO (Digital Out) channel 6
+        PinName _do7;      // Digital output pin for DO (Digital Out) channel 7
+        PinName _latch;    // Latch control pin
 
         /**
          * @brief Configures the thermal shutdown of the high-side switches (TPS4H160) to operate in latch mode. 

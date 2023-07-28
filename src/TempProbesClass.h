@@ -43,6 +43,12 @@ public:
      * @param rtd_th_pin The pin number for the RTD connection.
      */
     TempProbesClass(PinName ch_sel0_pin = PD_6, PinName ch_sel1_pin = PI_4, PinName ch_sel2_pin = PG_10, PinName rtd_th_pin = PC_15);
+   
+    /**
+     * @brief Destruct the TempProbesClass object.
+     *
+     * This destructor releases any resources used by the TempProbesClass object.
+     */
     ~TempProbesClass();
 
     /**

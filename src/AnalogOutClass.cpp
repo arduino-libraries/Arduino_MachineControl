@@ -70,5 +70,4 @@ void AnalogOutClass::write(int channel, float voltage) {
 }
 
 AnalogOutClass MachineControl_AnalogOut;
-
 /**** END OF FILE ****/

@@ -32,6 +32,12 @@ public:
      * @param latch_pin The pin number for the latch mode control.
      */
     ProgrammableDIOClass(PinName latch_pin = PH_14);
+
+    /**
+     * @brief Destruct the ProgrammableDIOClass object.
+     *
+     * This destructor releases any resources used by the ProgrammableDIOClass object.
+     */
     ~ProgrammableDIOClass();
 
     /**
@@ -43,7 +49,7 @@ public:
     bool begin(bool latch_mode = true);
 
 private:
-    PinName _latch;
+    PinName _latch; // Latch control pin
 
     /**
      * @brief Configures the thermal shutdown of the high-side switches (TPS4H160) to operate in latch mode.

@@ -23,21 +23,29 @@
  * This class extends the ArduinoIOExpanderClass to interface with the IO Expander and provides methods to configure digital inputs.
  */
 class ProgrammableDINClass : public ArduinoIOExpanderClass {
-public:
-    /**
-     * @brief Construct a ProgrammableDINClass object.
-     */
-    ProgrammableDINClass();
-	~ProgrammableDINClass();
+    public:
+        /**
+         * @brief Construct a ProgrammableDINClass object.
+         *
+         * This constructor initializes a ProgrammableDINClass object.
+         */
+        ProgrammableDINClass();
 
-    /**
-     * @brief Initialize the ProgrammableDIN module.
-     *
-     * Test connection with the IOExpander and set all the pins to the default mode.
-     *
-     * @return true If the ProgrammableDIN module is successfully initialized, false otherwise.
-     */
-    bool begin();
+        /**
+         * @brief Destruct the ProgrammableDINClass object.
+         *
+         * This destructor releases any resources used by the ProgrammableDINClass object.
+         */
+	    ~ProgrammableDINClass();
+
+        /**
+         * @brief Initialize the ProgrammableDIN module.
+         *
+         * Test connection with the IOExpander and set all the pins to the default mode.
+         *
+         * @return true If the ProgrammableDIN module is successfully initialized, false otherwise.
+         */
+        bool begin();
 };
 
 extern ProgrammableDINClass MachineControl_DigitalInputs;

@@ -5,6 +5,7 @@
  *
  * This library allows to configure the analog channels as PWM, to set frequency and value.
  */
+
 #ifndef __ANALOGOUT_CLASS_H
 #define __ANALOGOUT_CLASS_H
 
@@ -29,6 +30,12 @@ class AnalogOutClass {
          * @param ao3_pin The analog pin number of the channel 2
          */
         AnalogOutClass(PinName ao0_pin = PJ_11, PinName ao1_pin = PK_1, PinName ao2_pin = PG_7, PinName ao3_pin = PC_7);
+        
+        /**
+         * @brief Destruct the AnalogOutClass object.
+         *
+         * This destructor releases any resources used by the AnalogOutClass object.
+         */
         ~AnalogOutClass();
 
         /**
@@ -55,10 +62,10 @@ class AnalogOutClass {
         void write(int channel, float voltage);
 
     private:
-        mbed::PwmOut _ao0;
-        mbed::PwmOut _ao1;
-        mbed::PwmOut _ao2;
-        mbed::PwmOut _ao3;
+        mbed::PwmOut _ao0;   // PWM output for Analog Out channel 0
+        mbed::PwmOut _ao1;   // PWM output for Analog Out channel 1
+        mbed::PwmOut _ao2;   // PWM output for Analog Out channel 2
+        mbed::PwmOut _ao3;   // PWM output for Analog Out channel 3
 };
 
 extern AnalogOutClass MachineControl_AnalogOut;

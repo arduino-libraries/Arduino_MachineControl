@@ -6,6 +6,7 @@
  * This library allows to set the resistor configuration for the type of connected analog sensor (0-10V, 4-20mA or NTC)
  * and to capture the analog values acquired by the ANALOG IN channels.
  */
+
 #ifndef __ANALOGIN_CLASS_H
 #define __ANALOGIN_CLASS_H
 
@@ -36,6 +37,12 @@ class AnalogInClass {
          * @param ai2_pin The analog pin number of the channel 2
          */
         AnalogInClass(PinName ai0_pin = PC_3C, PinName ai1_pin = PC_2C, PinName ai2_pin = PA_1C);
+        
+        /**
+         * @brief Destruct the AnalogInClass object.
+         *
+         * This destructor releases any resources used by the AnalogInClass object.
+         */
         ~AnalogInClass();
 
         /**
@@ -56,9 +63,9 @@ class AnalogInClass {
         uint16_t read(int channel);
 
     private:
-        PinName _ai0;
-        PinName _ai1;
-        PinName _ai2;
+        PinName _ai0;   // Analog input pin for channel 0
+        PinName _ai1;   // Analog input pin for channel 1
+        PinName _ai2;   // Analog input pin for channel 2
 };
 
 extern AnalogInClass MachineControl_AnalogIn;
