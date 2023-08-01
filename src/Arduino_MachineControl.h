@@ -10,6 +10,7 @@
 #include "RtcControllerClass.h"
 #include "USBClass.h"
 #include "EncoderClass.h"
-#include "COMMClass.h"
+#include "CANCommClass.h"
+#include "RS485CommClass.h"
 
 #endif /* __ARDUINO_MACHINE_CONTROL_H */

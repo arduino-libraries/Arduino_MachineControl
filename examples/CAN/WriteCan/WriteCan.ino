@@ -10,7 +10,6 @@
 
 */
 #include <Arduino_MachineControl.h>
-#include <CAN.h>
 
 #define DATARATE_2MB     2000000
 #define DATARATE_1_5MB   1500000
@@ -25,9 +24,7 @@ void setup() {
 
   Serial.println("Start CAN initialization");
 
-  MachineControl_CommProtocols.begin();
-  MachineControl_CommProtocols.CANEnable();
-  MachineControl_CommProtocols.CAN.frequency(DATARATE_800KB);
+  MachineControl_CANComm.begin(DATARATE_800KB);
   Serial.println("Initialization done");
 }
 
@@ -38,12 +35,12 @@ int payload_size = 1;
 void loop() {
 
   mbed::CANMessage msg = mbed::CANMessage(13ul, &payload, payload_size);
-  if (MachineControl_CommProtocols.CAN.write(msg)) {
+  if (MachineControl_CANComm.write(msg)) {
     Serial.println("Message sent");
   } else {
     Serial.println("Transmission Error: ");
-    Serial.println(MachineControl_CommProtocols.CAN.tderror());
-    MachineControl_CommProtocols.CAN.reset();
+    Serial.println(MachineControl_CANComm.tderror());
+    MachineControl_CANComm.reset();
   }
 
   delay(100);

@@ -23,7 +23,6 @@ unsigned long counter { 0 };
 
 void setup()
 {
-
     Serial.begin(115200);
     // Wait for Serial or start after 2.5s
     for (auto const timeout = millis() + 2500; !Serial && timeout < millis(); delay(500))
@@ -33,42 +32,38 @@ void setup()
     Serial.println("Start RS485 initialization");
 
     // Set the PMC Communication Protocols to default config
-    MachineControl_CommProtocols.begin();
-
     // RS485/RS232 default config is:
     // - RS485 mode
     // - Half Duplex
     // - No A/B and Y/Z 120 Ohm termination enabled
-
     // Enable the RS485/RS232 system
-    MachineControl_CommProtocols.RS485Enable();
-
     // Specify baudrate, and preamble and postamble times for RS485 communication
-    MachineControl_CommProtocols.RS485.begin(115200, 0, 500);
+    MachineControl_RS485Comm.begin(115200, 0, 500);
+
     // Start in receive mode
-    MachineControl_CommProtocols.RS485.receive();
+    MachineControl_RS485Comm.receive();
 
     Serial.println("Initialization done!");
 }
 
 void loop()
 {
-    if (MachineControl_CommProtocols.RS485.available())
-        Serial.write(MachineControl_CommProtocols.RS485.read());
+    if (MachineControl_RS485Comm.available())
+        Serial.write(MachineControl_RS485Comm.read());
 
     if (millis() > sendNow) {
         // Disable receive mode before transmission
-        MachineControl_CommProtocols.RS485.noReceive();
+        MachineControl_RS485Comm.noReceive();
 
-        MachineControl_CommProtocols.RS485.beginTransmission();
+        MachineControl_RS485Comm.beginTransmission();
 
-        MachineControl_CommProtocols.RS485.print("hello ");
-        MachineControl_CommProtocols.RS485.println(counter++);
+        MachineControl_RS485Comm.print("hello ");
+        MachineControl_RS485Comm.println(counter++);
 
-        MachineControl_CommProtocols.RS485.endTransmission();
+        MachineControl_RS485Comm.endTransmission();
 
         // Re-enable receive mode after transmission
-        MachineControl_CommProtocols.RS485.receive();
+        MachineControl_RS485Comm.receive();
 
         sendNow = millis() + sendInterval;
     }
