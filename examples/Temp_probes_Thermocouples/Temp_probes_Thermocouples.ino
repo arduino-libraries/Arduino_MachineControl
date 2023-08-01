@@ -21,31 +21,31 @@
 void setup() {
   Serial.begin(9600);
   // Initialize temperature probes
-  MachineControl_TempProbes.begin(TEMPPROBE_TC);
+  MachineControl_TCTempProbe.begin();
   Serial.println("Temperature probes initialization done");
 }
 
 void loop() {
   //Set CH0, has internal 150 ms delay
-  MachineControl_TempProbes.selectChannel(0);
+  MachineControl_TCTempProbe.selectChannel(0);
   //Take CH0 measurement
-  float temp_ch0 = MachineControl_TempProbes.TC.readTemperature();
+  float temp_ch0 = MachineControl_TCTempProbe.readTemperature();
   Serial.print("Temperature CH0 [°C]: ");
   Serial.print(temp_ch0);
   Serial.println();
 
   //Set CH1, has internal 150 ms delay
-  MachineControl_TempProbes.selectChannel(1);
+  MachineControl_TCTempProbe.selectChannel(1);
   //Take CH1 measurement
-  float temp_ch1 = MachineControl_TempProbes.TC.readTemperature();
+  float temp_ch1 = MachineControl_TCTempProbe.readTemperature();
   Serial.print("Temperature CH1 [°C]: ");
   Serial.print(temp_ch1);
   Serial.println();
  
   //Set CH2, has internal 150 ms delay
-  MachineControl_TempProbes.selectChannel(2);
+  MachineControl_TCTempProbe.selectChannel(2);
   //Take CH2 measurement
-  float temp_ch2 = MachineControl_TempProbes.TC.readTemperature();
+  float temp_ch2 = MachineControl_TCTempProbe.readTemperature();
   Serial.print("Temperature CH2 [°C]: ");
   Serial.print(temp_ch2);
   Serial.println();

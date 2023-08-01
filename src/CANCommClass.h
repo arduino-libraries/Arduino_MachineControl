@@ -24,7 +24,7 @@
  * The `CANCommClass` is a subclass of `mbed::CAN` and provides methods to work with the CAN Bus communication protocol on the Portenta Machine Control board.
  * It includes initialization of the corresponding LED for CAN.
  */
-class CANCommClass: public mbed::CAN {
+class CANCommClass: public mbed::CAN { //TODO: Check ARDUINO API VERSION to use Arduino_CAN
     public:
         /**
          * @brief Construct a CANCommClass object.

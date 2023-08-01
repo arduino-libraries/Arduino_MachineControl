@@ -1,11 +1,11 @@
 /**
- * @file TempProbesClass.cpp
+ * @file TCTempProbeClass.cpp
  * @author Leonardo Cavagnis
- * @brief Source file for the Temperature Probes connector of the Portenta Machine Control. 
+ * @brief Source file for the Thermocouple (TC) temperature sensor connector of the Portenta Machine Control.
  */
 
 /* Includes -----------------------------------------------------------------*/
-#include "TempProbesClass.h"
+#include "TCTempProbeClass.h"
 
 #if __has_include("portenta_info.h")
 #include "portenta_info.h"
@@ -15,45 +15,31 @@ uint8_t* boardInfo();
 #endif
 
 /* Functions -----------------------------------------------------------------*/
-TempProbesClass::TempProbesClass(PinName ch_sel0_pin, 
-                                 PinName ch_sel1_pin,
-                                 PinName ch_sel2_pin,
-                                 PinName rtd_th_pin)
-: _ch_sel0{ch_sel0_pin}, _ch_sel1{ch_sel0_pin}, _ch_sel2{ch_sel2_pin}, _rtd_th{rtd_th_pin}                     
+TCTempProbeClass::TCTempProbeClass(PinName tc_cs_pin,
+                                     PinName ch_sel0_pin, 
+                                     PinName ch_sel1_pin,
+                                     PinName ch_sel2_pin)
+: MAX31855Class(tc_cs_pin), _tc_cs{tc_cs_pin}, _ch_sel0{ch_sel0_pin}, _ch_sel1{ch_sel0_pin}, _ch_sel2{ch_sel2_pin}                  
 { }
 
-TempProbesClass::~TempProbesClass() 
+TCTempProbeClass::~TCTempProbeClass() 
 { }
 
-bool TempProbesClass::begin(uint8_t tempprobe_type, uint8_t io_address) {
-    bool status = true; 
-
-    switch(tempprobe_type) {
-        case TEMPPROBE_RTD:
-            TempProbesClass::RTD.begin(io_address);
-            _enableRTD();
-            break;
-        case TEMPPROBE_TC:
-            TempProbesClass::TC.begin();
-            _enableTC();
-            break;
-        default:
-            status = false;
-            break;
-    }
+bool TCTempProbeClass::begin() {
+    MAX31855Class::begin();
 
     pinMode(_ch_sel0, OUTPUT);
     pinMode(_ch_sel1, OUTPUT);
     pinMode(_ch_sel2, OUTPUT);
-    pinMode(_rtd_th, OUTPUT);
 
-    pinMode(PI_0, OUTPUT);
-    pinMode(PA_6, OUTPUT);
+    pinMode(_tc_cs, OUTPUT);
 
-    return status;
+    _enable();
+
+    return true;
 }
 
-void TempProbesClass::selectChannel(int channel) {
+void TCTempProbeClass::selectChannel(int channel) {
 
 #ifdef TRY_REV2_RECOGNITION
     // check if OTP data is present AND the board is mounted on a r2 carrier
@@ -98,28 +84,19 @@ void TempProbesClass::selectChannel(int channel) {
     delay(150);
 }
 
-void TempProbesClass::end() {
-    _disableCS();
+void TCTempProbeClass::end() {
+    MAX31855Class::end();
+    
+    _disable();
 }
 
-void TempProbesClass::_enableTC() {
-    digitalWrite(_rtd_th, LOW);
-
-    digitalWrite(PI_0, LOW);
-    digitalWrite(PA_6, HIGH);
+void TCTempProbeClass::_enable() {
+    digitalWrite(_tc_cs, LOW);
 }
 
-void TempProbesClass::_enableRTD() {
-    digitalWrite(_rtd_th, HIGH);
-
-    digitalWrite(PI_0, HIGH);
-    digitalWrite(PA_6, LOW);
+void TCTempProbeClass::_disable() {
+    digitalWrite(_tc_cs, HIGH);
 }
 
-void TempProbesClass::_disableCS() {
-    digitalWrite(PI_0, HIGH);
-    digitalWrite(PA_6, HIGH);
-}
-
-TempProbesClass MachineControl_TempProbes;
+TCTempProbeClass MachineControl_TCTempProbe;
 /**** END OF FILE ****/
