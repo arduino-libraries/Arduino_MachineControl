@@ -23,7 +23,6 @@ unsigned long counter = 0;
 
 void setup()
 {
-
     Serial.begin(115200);
     while (!Serial) {
         ; // wait for serial port to connect.
@@ -47,7 +46,6 @@ void setup()
     // Start in receive mode
     MachineControl_RS485Comm.receive();
     
-
     Serial.println("Initialization done!");
 }
 

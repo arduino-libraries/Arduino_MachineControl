@@ -24,11 +24,10 @@ unsigned long counter { 0 };
 void setup()
 {
     Serial.begin(115200);
-    // Wait for Serial or start after 2.5s
-    for (auto const timeout = millis() + 2500; !Serial && timeout < millis(); delay(500))
-        ;
-
-    delay(2500);
+    while (!Serial) {
+        ; // wait for serial port to connect.
+    }
+    delay(1000);
     Serial.println("Start RS485 initialization");
 
     // Set the PMC Communication Protocols to default config

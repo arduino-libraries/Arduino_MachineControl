@@ -2,7 +2,6 @@
  * @file RS485CommClass.cpp
  * @author Leonardo Cavagnis
  * @brief Source file for the RS485CommClass used to initialize and interact with RS485 and RS232 communication protocols on the Portenta Machine Control board.
- *
  */
 
 /* Includes -----------------------------------------------------------------*/
@@ -11,7 +10,7 @@
 
 /* Functions -----------------------------------------------------------------*/
 
-RS485CommClass::RS485CommClass(arduino::UART uart_itf, PinName rs_tx_pin, PinName rs_de_pin, PinName rs_re_pin)
+RS485CommClass::RS485CommClass(arduino::UART& uart_itf, PinName rs_tx_pin, PinName rs_de_pin, PinName rs_re_pin)
                     : RS485Class(uart_itf, PinNameToIndex(rs_tx_pin), PinNameToIndex(rs_de_pin), PinNameToIndex(rs_re_pin)) 
 { }
 
