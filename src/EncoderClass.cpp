@@ -1,7 +1,7 @@
 /**
  * @file EncoderClass.cpp
  * @author Leonardo Cavagnis
- * @brief Source file for the EncoderClass of the Portenta Machine Control.
+ * @brief Source file for the encoder module of the Portenta Machine Control.
  */
 
 /* Includes -----------------------------------------------------------------*/
@@ -17,15 +17,49 @@ EncoderClass::EncoderClass(PinName enc0_A_pin, PinName enc0_B_pin, PinName enc0_
 EncoderClass::~EncoderClass()
 { }
 
-QEI& EncoderClass::operator[](int index) {
-    switch (index) {
+void EncoderClass::reset(int channel) {
+    switch (channel) {
         case 0:
-            return _enc0;
+            _enc0.reset();
+            break;
         case 1:
-            return _enc1;
+            _enc1.reset();
+            break;
         default:
-            // Return encoder 0 by default if an invalid index is provided
-            return _enc0;
+            return;
+    }
+}
+
+int EncoderClass::getCurrentState(int channel) {
+    switch (channel) {
+        case 0:
+            return _enc0.getCurrentState();
+        case 1:
+            return _enc1.getCurrentState();
+        default:
+            return -1;
+    }
+}
+
+int EncoderClass::getPulses(int channel) {
+    switch (channel) {
+        case 0:
+            return _enc0.getPulses();
+        case 1:
+            return _enc1.getPulses();
+        default:
+            return -1;
+    }
+}
+
+int EncoderClass::getRevolutions(int channel) {
+    switch (channel) {
+        case 0:
+            return _enc0.getRevolutions();
+        case 1:
+            return _enc1.getRevolutions();
+        default:
+            return -1;
     }
 }
 

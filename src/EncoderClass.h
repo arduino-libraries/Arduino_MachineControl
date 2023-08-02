@@ -1,7 +1,7 @@
 /**
  * @file EncoderClass.h
  * @author Leonardo Cavagnis
- * @brief Header file for the EncoderClass of the Portenta Machine Control.
+ * @brief Header file for the encoder module of the Portenta Machine Control.
  *
  * This library provides a class to manage the Quadrature Encoder Interface devices
  * of the Portenta Machine Control. It allows interfacing with two encoders through
@@ -22,6 +22,10 @@
 /**
  * @class EncoderClass
  * @brief Class for managing Quadrature Encoder Interface devices of the Portenta Machine Control.
+ * 
+ * This class provides methods to interact with two quadrature encoders. Each encoder
+ * has two channels (A and B) for quadrature signals and an index channel. The class
+ * allows reading the current state, pulses, and revolutions of each encoder.
  */
 class EncoderClass {
 public:
@@ -31,12 +35,12 @@ public:
      * This constructor initializes the two QEI objects for encoder 0 and encoder 1
      * with the specified pin assignments.
      *
-     * @param enc0_A_pin Pin assignment for encoder 0 channel A (default: PA_0).
-     * @param enc0_B_pin Pin assignment for encoder 0 channel B (default: PB_0).
-     * @param enc0_I_pin Pin assignment for encoder 0 Index channel (default: PC_0).
-     * @param enc1_A_pin Pin assignment for encoder 1 channel A (default: PD_0).
-     * @param enc1_B_pin Pin assignment for encoder 1 channel B (default: PE_0).
-     * @param enc1_I_pin Pin assignment for encoder 1 Index channel (default: PF_0).
+     * @param enc0_A_pin Pin assignment for encoder 0 channel A (default: PJ_8).
+     * @param enc0_B_pin Pin assignment for encoder 0 channel B (default: PH_12).
+     * @param enc0_I_pin Pin assignment for encoder 0 Index channel (default: PH_11).
+     * @param enc1_A_pin Pin assignment for encoder 1 channel A (default: PC_13).
+     * @param enc1_B_pin Pin assignment for encoder 1 channel B (default: PI_7).
+     * @param enc1_I_pin Pin assignment for encoder 1 Index channel (default: PJ_10).
      */
     EncoderClass(PinName enc0_A_pin = PJ_8, PinName enc0_B_pin = PH_12, PinName enc0_I_pin = PH_11,
                  PinName enc1_A_pin = PC_13, PinName enc1_B_pin = PI_7, PinName enc1_I_pin = PJ_10);
@@ -49,14 +53,45 @@ public:
     ~EncoderClass();
 
     /**
-     * @brief Get the QEI object for the specified encoder index.
-     *
-     * This method returns a reference to the QEI object for the specified encoder index.
-     *
-     * @param index The index for selecting the encoder (0 or 1).
-     * @return A reference to the corresponding QEI object.
+     * @brief Reset the encoder counter for the specified channel.
+     * 
+     * @param channel The encoder channel (0 or 1) to reset.
      */
-    QEI& operator[](int index);
+    void reset(int channel);
+
+    /**
+     * @brief Get the current state of the specified encoder channel.
+     * 
+     * The current state is the value of the encoder counter.
+     * 
+     * @param channel The encoder channel (0 or 1) to read the state from.
+     * @return The current state of the encoder channel as a 2-bit number, where:
+     *         bit 0 = The reading from channel B
+     *         bit 1 = The reading from channel A
+     */
+    int getCurrentState(int channel);
+
+    /**
+     * @brief Get the number of pulses counted by the specified encoder channel.
+     * 
+     * This method returns the number of pulses counted by the encoder. Each pulse
+     * corresponds to a change in the encoder's quadrature signal.
+     * 
+     * @param channel The encoder channel (0 or 1) to read the pulses from.
+     * @return The number of pulses counted by the encoder channel.
+     */
+    int getPulses(int channel);
+
+    /**
+     * @brief Get the number of revolutions counted by the specified encoder channel.
+     * 
+     * This method returns the number of full revolutions counted by the encoder.
+     * It utilizes the index channel to track revolutions.
+     * 
+     * @param channel The encoder channel (0 or 1) to read the revolutions from.
+     * @return The number of revolutions counted by the encoder channel.
+     */
+    int getRevolutions(int channel);
 
 private:
     QEI _enc0;  // QEI object for encoder 0
