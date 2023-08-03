@@ -1,84 +1,93 @@
-#include "EthernetInterface.h"
-EthernetInterface net;
+#include <PortentaEthernet.h>
+#include <Ethernet.h>
+#include <SPI.h>
+
+EthernetClient client;
+char server[] = "www.ifconfig.io"; // name address (using DNS)
+
+unsigned long beginMicros, endMicros;
+unsigned long byteCount = 0;
+bool printWebData = true; // set to false for better speed measurement
 
 void setup()
 {
-    Serial.begin(115200);
-    while (!Serial)
+    Serial.begin(9600);
+    while (!Serial) {
         ;
+    }
 
     Serial.println("Ethernet example for H7 + PMC");
 
-    // Bring up the ethernet interface
-    net.connect();
-
-    // Show the network address
-    SocketAddress addr;
-    net.get_ip_address(&addr);
-    Serial.print("IP address: ");
-    Serial.println(addr.get_ip_address() ? addr.get_ip_address() : "None");
-
-    // Open a socket on the network interface, and create a TCP connection to mbed.org
-    TCPSocket socket;
-    socket.open(&net);
-
-    net.gethostbyname("ifconfig.io", &addr);
-    addr.set_port(80);
-    socket.connect(addr);
-
-    String request;
-    request += "GET / HTTP/1.1\r\n";
-    request += "Host: ifconfig.io\r\n";
-    request += "User-Agent: curl/7.64.1\r\n";
-    request += "Accept: */*\r\n";
-    request += "Connection: close\r\n";
-    request += "\r\n";
-
-    auto scount = socket.send(request.c_str(), request.length());
-    Serial.print("Sent ");
-    Serial.print(scount);
-    Serial.println(" bytes: ");
-    Serial.print(request);
-
-    // Receive a simple HTTP response
-    const size_t rlen { 64 };
-    char rbuffer[rlen + 1] {};
-    size_t rcount;
-    size_t rec { 0 };
-    String response;
-
-    while ((rec = socket.recv(rbuffer, rlen)) > 0) {
-        rcount += rec;
-        response += rbuffer;
-        memset(rbuffer, 0, rlen);
-    }
-    Serial.print("Received ");
-    Serial.print(rcount);
-    Serial.println(" bytes: ");
-    Serial.println(response);
-
-    const String clTag = "Content-Length: ";
-    auto clIndex = response.indexOf(clTag);
-    clIndex += clTag.length();
-    auto cl = response.substring(clIndex, clIndex + 2);
-    const String bodyTag = "\r\n\r\n";
-    auto bodyIndex = response.indexOf(bodyTag);
-    if (bodyIndex != -1) {
-        bodyIndex += bodyTag.length();
-        auto body = response.substring(bodyIndex, bodyIndex + cl.toInt());
-        Serial.print("My public IPv4 Address is: ");
-        Serial.println(body);
+    if (Ethernet.begin() == 0) {
+        Serial.println("Failed to configure Ethernet using DHCP");
+        while(1);
+    } else {
+        Serial.print("DHCP assigned IP ");
+        Serial.println(Ethernet.localIP());
     }
 
+    // give the Ethernet shield a second to initialize:
+    delay(1000);
+    Serial.print("connecting to ");
+    Serial.print(server);
+    Serial.println("...");
 
-    // Close the socket to return its memory and bring down the network interface
-    socket.close();
+    // if you get a connection, report back via serial:
+    if (client.connect(server, 80)) {
+        Serial.print("connected to ");
+        Serial.println(client.remoteIP());
+        
+        // Make a HTTP request:
+        client.println("GET / HTTP/1.1");
+        client.println("Host: ifconfig.io");
+        client.println("User-Agent: curl/7.64.1");
+        client.println("Connection: close");
+        client.println("Accept: */*");
+        client.println();
+    } else {
+        // if you didn't get a connection to the server:
+        Serial.println("connection failed");
+    }
 
-    // Bring down the ethernet interface
-    net.disconnect();
-    Serial.println("Done");
+     beginMicros = micros();
 }
 
 void loop()
 {
+    // if there are incoming bytes available
+    // from the server, read them and print them:
+    int len = client.available();
+    if (len > 0) {
+        byte buffer[80];
+        if (len > 80)
+            len = 80;
+        client.read(buffer, len);
+        if (printWebData) {
+            Serial.write(buffer, len); // show in the serial monitor (slows some boards)
+        }
+        byteCount = byteCount + len;
+    }
+
+    // if the server's disconnected, stop the client:
+    if (!client.connected()) {
+        endMicros = micros();
+        Serial.println();
+        Serial.println("disconnecting.");
+        client.stop();
+        Serial.print("Received ");
+        Serial.print(byteCount);
+        Serial.print(" bytes in ");
+        float seconds = (float)(endMicros - beginMicros) / 1000000.0;
+        Serial.print(seconds, 4);
+        float rate = (float)byteCount / seconds / 1000.0;
+        Serial.print(", rate = ");
+        Serial.print(rate);
+        Serial.print(" kbytes/second");
+        Serial.println();
+
+        // do nothing forevermore:
+        while (true) {
+            delay(1);
+        }
+    }
 }
