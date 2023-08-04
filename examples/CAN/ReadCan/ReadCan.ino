@@ -11,35 +11,25 @@
 */
 #include <Arduino_MachineControl.h>
 
-#define DATARATE_2MB     2000000
-#define DATARATE_1_5MB   1500000
-#define DATARATE_1MB     1000000
-#define DATARATE_800KB   800000
-
-void setup() {
+void setup()
+{
   Serial.begin(9600);
   while (!Serial) {
     ; // wait for serial port to connect.
   }
 
-  Serial.println("Start CAN initialization");
-  MachineControl_CANComm.begin(DATARATE_800KB);
-
-  Serial.println("Initialization done");
+  if (!MachineControl_CANComm.begin(CanBitRate::BR_500k))
+  {
+    Serial.println("CAN init failed.");
+    for (;;) {}
+  }
 }
 
-void loop() {
-  mbed::CANMessage msg;
-  if (MachineControl_CANComm.read(msg)) {
-
-    // Print the sender ID
-    Serial.print("ID: ");
-    Serial.println(msg.id);
-
-    // Print the first Payload Byte
-    Serial.print("Message received:");
-    Serial.println(msg.data[0], DEC);
+void loop()
+{
+  if (MachineControl_CANComm.available())
+  {
+    CanMsg const msg = MachineControl_CANComm.read();
+    Serial.println(msg);
   }
-
-  delay(100);
 }

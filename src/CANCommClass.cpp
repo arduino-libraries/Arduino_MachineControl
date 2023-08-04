@@ -8,33 +8,45 @@
 #include "CANCommClass.h"
 
 /* Functions -----------------------------------------------------------------*/
-CANCommClass::CANCommClass(PinName can_tx_pin, PinName can_rx_pin) :
-			mbed::CAN(can_tx_pin, can_rx_pin)
+CANCommClass::CANCommClass(PinName can_tx_pin, PinName can_rx_pin, PinName can_stb_pin) :
+			_can(can_rx_pin, can_tx_pin), _tx{can_tx_pin}, _rx{can_rx_pin}, _stb{can_stb_pin}
 { }
 
 CANCommClass::~CANCommClass() 
 { }
 
-bool CANCommClass::begin(int can_bitrate) {
-	pinMode(PinNameToIndex(PA_13), OUTPUT); //Disable CAN pin
-	pinMode(PinNameToIndex(PB_8), OUTPUT);
-	pinMode(PinNameToIndex(PH_13), OUTPUT);
+bool CANCommClass::begin(CanBitRate can_bitrate) {
+	pinMode(PinNameToIndex(_stb), OUTPUT);
 
 	_enable();
 
-	return mbed::CAN::frequency(can_bitrate);
+	return _can.begin(can_bitrate);
+}
+
+int CANCommClass::write(CanMsg const & msg) {
+	return _can.write(msg);
+}
+
+size_t CANCommClass::available() {
+	return _can.available();
+}
+
+CanMsg CANCommClass::read() {
+	return _can.read();
 }
 
 void CANCommClass::end() {
 	_disable();
+
+	_can.end();
 }
 
 void CANCommClass::_enable() {
-	digitalWrite(PinNameToIndex(PA_13), LOW);
+	digitalWrite(PinNameToIndex(_stb), LOW);
 }
 
 void CANCommClass::_disable() {
-	digitalWrite(PinNameToIndex(PA_13), HIGH);
+	digitalWrite(PinNameToIndex(_stb), HIGH);
 }
 
 CANCommClass MachineControl_CANComm;

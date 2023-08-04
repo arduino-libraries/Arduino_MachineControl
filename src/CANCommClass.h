@@ -14,6 +14,7 @@
 #include <Arduino.h>
 #include <pinDefinitions.h>
 #include <mbed.h>
+#include <Arduino_CAN.h>
 
 /* Class ----------------------------------------------------------------------*/
 
@@ -21,10 +22,9 @@
  * @class CANCommClass
  * @brief Class for managing the CAN Bus communication protocol of the Portenta Machine Control.
  *
- * The `CANCommClass` is a subclass of `mbed::CAN` and provides methods to work with the CAN Bus communication protocol on the Portenta Machine Control board.
- * It includes initialization of the corresponding LED for CAN.
+ * The `CANCommClass` provides methods to work with the CAN Bus communication protocol on the Portenta Machine Control board.
  */
-class CANCommClass: public mbed::CAN { //TODO: Check ARDUINO API VERSION to use Arduino_CAN
+class CANCommClass {
     public:
         /**
          * @brief Construct a CANCommClass object.
@@ -33,8 +33,9 @@ class CANCommClass: public mbed::CAN { //TODO: Check ARDUINO API VERSION to use 
          *
          * @param can_tx_pin The pin for transmitting data on the CAN Bus.
          * @param can_rx_pin The pin for receiving data on the CAN Bus.
+         * @param can_stb_pin The pin to control the standby (low-power) mode of the CAN transceiver.
          */
-        CANCommClass(PinName can_tx_pin = PB_8, PinName can_rx_pin = PH_13);
+        CANCommClass(PinName can_tx_pin = PB_8, PinName can_rx_pin = PH_13, PinName can_stb_pin = PA_13);
 
         /**
          * @brief Destruct the CANCommClass object.
@@ -46,12 +47,40 @@ class CANCommClass: public mbed::CAN { //TODO: Check ARDUINO API VERSION to use 
         /**
          * @brief Begin the CAN communication protocol.
          *
-         * This method initializes the CAN communication protocol, including the corresponding LED for CAN.
+         * This method initializes the CAN communication protocol.
          *
          * @param can_bitrate The desired bitrate for the CAN communication protocol.
          * @return true If the initialization is successful, false otherwise.
          */
-        bool begin(int can_bitrate);
+        bool begin(CanBitRate can_bitrate);
+
+        /**
+         * @brief Write a CAN message to the bus.
+         *
+         * This method sends a CAN message over the bus.
+         *
+         * @param msg The CAN message to be sent, represented by a `CanMsg` object.
+         * @return The number of bytes sent or <=0 in case of an error.
+         */
+        int write(CanMsg const & msg);
+        
+        /**
+         * @brief Check the number of available CAN messages in the receive buffer.
+         *
+         * This method checks the number of CAN messages available to read from the bus.
+         *
+         * @return The number of available CAN messages.
+         */
+        size_t available();
+        
+        /**
+         * @brief Read a CAN message from the bus.
+         *
+         * This method reads a CAN message from the receive buffer.
+         *
+         * @return The received CAN message as a `CanMsg` object.
+         */
+        CanMsg read();
 
         /**
          * @brief Close the CAN communication protocol.
@@ -61,6 +90,11 @@ class CANCommClass: public mbed::CAN { //TODO: Check ARDUINO API VERSION to use 
         void end();
 
     private:
+        Arduino_CAN _can;
+        PinName _tx;
+        PinName _rx;
+        PinName _stb;
+
         /**
          * @brief Set the CAN transceiver in Normal mode.
          *
