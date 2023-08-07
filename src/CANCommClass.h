@@ -4,7 +4,7 @@
  * @brief Header file for the CANCommClass used to initialize and interact with the CAN Bus communication protocol on the Portenta Machine Control board.
  *
  * This library provides a class to manage the CAN Bus communication protocol of the Portenta Machine Control board.
- * It allows initializing and interacting with the CAN Bus protocol. The library also initializes the corresponding LED for CAN.
+ * It allows initializing and interacting with the CAN Bus protocol.
  */ 
 
 #ifndef __CAN_COMM_CLASS_H
@@ -15,6 +15,7 @@
 #include <pinDefinitions.h>
 #include <mbed.h>
 #include <Arduino_CAN.h>
+#include "pins_mc.h"
 
 /* Class ----------------------------------------------------------------------*/
 
@@ -35,7 +36,7 @@ class CANCommClass {
          * @param can_rx_pin The pin for receiving data on the CAN Bus.
          * @param can_stb_pin The pin to control the standby (low-power) mode of the CAN transceiver.
          */
-        CANCommClass(PinName can_tx_pin = PB_8, PinName can_rx_pin = PH_13, PinName can_stb_pin = PA_13);
+        CANCommClass(PinName can_tx_pin = MC_CAN_TX_PIN, PinName can_rx_pin = MC_CAN_RX_PIN, PinName can_stb_pin = MC_CAN_STB_PIN);
 
         /**
          * @brief Destruct the CANCommClass object.

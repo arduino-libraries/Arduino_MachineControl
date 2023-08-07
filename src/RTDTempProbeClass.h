@@ -15,6 +15,7 @@
 #include "utility/THERMOCOUPLE/MAX31855.h"
 #include <Arduino.h>
 #include <mbed.h>
+#include "pins_mc.h"
 
 /* Class ----------------------------------------------------------------------*/
 
@@ -38,11 +39,11 @@ public:
      * @param ch_sel2_pin The pin number for the third channel selection bit.
      * @param rtd_th_pin The pin number for the RTD connection.
      */
-    RTDTempProbeClass(PinName rtd_cs_pin = PA_6, 
-                     PinName ch_sel0_pin = PD_6, 
-                     PinName ch_sel1_pin = PI_4, 
-                     PinName ch_sel2_pin = PG_10, 
-                     PinName rtd_th_pin = PC_15);
+    RTDTempProbeClass(PinName rtd_cs_pin = MC_RTD_CS_PIN, 
+                     PinName ch_sel0_pin = MC_RTD_SEL0_PIN, 
+                     PinName ch_sel1_pin = MC_RTD_SEL1_PIN, 
+                     PinName ch_sel2_pin = MC_RTD_SEL2_PIN, 
+                     PinName rtd_th_pin = MC_RTD_TH_PIN);
    
     /**
      * @brief Destruct the RTDTempProbeClass object.

@@ -13,6 +13,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include <Arduino.h>
 #include <mbed.h>
+#include "pins_mc.h"
 
 /* Exported defines ----------------------------------------------------------*/
 
@@ -36,7 +37,7 @@ class AnalogInClass {
          * @param ai1_pin The analog pin number of the channel 1
          * @param ai2_pin The analog pin number of the channel 2
          */
-        AnalogInClass(PinName ai0_pin = PC_3C, PinName ai1_pin = PC_2C, PinName ai2_pin = PA_1C);
+        AnalogInClass(PinName ai0_pin = MC_AI_AI0_PIN, PinName ai1_pin = MC_AI_AI1_PIN, PinName ai2_pin = MC_AI_AI2_PIN);
         
         /**
          * @brief Destruct the AnalogInClass object.

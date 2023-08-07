@@ -8,20 +8,20 @@
 #include "AnalogInClass.h"
 
 /* Private defines -----------------------------------------------------------*/
-#define CH0_IN1 PD_4
-#define CH0_IN2 PD_5
-#define CH0_IN3 PE_3
-#define CH0_IN4 PG_3
+#define CH0_IN1 MC_AI_CH0_IN1_PIN
+#define CH0_IN2 MC_AI_CH0_IN2_PIN
+#define CH0_IN3 MC_AI_CH0_IN3_PIN
+#define CH0_IN4 MC_AI_CH0_IN4_PIN
 
-#define CH1_IN1 PD_7
-#define CH1_IN2 PH_6
-#define CH1_IN3 PJ_7
-#define CH1_IN4 PH_15
+#define CH1_IN1 MC_AI_CH1_IN1_PIN
+#define CH1_IN2 MC_AI_CH1_IN2_PIN
+#define CH1_IN3 MC_AI_CH1_IN3_PIN
+#define CH1_IN4 MC_AI_CH1_IN4_PIN
 
-#define CH2_IN1 PH_10
-#define CH2_IN2 PA_4
-#define CH2_IN3 PA_8
-#define CH2_IN4 PC_6
+#define CH2_IN1 MC_AI_CH2_IN1_PIN
+#define CH2_IN2 MC_AI_CH2_IN2_PIN
+#define CH2_IN3 MC_AI_CH2_IN3_PIN
+#define CH2_IN4 MC_AI_CH2_IN4_PIN
 
 /* Functions -----------------------------------------------------------------*/
 AnalogInClass::AnalogInClass(PinName ai0_pin, PinName ai1_pin, PinName ai2_pin)

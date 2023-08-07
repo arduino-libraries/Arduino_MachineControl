@@ -14,6 +14,7 @@
 #include "utility/RTC/PCF8563T.h"
 #include <Arduino.h>
 #include <mbed.h>
+#include "pins_mc.h"
 
 /* Class ----------------------------------------------------------------------*/
 
@@ -33,7 +34,7 @@ class RtcControllerClass : public PCF8563TClass {
 		 * 
 		 * @param int_pin The pin number for the interrupt pin (default is PB_9).
 		 */
-		RtcControllerClass(PinName int_pin = PB_9);
+		RtcControllerClass(PinName int_pin = MC_RTC_INT_PIN);
 
 		/**
 		 * @brief Destructor for the RtcControllerClass.

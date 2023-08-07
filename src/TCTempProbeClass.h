@@ -15,6 +15,7 @@
 #include "utility/THERMOCOUPLE/MAX31855.h"
 #include <Arduino.h>
 #include <mbed.h>
+#include "pins_mc.h"
 
 /* Class ----------------------------------------------------------------------*/
 
@@ -37,10 +38,10 @@ public:
      * @param ch_sel1_pin The pin number for the second channel selection bit.
      * @param ch_sel2_pin The pin number for the third channel selection bit.
      */
-    TCTempProbeClass(PinName tc_cs_pin = PI_0, 
-                     PinName ch_sel0_pin = PD_6, 
-                     PinName ch_sel1_pin = PI_4, 
-                     PinName ch_sel2_pin = PG_10);
+    TCTempProbeClass(PinName tc_cs_pin = MC_TC_CS_PIN, 
+                     PinName ch_sel0_pin = MC_TC_SEL0_PIN, 
+                     PinName ch_sel1_pin = MC_TC_SEL1_PIN, 
+                     PinName ch_sel2_pin = MC_TC_SEL2_PIN);
    
     /**
      * @brief Destruct the TCTempProbeClass object.

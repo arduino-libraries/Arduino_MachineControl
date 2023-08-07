@@ -19,19 +19,19 @@ RS485CommClass::~RS485CommClass()
 
 void RS485CommClass::begin(unsigned long baudrate, int predelay, int postdelay) {
     /* Pinout configuration */
-    pinMode(PinNameToIndex(PA_0), OUTPUT);
-    pinMode(PinNameToIndex(PI_9), OUTPUT);
+    pinMode(PinNameToIndex(MC_RS485_TX_PIN), OUTPUT);
+    pinMode(PinNameToIndex(MC_RS485_RX_PIN), OUTPUT);
 
-    pinMode(PinNameToIndex(PG_9), OUTPUT);
-    pinMode(PinNameToIndex(PA_10), OUTPUT);
-    pinMode(PinNameToIndex(PI_15), OUTPUT);
-    pinMode(PinNameToIndex(PI_14), OUTPUT);
-    pinMode(PinNameToIndex(PG_14), OUTPUT);
-    pinMode(PinNameToIndex(PA_9), OUTPUT);
+    pinMode(PinNameToIndex(MC_RS485_EN_PIN), OUTPUT);
+    pinMode(PinNameToIndex(MC_RS485_RS232_PIN), OUTPUT);
+    pinMode(PinNameToIndex(MC_RS485_FDTERM_PIN), OUTPUT);
+    pinMode(PinNameToIndex(MC_RS485_TERM_PIN), OUTPUT);
+    pinMode(PinNameToIndex(MC_RS485_SLEW_PIN), OUTPUT);
+    pinMode(PinNameToIndex(MC_RS485_HF_PIN), OUTPUT);
 
 	/* Turn-off LEDs RS485 */
-	digitalWrite(PinNameToIndex(PA_0), LOW);
-	digitalWrite(PinNameToIndex(PI_9), LOW);
+	digitalWrite(PinNameToIndex(MC_RS485_TX_PIN), LOW);
+	digitalWrite(PinNameToIndex(MC_RS485_RX_PIN), LOW);
 
 	/* Set defaults for RS485 */
 	_disable();
@@ -58,23 +58,23 @@ void RS485CommClass::end() {
 }
 
 void RS485CommClass::setModeRS232(bool enable) 	{ 
-	digitalWrite(PinNameToIndex(PA_10), enable ? LOW : HIGH);
+	digitalWrite(PinNameToIndex(MC_RS485_RS232_PIN), enable ? LOW : HIGH);
 }
 
 void RS485CommClass::setYZTerm(bool enable) { 
-	digitalWrite(PinNameToIndex(PI_15), enable ? HIGH : LOW);
+	digitalWrite(PinNameToIndex(MC_RS485_FDTERM_PIN), enable ? HIGH : LOW);
 }
 
 void RS485CommClass::setABTerm(bool enable) { 
-	digitalWrite(PinNameToIndex(PI_14), enable ? HIGH : LOW);
+	digitalWrite(PinNameToIndex(MC_RS485_TERM_PIN), enable ? HIGH : LOW);
 }
 
 void RS485CommClass::setSlew(bool enable) {
-	digitalWrite(PinNameToIndex(PG_14), enable ? LOW : HIGH);
+	digitalWrite(PinNameToIndex(MC_RS485_SLEW_PIN), enable ? LOW : HIGH);
 }
 
 void RS485CommClass::setFullDuplex(bool enable) 	{
-	digitalWrite(PinNameToIndex(PA_9), enable ? LOW : HIGH);
+	digitalWrite(PinNameToIndex(MC_RS485_HF_PIN), enable ? LOW : HIGH);
 	if (enable) {
 		// RS485 Full Duplex require YZ and AB 120 Ohm termination enabled
 		setYZTerm(true);
@@ -83,13 +83,13 @@ void RS485CommClass::setFullDuplex(bool enable) 	{
 }
 
 void RS485CommClass::_enable() { 
-	digitalWrite(PinNameToIndex(PG_9), HIGH);
+	digitalWrite(PinNameToIndex(MC_RS485_EN_PIN), HIGH);
 }
 
 void RS485CommClass::_disable() { 
-	digitalWrite(PinNameToIndex(PG_9), LOW);
+	digitalWrite(PinNameToIndex(MC_RS485_EN_PIN), LOW);
 }
 
-arduino::UART 	_UART4_	{PA_0, PI_9, NC, NC};
+arduino::UART 	_UART4_	{MC_RS485_TX_PIN, MC_RS485_RX_PIN, NC, NC};
 RS485CommClass MachineControl_RS485Comm(_UART4_);
 /**** END OF FILE ****/

@@ -12,6 +12,7 @@
 /* Includes -------------------------------------------------------------------*/
 #include <Arduino.h>
 #include <mbed.h>
+#include "pins_mc.h"
 
 /* Class ----------------------------------------------------------------------*/
 
@@ -36,15 +37,15 @@ class DigitalOutputsClass {
          * @param do7_pin The pin number for the digital output channel 7.
          * @param latch_pin The pin number for the latch mode control.
          */
-        DigitalOutputsClass(PinName do0_pin = PI_6, 
-                            PinName do1_pin = PH_9, 
-                            PinName do2_pin = PJ_9, 
-                            PinName do3_pin = PE_2,
-                            PinName do4_pin = PI_3,
-                            PinName do5_pin = PI_2,
-                            PinName do6_pin = PD_3,
-                            PinName do7_pin = PA_14,
-                            PinName latch_pin = PB_2);
+        DigitalOutputsClass(PinName do0_pin = MC_DO_DO0_PIN, 
+                            PinName do1_pin = MC_DO_DO1_PIN, 
+                            PinName do2_pin = MC_DO_DO2_PIN, 
+                            PinName do3_pin = MC_DO_DO3_PIN,
+                            PinName do4_pin = MC_DO_DO4_PIN,
+                            PinName do5_pin = MC_DO_DO5_PIN,
+                            PinName do6_pin = MC_DO_DO6_PIN,
+                            PinName do7_pin = MC_DO_DO7_PIN,
+                            PinName latch_pin = MC_DO_LATCH_PIN);
 
         /**
          * @brief Destruct the DigitalOutputsClass object.

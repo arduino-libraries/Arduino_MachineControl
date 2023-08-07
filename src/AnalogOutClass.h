@@ -12,6 +12,7 @@
 /* Includes -------------------------------------------------------------------*/
 #include <Arduino.h>
 #include <mbed.h>
+#include "pins_mc.h"
 
 /* Class ----------------------------------------------------------------------*/
 
@@ -29,7 +30,7 @@ class AnalogOutClass {
          * @param ao2_pin The analog pin number of the channel 2
          * @param ao3_pin The analog pin number of the channel 2
          */
-        AnalogOutClass(PinName ao0_pin = PJ_11, PinName ao1_pin = PK_1, PinName ao2_pin = PG_7, PinName ao3_pin = PC_7);
+        AnalogOutClass(PinName ao0_pin = MC_AO_AO0_PIN, PinName ao1_pin = MC_AO_AO1_PIN, PinName ao2_pin = MC_AO_AO2_PIN, PinName ao3_pin = MC_AO_AO3_PIN);
         
         /**
          * @brief Destruct the AnalogOutClass object.

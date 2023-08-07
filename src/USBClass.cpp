@@ -19,13 +19,13 @@ bool USBClass::begin() {
     pinMode(_power, OUTPUT);
     pinMode(_usbflag, INPUT);
 
-    _powerEnable();
+    _enable();
 
     return true;
 }
 
 void USBClass::end() {
-    _powerDisable();
+    _disable();
 }
 
 bool USBClass::getFaultStatus() {
@@ -41,11 +41,11 @@ bool USBClass::getFaultStatus() {
     return res;
 }
 
-void USBClass::_powerEnable() {
+void USBClass::_enable() {
     digitalWrite(_power, LOW);
 }
 
-void USBClass::_powerDisable() {
+void USBClass::_disable() {
     digitalWrite(_power, HIGH);
 }
 

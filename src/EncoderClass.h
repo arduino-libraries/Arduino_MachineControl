@@ -16,6 +16,7 @@
 #include "utility/QEI/QEI.h"
 #include <Arduino.h>
 #include <mbed.h>
+#include "pins_mc.h"
 
 /* Class ----------------------------------------------------------------------*/
 
@@ -42,8 +43,8 @@ public:
      * @param enc1_B_pin Pin assignment for encoder 1 channel B (default: PI_7).
      * @param enc1_I_pin Pin assignment for encoder 1 Index channel (default: PJ_10).
      */
-    EncoderClass(PinName enc0_A_pin = PJ_8, PinName enc0_B_pin = PH_12, PinName enc0_I_pin = PH_11,
-                 PinName enc1_A_pin = PC_13, PinName enc1_B_pin = PI_7, PinName enc1_I_pin = PJ_10);
+    EncoderClass(PinName enc0_A_pin = MC_ENC_0A_PIN, PinName enc0_B_pin = MC_ENC_0B_PIN, PinName enc0_I_pin = MC_ENC_0I_PIN,
+                 PinName enc1_A_pin = MC_ENC_1A_PIN, PinName enc1_B_pin = MC_ENC_1B_PIN, PinName enc1_I_pin = MC_ENC_1I_PIN);
 
     /**
      * @brief Destruct the EncoderClass object.

@@ -14,6 +14,7 @@
 #include <ArduinoRS485.h> 
 #include <Arduino.h>      
 #include <mbed.h>
+#include "pins_mc.h"
 
 /* Class ----------------------------------------------------------------------*/
 
@@ -36,7 +37,8 @@ class RS485CommClass : public RS485Class {
          * @param rs_de_pin The pin for enabling the RS485 driver.
          * @param rs_re_pin The pin for setting the RS485 driver in receive or transmit mode.
          */
-        RS485CommClass(arduino::UART& uart_itf, PinName rs_tx_pin = PA_0, PinName rs_de_pin = PI_13, PinName rs_re_pin = PI_10);
+        RS485CommClass(arduino::UART& uart_itf, PinName rs_tx_pin = MC_RS485_TX_PIN, PinName rs_de_pin = MC_RS485_DE_PIN, PinName rs_re_pin = MC_RS485_RE_PIN);
+
 
         /**
          * @brief Destruct the RS485CommClass object.

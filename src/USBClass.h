@@ -13,6 +13,7 @@
 /* Includes -------------------------------------------------------------------*/
 #include <Arduino.h>
 #include <mbed.h>
+#include "pins_mc.h"
 
 /* Class ----------------------------------------------------------------------*/
 
@@ -32,7 +33,7 @@ public:
      * @param power_pin The pin number for controlling the power to the USBA VBUS.
      * @param usbflag_pin The pin number for reading the fault status of the USBA VBUS.
      */
-    USBClass(PinName power_pin = PB_14, PinName usbflag_pin = PB_15);
+    USBClass(PinName power_pin = MC_USB_PWR_PIN, PinName usbflag_pin = MC_USB_FLAG_PIN);
 
     /**
      * @brief Destruct the USBClass object.
@@ -76,14 +77,14 @@ private:
      *
      * This private method is used to enable power to the USBA VBUS.
      */
-    void _powerEnable();
+    void _enable();
 
     /**
      * @brief Disable power to the USBA VBUS.
      *
      * This private method is used to disable power to the USBA VBUS.
      */
-    void _powerDisable();
+    void _disable();
 };
 
 extern USBClass MachineControl_USBController;

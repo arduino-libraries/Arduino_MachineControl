@@ -13,6 +13,7 @@
 #include "utility/ioexpander/ArduinoIOExpander.h"
 #include <Arduino.h>
 #include <mbed.h>
+#include "pins_mc.h"
 
 /* Class ----------------------------------------------------------------------*/
 
@@ -31,7 +32,7 @@ public:
      *
      * @param latch_pin The pin number for the latch mode control.
      */
-    ProgrammableDIOClass(PinName latch_pin = PH_14);
+    ProgrammableDIOClass(PinName latch_pin = MC_PDIO_LATCH_PIN);
 
     /**
      * @brief Destruct the ProgrammableDIOClass object.
