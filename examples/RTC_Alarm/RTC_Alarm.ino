@@ -12,8 +12,6 @@
 */
 #include <Arduino_MachineControl.h>
 
-using namespace machinecontrol;
-
 int hours = 12;
 int minutes = 45;
 int seconds = 57;
