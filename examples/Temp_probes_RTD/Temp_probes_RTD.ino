@@ -1,18 +1,19 @@
 /*
-  Machine Control - Temperature probes RTD example
-
-  This example provides a way to test the 3-wire RTDs
-  on the Machine control Carrier. It is possible to
-  acquire 2-wire RTD simply by shorting the RTDx pin
-  to the TPx pin. The Machine control carrier has on
-  board a precise 400 ohm 0.1% reference resistor which
-  is used as a reference by the MAX31865.
-
-  The circuit:
-   - Portenta H7
-   - Portenta Machine Control Carrier
-   - 3-wire RTD or 2-wire RTD
-*/
+ * Portenta Machine Control - Temperature Probes RTD Example
+ *
+ * This example provides a method to test the 3-wire RTDs
+ * on the Machine Control Carrier. It is also possible to
+ * acquire 2-wire RTDs by shorting the RTDx pin to the TPx pin.
+ * The Machine Control Carrier features a precise 400 ohm 0.1% reference resistor,
+ * which serves as a reference for the MAX31865.
+ *
+ * Circuit:
+ *  - Portenta H7
+ *  - Portenta Machine Control
+ *  - 3-wire RTD or 2-wire RTD
+ *
+ * Initial author: Riccardo Rizzo @Rocketct
+ */
 
 #include <Arduino_MachineControl.h>
 
@@ -24,7 +25,10 @@
 
 void setup() {
   Serial.begin(9600);
-  Serial.println("MAX31865 PT100 Sensor Test!");
+  while (!Serial) {
+      ;
+  }
+
   MachineControl_RTDTempProbe.begin(THREE_WIRE);
 }
 

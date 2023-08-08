@@ -1,34 +1,32 @@
 /*
-  RS232 communication
-
-  This sketch shows how to use the SP335ECR1 on the Machine
-  Control as a RS232 interface, how to periodically send
-  a string on the RS232 TX channel and how to receive data
-  from the interface RX channel.
-
-  Circuit:
-   - Arduino Portenta Machine Control (PMC)
-   - Device with RS232 interface
-   - Connect PMC TXN to RS232 Device RXD
-   - Connect PMC RXP to RS232 Device TXD
-   - Connect PMC GND to RS232 Device GND
-
-*/
+ * Portenta Machine Control - RS232 Communication Example
+ *
+ * This sketch shows the usage of the SP335ECR1 on the Machine Control
+ * as an RS232 interface. It demonstrates how to periodically send a string on the RS232 TX channel
+ * and how to receive data from the interface RX channel.
+ *
+ * Circuit:
+ *  - Portenta H7
+ *  - Portenta Machine Control
+ *  - Device with RS232 interface
+ *  - Connect PMC TXN to RS232 Device RXD
+ *  - Connect PMC RXP to RS232 Device TXD
+ *  - Connect PMC GND to RS232 Device GND
+ *
+ * Initial author: Riccardo Rizzo @Rocketct
+ */
 
 #include <Arduino_MachineControl.h>
 
 constexpr unsigned long sendInterval { 1000 };
 unsigned long sendNow { 0 };
-
 unsigned long counter { 0 };
 
-void setup()
-{
-
-    Serial.begin(115200);
-    // Wait for Serial or start after 2.5s
-    for (auto const timeout = millis() + 2500; !Serial && timeout < millis(); delay(500))
+void setup() {
+    Serial.begin(9600);
+    while (!Serial) {
         ;
+    }
 
     delay(2500);
     Serial.println("Start RS232 initialization");
@@ -39,8 +37,7 @@ void setup()
     // - RS485 mode
     // - Half Duplex
     // - No A/B and Y/Z 120 Ohm termination enabled
-    // Specify baudrate for the communication
-    MachineControl_RS485Comm.begin(115200);
+    MachineControl_RS485Comm.begin(115200); // Specify baudrate for the communication
 
     // Enable the RS232 mode
     MachineControl_RS485Comm.setModeRS232(true);
@@ -51,8 +48,7 @@ void setup()
     Serial.println("Initialization done!");
 }
 
-void loop()
-{
+void loop() {
     if (MachineControl_RS485Comm.available())
         Serial.write(MachineControl_RS485Comm.read());
 

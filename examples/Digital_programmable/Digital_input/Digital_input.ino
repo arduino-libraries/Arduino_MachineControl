@@ -1,24 +1,25 @@
 /*
-  Machine Control - Digital Input Example
+ * Portenta Machine Control - Digital Input Example
+ *
+ * This sketch shows how to periodically read from all the DIGITAL INPUTS channels on the Machine Control.
+ *
+ * Circuit:
+ *  - Portenta H7
+ *  - Portenta Machine Control
+ *
+ * Initial author: Riccardo Rizzo @Rocketct
+ */
 
-  This sketch shows how to periodically read from all the DIGITAL
-  INPUTS channels on the Machine Control.
-
-  The circuit:
-   - Portenta H7
-   - Machine Control
-
-  This example code is in the public domain.
-*/
 #include <Arduino_MachineControl.h>
-#include "Wire.h"
 
 uint16_t readings = 0;
 
 void setup() {
   Serial.begin(9600);
-  //The loop starts only when the Serial Monitor is opened.
-  while(!Serial);
+  while (!Serial) {
+    ; // wait for serial port to connect.
+  }
+
   Wire.begin();
 
   if (!MachineControl_DigitalInputs.begin()) {

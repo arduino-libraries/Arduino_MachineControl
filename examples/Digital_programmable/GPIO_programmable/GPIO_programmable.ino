@@ -1,25 +1,27 @@
 /*
-  Machine Control - IOExpander Read And Write Example
+ * Portenta Machine Control - IOExpander Read and Write Example
+ *
+ * This sketch shows the utilization of the GPIO Expanders on the Machine Control.
+ * It demonstrates the periodic transmission of values on the PROGRAMMABLE DIGITAL I/O output channels
+ * and the periodic reading from the PROGRAMMABLE DIGITAL I/O input channels.
+ *
+ * Circuit:
+ *  - Portenta H7
+ *  - Portenta Machine Control
+ *
+ * Initial author: Riccardo Rizzo @Rocketct
+ */
 
-  This sketch shows how to use the GPIO Expanders on the Machine Control,
-  how to periodically send a value on the PROGRAMMABLE DIGITAL I/O
-  output channels and how to periodically read from the PROGRAMMABLE
-  DIGITAL I/O input channels.
-
-  The circuit:
-   - Portenta H7
-   - Machine Control
-
-  This example code is in the public domain.
-*/
- 
 #include <Arduino_MachineControl.h>
-#include "Wire.h"
 
 void setup() {
   Serial.begin(9600);
-  while (!Serial);
+  while (!Serial) {
+    ; // wait for serial port to connect.
+  }
+
   Wire.begin();
+
   if (!MachineControl_DigitalProgrammables.begin()) {
     Serial.println("GPIO expander initialization fail!!");
   }

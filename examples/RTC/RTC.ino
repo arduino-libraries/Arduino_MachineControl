@@ -1,15 +1,16 @@
 /*
-  Machine Control - RTC Example
+ * Portenta Machine Control - RTC Example
+ *
+ * This sketch shows the utilization of the RTC PCF8563T on the Machine
+ * Control Carrier and demonstrates how to configure the PCF8563T's time registers.
+ *
+ * Circuit:
+ *  - Portenta H7
+ *  - Portenta Machine Control
+ *
+ * Initial author: Riccardo Rizzo @Rocketct
+ */
 
-  This sketch shows how to use the RTC PCF8563T on the Machine
-  Control Carrier and how to configure the PCF8563T's
-  time registers.
-
-  Circuit:
-   - Portenta H7
-   - Machine Control
-
-*/
 #include <Arduino_MachineControl.h>
 
 int years = 20;
@@ -22,14 +23,14 @@ int seconds = 31;
 void setup() {
   Serial.begin(9600);
   while (!Serial) {
-    ; // wait for serial port to connect.
+      ;
   }
 
-  Serial.println("Initialization");
+  Serial.print("RTC Initialization");
   if(!MachineControl_RTCController.begin()) {
-    Serial.println("Initialization fail!");
+    Serial.println(" fail!");
   }
-  Serial.println("Initialization Done!");
+  Serial.println(" done!");
 
   // APIs to set date's fields: years, months, days, hours, minutes and seconds
   // The RTC time can be set as epoch, using one of the following two options:
@@ -45,7 +46,7 @@ void setup() {
 }
 
 void loop() {
-  // APIs to get date's fields.
+  // APIs to get date's fields
   Serial.print("Date: ");
   Serial.print(MachineControl_RTCController.getYears());
   Serial.print("/");
@@ -58,9 +59,11 @@ void loop() {
   Serial.print(MachineControl_RTCController.getMinutes());
   Serial.print(":");
   Serial.println(MachineControl_RTCController.getSeconds());
+  
   time_t utc_time = time(NULL);
   Serial.print("Date as UTC time: ");
   Serial.println(utc_time);
   Serial.println();
+  
   delay(1000);
 }

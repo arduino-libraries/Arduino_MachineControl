@@ -1,32 +1,31 @@
 /*
-  RS485 Half Duplex communication
-
-  This sketch shows how to use the SP335ECR1 on the Machine
-  Control as a half duplex (AB) RS485 interface, how to periodically
-  send a string on the RS485 TX channel and how to receive data
-  from the interface RX channel.
-
-  Circuit:
-   - Portenta H7
-   - Machine Control
-   - A Slave device with RS485 interface
-   - Connect TXP to A(+) and TXN to B(-)
-
-*/
+ * Portenta Machine Control - RS485 Half Duplex Communication Example
+ *
+ * This sketch shows the usage of the SP335ECR1 on the Machine Control
+ * as a half duplex (AB) RS485 interface. It demonstrates how to periodically send a string
+ * on the RS485 TX channel.
+ *
+ * Circuit:
+ *  - Portenta H7
+ *  - Portenta Machine Control
+ *  - A Slave device with RS485 interface
+ *  - Connect TXP to A(+) and TXN to B(-)
+ *
+ * Initial author: Riccardo Rizzo @Rocketct
+ */
 
 #include "Arduino_MachineControl.h"
 
 constexpr unsigned long sendInterval { 1000 };
 unsigned long sendNow { 0 };
-
 unsigned long counter { 0 };
 
-void setup()
-{
-    Serial.begin(115200);
+void setup() {
+    Serial.begin(9600);
     while (!Serial) {
-        ; // wait for serial port to connect.
+        ;
     }
+
     delay(1000);
     Serial.println("Start RS485 initialization");
 
@@ -36,8 +35,7 @@ void setup()
     // - Half Duplex
     // - No A/B and Y/Z 120 Ohm termination enabled
     // Enable the RS485/RS232 system
-    // Specify baudrate, and preamble and postamble times for RS485 communication
-    MachineControl_RS485Comm.begin(115200, 0, 500);
+    MachineControl_RS485Comm.begin(115200, 0, 500); // Specify baudrate, and preamble and postamble times for RS485 communication
 
     // Start in receive mode
     MachineControl_RS485Comm.receive();
@@ -45,8 +43,7 @@ void setup()
     Serial.println("Initialization done!");
 }
 
-void loop()
-{
+void loop() {
     if (MachineControl_RS485Comm.available())
         Serial.write(MachineControl_RS485Comm.read());
 
