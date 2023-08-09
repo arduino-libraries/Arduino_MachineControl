@@ -38,7 +38,7 @@ const MAX31855Class::coefftable MAX31855Class::CoeffK[];
 const MAX31855Class::coefftable MAX31855Class::InvCoeffJ[];
 const MAX31855Class::coefftable MAX31855Class::InvCoeffK[];
 
-MAX31855Class::MAX31855Class(int cs, SPIClass& spi) :
+MAX31855Class::MAX31855Class(PinName cs, SPIClass& spi) :
   _cs(cs),
   _spi(&spi),
   _spiSettings(4000000, MSBFIRST, SPI_MODE0),

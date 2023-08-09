@@ -29,7 +29,7 @@
 
 class MAX31855Class {
 public:
-  MAX31855Class(int cs = 7, SPIClass& spi = SPI);
+  MAX31855Class(PinName cs = PI_0, SPIClass& spi = SPI);
 
   int begin();
   void end();
