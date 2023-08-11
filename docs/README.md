@@ -28,11 +28,11 @@ https://www.arduino.cc/reference/en/libraries/arduino_machinecontrol
 - Provides control for other I/O:
     - 12 programmable digital I/O at 24V
 
-- Supports various Communication Protocols:
+- Supports various communication protocols:
     - CAN-BUS
     - Serial protocols (RS232/RS422/RS485)
 
-- Supports versatile connectivity options:
+- Supports connectivity options:
     - Ethernet
     - USB
     - Bluetooth Low Energy
@@ -67,8 +67,6 @@ void loop() {
 
 ## Examples
 
-## Examples
-
 - **[Analog_input_0_10V](../examples/Analog_input/Analog_input_0_10V):** This example demonstrates how to read analog input signals in the 0-10V range.
 - **[Analog_input_4_20mA](../examples/Analog_input/Analog_input_4_20mA):** This example demonstrates how to read analog input signals in the 4-20mA range.
 - **[Analog_input_NTC](../examples/Analog_input/Analog_input_NTC):** This example shows reading analog input signals from NTC temperature probes.
@@ -88,7 +86,6 @@ void loop() {
 - **[Temp_probes_RTD](../examples/Temp_probes_RTD):** This example demonstrates the temperature probe readings using RTD sensors.
 - **[Temp_probes_Thermocouples](../examples/Temp_probes_Thermocouples):** This example demonstrates the temperature probe readings using thermocouple sensors.
 - **[USB_host](../examples/USB_host):** This example shows the USB host functionality.
-
 
 ## API
 
