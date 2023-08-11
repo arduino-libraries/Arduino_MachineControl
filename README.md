@@ -1,18 +1,17 @@
-# Portenta Machine Control Library for Arduino
+# 🏭 Library for Portenta Machine Control
 
-[![Check Arduino status](https://github.com/arduino-libraries/Arduino_MachineControl/actions/workflows/check-arduino.yml/badge.svg)](https://github.com/arduino-libraries/Arduino_MachineControl/actions/workflows/check-arduino.yml)
-[![Compile Examples status](https://github.com/arduino-libraries/Arduino_MachineControl/actions/workflows/compile-examples.yml/badge.svg)](https://github.com/arduino-libraries/Arduino_MachineControl/actions/workflows/compile-examples.yml)
-[![Spell Check status](https://github.com/arduino-libraries/Arduino_MachineControl/actions/workflows/spell-check.yml/badge.svg)](https://github.com/arduino-libraries/Arduino_MachineControl/actions/workflows/spell-check.yml)
+The Arduino Portenta Machine Control is a versatile industrial unit for driving machinery. It offers soft-PLC control, diverse I/O options, and flexible network connectivity.
 
-Arduino Library for the Portenta Machine Control
+The Machine Control library enables efficient management of the features of the Portenta Machine Control board.
 
-The Portenta Machine Control enhances existing products with minimal effort, allowing companies to implement a standard platform across different equipment models. It is now easy to create an infrastructure of interconnected machines, which can be controlled onsite or via the cloud when needed; moreover, human-machine interaction can be further enahnced via mobile apps thanks to BLE connectivity.
+📦 For more information about this product:
+https://www.arduino.cc/pro/hardware/product/portenta-machine-control
 
-For more information about this library please visit us at https://www.arduino.cc/reference/en/libraries/arduino_machinecontrol/
-For more information about this product: https://www.arduino.cc/pro/hardware/product/portenta-machine-control
+📖 For more information about this library please read the documentation [here](./docs/).
 
 ## License
 
+```
 Copyright (c) 2021 Arduino SA. All rights reserved.
 
 This library is free software; you can redistribute it and/or
@@ -28,3 +27,4 @@ Lesser General Public License for more details.
 You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+```
