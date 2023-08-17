@@ -31,12 +31,7 @@ https://www.arduino.cc/reference/en/libraries/arduino_machinecontrol
 - Supports various communication protocols:
     - CAN-BUS
     - Serial protocols (RS232/RS422/RS485)
-
-- Supports connectivity options:
-    - Ethernet
     - USB
-    - Bluetooth Low Energy
-    - Wi-Fi
 
 - Handles RTC (Real-Time Clock) functionality
 
