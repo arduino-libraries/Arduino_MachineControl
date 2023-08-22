@@ -1,18 +1,55 @@
-#######################################
-# Syntax Coloring Map For MachineControl
-####################################### 
+################################################
+# Syntax Coloring Map For Arduino_MachineControl
+################################################
 # Class (KEYWORD1)
-#######################################
+################################################
 
-Arduino_MachineControl	KEYWORD1
+Arduino_MachineControl KEYWORD1
 
-#######################################
+MachineControl_AnalogIn KEYWORD1
+MachineControl_AnalogOut KEYWORD1
+MachineControl_CANComm KEYWORD1
+MachineControl_DigitalOutputs KEYWORD1
+MachineControl_Encoders KEYWORD1
+MachineControl_DigitalInputs KEYWORD1
+MachineControl_DigitalProgrammables KEYWORD1
+MachineControl_RS485Comm KEYWORD1
+MachineControl_RTDTempProbe KEYWORD1
+MachineControl_RTCController KEYWORD1
+MachineControl_TCTempProbe KEYWORD1
+MachineControl_USBController KEYWORD1
+
+################################################
 # Methods and Functions (KEYWORD2)
-#######################################	
+################################################
 
 begin	KEYWORD2
-end	    KEYWORD2
+end KEYWORD2
 
-#######################################
+read KEYWORD2
+
+setPeriod KEYWORD2
+write KEYWORD2
+
+available KEYWORD2
+
+writeAll KEYWORD2
+
+reset KEYWORD2
+getCurrentState KEYWORD2
+getPulses KEYWORD2
+getRevolutions KEYWORD2
+
+setModeRS232 KEYWORD2
+setYZTerm KEYWORD2
+setABTerm KEYWORD2
+setSlew KEYWORD2
+setFullDuplex KEYWORD2
+
+selectChannel KEYWORD2
+
+getFaultStatus KEYWORD2
+
+################################################
 # Constants (LITERAL1)
-#######################################
+################################################
