@@ -29,7 +29,7 @@ void setup() {
     ; // wait for serial port to connect.
   }
 
-  MachineControl_AnalogIn.begin(MCAI_SENSOR_NTC);
+  MachineControl_AnalogIn.begin(SensorType::NTC);
 }
 
 void loop() {

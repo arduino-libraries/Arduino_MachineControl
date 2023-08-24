@@ -49,14 +49,14 @@ AnalogInClass::AnalogInClass(PinName ai0_pin, PinName ai1_pin, PinName ai2_pin)
 AnalogInClass::~AnalogInClass() 
 { }
 
-bool AnalogInClass::begin(int sensor_type, int res_bits) {
+bool AnalogInClass::begin(SensorType sensor_type, int res_bits) {
     bool ret = true;
 
     /* Set bit resolution of ADC */
     analogReadResolution(res_bits);
 
     switch (sensor_type) {
-        case MCAI_SENSOR_NTC:
+        case SensorType::NTC:
             /* Enable a 100K resistor in series with the reference voltage.	 
              * The voltage sampled is the voltage division between the 100k resistor and the input resistor (NTC/PTC) */
             digitalWrite(CH0_IN1, LOW);
@@ -74,7 +74,7 @@ bool AnalogInClass::begin(int sensor_type, int res_bits) {
             digitalWrite(CH2_IN3, HIGH);
             digitalWrite(CH2_IN4, HIGH);
             break;
-        case MCAI_SENSOR_0_10V:
+        case SensorType::V_0_10:
             /* Configure the input resistor dividers to have a ratio of 0.28
              * (Maximum input voltage is 10V). */
             digitalWrite(CH0_IN1, HIGH);
@@ -92,7 +92,7 @@ bool AnalogInClass::begin(int sensor_type, int res_bits) {
             digitalWrite(CH2_IN3, LOW);
             digitalWrite(CH2_IN4, HIGH);
             break;
-        case MCAI_SENSOR_4_20MA:
+        case SensorType::MA_4_20:
             /* Enable a 120 ohm resistor to GND to convert the 4-20mA sensor currents to voltage. 
              * Note: 24V are available from the carrier to power the 4-20mA sensors. */
             digitalWrite(CH0_IN1, HIGH);

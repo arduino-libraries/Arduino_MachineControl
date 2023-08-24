@@ -17,11 +17,15 @@
 
 /* Exported defines ----------------------------------------------------------*/
 
-/** Analog Sensor type **/
-#define MCAI_SENSOR_NTC         1
-#define MCAI_SENSOR_0_10V       2
-#define MCAI_SENSOR_4_20MA      3
-
+/**
+ * @brief Enum class that represents different sensor types.
+ */
+enum class SensorType {
+    NTC = 1,
+    V_0_10 = 2,
+    MA_4_20 = 3
+};
+ 
 /* Class ----------------------------------------------------------------------*/
 
 /**
@@ -49,11 +53,11 @@ class AnalogInClass {
         /**
          * @brief Initialize the analog reader, configure the sensor type and read resolution.
          *
-         * @param sensor_type The sensor type (0-10V, 4-20mA or NTC)
+         * @param sensor_type The sensor type (NTC, V_0_10 or MA_4_20)
          * @param res_bits Resolution in bits of the read analog value
-         * @return true If the analog reader is successfully initialized, false Otherwise
+         * @return true If the analog reader is successfully initialized, false otherwise
          */
-        bool begin(int sensor_type, int res_bits = 16);
+        bool begin(SensorType sensor_type, int res_bits = 16);
 
         /**
          * @brief Read the sampled voltage from the selected channel.

@@ -24,7 +24,7 @@ Class for the Analog IN connector of the Portenta Machine Control.
 --------------------------------|---------------------------------------------
 `public ` [`AnalogInClass`](#public-analoginclasspinname-ai0_pin--mc_ai_ai0_pin-pinname-ai1_pin--mc_ai_ai1_pin-pinname-ai2_pin--mc_ai_ai2_pin)`(PinName ai0_pin, PinName ai1_pin, PinName ai2_pin)` | Construct an Analog Input reader for the Portenta Machine Control.
 `public ` [`~AnalogInClass`](#public-analoginclass)`()` | Destruct the AnalogInClass object.
-`public bool` [`begin`](#public-bool-beginint-sensor_type-int-res_bits--16)`(int sensor_type, int res_bits)` | Initialize the analog reader, configure the sensor type and read resolution.
+`public bool` [`begin`](#public-bool-beginint-sensor_type-int-res_bits--16)`(SensorType sensor_type, int res_bits)` | Initialize the analog reader, configure the sensor type and read resolution.
 `public uint16_t` [`read`](#public-uint16_t-readint-channel)`(int channel)` | Read the sampled voltage from the selected channel.
 
 # class `AnalogOutClass`

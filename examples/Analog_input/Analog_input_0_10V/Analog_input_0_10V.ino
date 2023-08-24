@@ -25,7 +25,7 @@ void setup() {
     ; // wait for serial port to connect.
   }
 
-  MachineControl_AnalogIn.begin(MCAI_SENSOR_0_10V);
+  MachineControl_AnalogIn.begin(SensorType::V_0_10);
 }
 
 void loop() {
