@@ -79,7 +79,7 @@ bool PCF8563TClass::begin()
  *  Save an unsigned byte with the Year's value
  *  @param years  Year's unsigned byte
  */   
-void PCF8563TClass::setYears(uint8_t years) { 
+void PCF8563TClass::setYear(uint8_t years) { 
   uint8_t dec = years / 10;
   uint8_t unit = years - (dec * 10);
   writeByte(PCF8563T_YEARS_REG, ((dec << 4) + unit));
@@ -90,7 +90,7 @@ void PCF8563TClass::setYears(uint8_t years) {
  *  Save an unsigned byte with the Month's value
  *  @param months Month's unsigned byte (0 to 12)
  */   
-void PCF8563TClass::setMonths(uint8_t months) {
+void PCF8563TClass::setMonth(uint8_t months) {
   uint8_t offset = 0;
   if (months > 9) {
     offset = 6;
@@ -103,7 +103,7 @@ void PCF8563TClass::setMonths(uint8_t months) {
  *  Save an unsigned byte with the Day's value
  *  @param days day's unsigned byte
  */   
-void PCF8563TClass::setDays(uint8_t days) {
+void PCF8563TClass::setDay(uint8_t days) {
   uint8_t dec = days / 10;
   uint8_t unit = days - (dec * 10);
   writeByte(PCF8563T_DAYS_REG, ((dec << 4) + unit));
@@ -147,7 +147,7 @@ void PCF8563TClass::setSeconds(uint8_t seconds) {
  *  Get unsigned byte with the Year(s) value
  *  @return byte with Year(s) value
  */   
-uint8_t PCF8563TClass::getYears() {
+uint8_t PCF8563TClass::getYear() {
   uint8_t years = readByte(PCF8563T_YEARS_REG);
   return (years & 0x0F) + ((years >> 4)*10);
 }
@@ -157,7 +157,7 @@ uint8_t PCF8563TClass::getYears() {
  *  Get unsigned byte with the month(s) value
  *  @return byte with Month(s) value
  */   
-uint8_t PCF8563TClass::getMonths() {
+uint8_t PCF8563TClass::getMonth() {
   uint8_t months = readByte(PCF8563T_MONTHS_REG) & 0x1F;
   if(months > 9) {
     return months - 6;
@@ -171,7 +171,7 @@ uint8_t PCF8563TClass::getMonths() {
  *  Get unsigned byte with the Day(s) value
  *  @return byte with Day(s) value
  */   
-uint8_t PCF8563TClass::getDays() {
+uint8_t PCF8563TClass::getDay() {
   uint8_t days = readByte(PCF8563T_DAYS_REG) & 0x3F;
   return (days & 0x0F) + ((days >> 4)*10);
 }
@@ -215,9 +215,9 @@ void PCF8563TClass::setEpoch() {
   time.tm_sec = getSeconds();
   time.tm_min = getMinutes();
   time.tm_hour = getHours();
-  time.tm_mday = getDays();
-  time.tm_mon = getMonths() - 1;
-  time.tm_year = getYears() + 100;
+  time.tm_mday = getDay();
+  time.tm_mon = getMonth() - 1;
+  time.tm_year = getYear() + 100;
   time_t seconds;
   _rtc_maketime(&time, &seconds, RTC_FULL_LEAP_YEAR_SUPPORT);
   set_time(seconds);
@@ -236,9 +236,9 @@ void PCF8563TClass::setEpoch(time_t seconds) {
   setSeconds(time.tm_sec);
   setMinutes(time.tm_min);
   setHours( time.tm_hour);
-  setDays(time.tm_mday);
-  setMonths(time.tm_mon + 1);
-  setYears((time.tm_year - 100));
+  setDay(time.tm_mday);
+  setMonth(time.tm_mon + 1);
+  setYear((time.tm_year - 100));
   set_time(seconds);
 }
 
@@ -286,9 +286,9 @@ time_t PCF8563TClass::getEpoch() {
   time.tm_sec = getSeconds();
   time.tm_min = getMinutes();
   time.tm_hour = getHours();
-  time.tm_mday = getDays();
-  time.tm_mon = getMonths() - 1;
-  time.tm_year = getYears() + 100;  // year since 1900
+  time.tm_mday = getDay();
+  time.tm_mon = getMonth() - 1;
+  time.tm_year = getYear() + 100;  // year since 1900
 
   _rtc_maketime(&time, &seconds, RTC_FULL_LEAP_YEAR_SUPPORT);
   return seconds;

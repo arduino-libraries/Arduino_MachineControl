@@ -31,16 +31,16 @@ class PCF8563TClass {
 public:
   PCF8563TClass();
   bool begin();
-  void setYears(uint8_t years);
-  void setMonths(uint8_t months);
-  void setDays(uint8_t days);
+  void setYear(uint8_t years);
+  void setMonth(uint8_t months);
+  void setDay(uint8_t days);
   void setHours(uint8_t hours);
   void setMinutes(uint8_t minutes);
   void setSeconds(uint8_t seconds);
 
-  uint8_t getYears();
-  uint8_t getMonths();
-  uint8_t getDays();
+  uint8_t getYear();
+  uint8_t getMonth();
+  uint8_t getDay();
   uint8_t getHours();
   uint8_t getMinutes();
   uint8_t getSeconds();

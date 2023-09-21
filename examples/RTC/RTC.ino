@@ -13,9 +13,9 @@
 
 #include <Arduino_MachineControl.h>
 
-int years = 20;
-int months = 9;
-int days = 24;
+int year = 20;
+int month = 9;
+int day = 24;
 int hours = 12;
 int minutes = 43;
 int seconds = 31;
@@ -36,9 +36,9 @@ void setup() {
   // The RTC time can be set as epoch, using one of the following two options:
   // - Calendar time: MachineControl_RTCController.setEpoch(years,  months,  days, hours, minutes, seconds);
   // - UTC time: MachineControl_RTCController.setEpoch(date_in_seconds);
-  MachineControl_RTCController.setYears(years);
-  MachineControl_RTCController.setMonths(months);
-  MachineControl_RTCController.setDays(days);
+  MachineControl_RTCController.setYear(year);
+  MachineControl_RTCController.setMonth(month);
+  MachineControl_RTCController.setDay(day);
   MachineControl_RTCController.setHours(hours);
   MachineControl_RTCController.setMinutes(minutes);
   MachineControl_RTCController.setSeconds(seconds);
@@ -48,11 +48,11 @@ void setup() {
 void loop() {
   // APIs to get date's fields
   Serial.print("Date: ");
-  Serial.print(MachineControl_RTCController.getYears());
+  Serial.print(MachineControl_RTCController.getYear());
   Serial.print("/");
-  Serial.print(MachineControl_RTCController.getMonths());
+  Serial.print(MachineControl_RTCController.getMonth());
   Serial.print("/");
-  Serial.print(MachineControl_RTCController.getDays());
+  Serial.print(MachineControl_RTCController.getDay());
   Serial.print(" - ");
   Serial.print(MachineControl_RTCController.getHours());
   Serial.print(":");
