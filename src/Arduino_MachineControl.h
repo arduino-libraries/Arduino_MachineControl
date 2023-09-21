@@ -9,9 +9,16 @@
 #include "utility/RTC/PCF8563T.h"
 #include "utility/RTC/PCF8563T.h"
 
-#include "Arduino.h"
-#include "pinDefinitions.h"
-#include "mbed.h"
+#include <Arduino.h>
+#include <pinDefinitions.h>
+#include <mbed.h>
+
+#if __has_include("portenta_info.h")
+#include "portenta_info.h"
+#define TRY_REV2_RECOGNITION
+uint8_t* boardInfo();
+#define PMC_R2_SKU  (24 << 8 | 3)
+#endif
 
 namespace machinecontrol {
 
@@ -28,6 +35,26 @@ public:
 	*  @param channel (0-2)
 	*/   
 	void selectChannel(int channel) {
+
+#ifdef TRY_REV2_RECOGNITION
+		// check if OTP data is present AND the board is mounted on a r2 carrier
+		auto info = (PortentaBoardInfo*)boardInfo();
+		if (info->magic == 0xB5 && info->carrier == PMC_R2_SKU) {
+			// reverse channels 0 and 2
+			switch (channel) {
+				case 0:
+					channel = 2;
+					break;
+				case 2:
+					channel = 0;
+					break;
+				default:
+					break;
+			}
+		}
+#endif
+#undef TRY_REV2_RECOGNITION
+
 		for (int i=0; i<3; i++) {
 			ch_sel[i] = (i == channel ? 1 : 0);
 		}
@@ -73,9 +100,6 @@ private:
 };
 
 extern RTDClass temp_probes;
-
-static 	mbed::CAN   _can(PB_8, PH_13);
-
 
 /**
  * The COMMClass is used to initialize the CAN and RS485 LEDs and 
@@ -124,10 +148,10 @@ public:
 		can_disable = 1;
 	}
 
-	UART _UART4_ = arduino::UART(PA_0, PI_9, NC, NC);
-	mbed::CAN& can = _can;
+	arduino::UART _UART4_ {PA_0, PI_9, NC, NC};
+	mbed::CAN can {PB_8, PH_13};
 
-	RS485Class rs485 = RS485Class(_UART4_, PinNameToIndex(PA_0), PinNameToIndex(PI_13), PinNameToIndex(PI_10));
+	RS485Class rs485 {_UART4_, PinNameToIndex(PA_0), PinNameToIndex(PI_13), PinNameToIndex(PI_10)};
 
 	void rs485Enable(bool enable) 		{ digitalWrite(PinNameToIndex(PG_9),  enable ? 	HIGH : LOW); }
 	void rs485ModeRS232(bool enable) 	{ digitalWrite(PinNameToIndex(PA_10), enable ? 	LOW : HIGH); }

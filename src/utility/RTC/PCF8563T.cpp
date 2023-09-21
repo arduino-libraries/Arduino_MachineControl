@@ -172,7 +172,7 @@ uint8_t PCF8563TClass::getMonths() {
  *  @return byte with Day(s) value
  */   
 uint8_t PCF8563TClass::getDays() {
-  uint8_t days = readByte(PCF8563T_DAYS_REG);
+  uint8_t days = readByte(PCF8563T_DAYS_REG) & 0x3F;
   return (days & 0x0F) + ((days >> 4)*10);
 }
 

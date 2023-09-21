@@ -83,6 +83,22 @@ int ArduinoIOExpanderClass::read(int pin)
   return -1;
 }
 
+void ArduinoIOExpanderClass::writeAll(uint32_t banks) {
+  _tca.writeAll(banks & 0xFF, (banks  >> 8) & 0xFF, 0x00);
+}
+
+uint32_t ArduinoIOExpanderClass::readAll()
+{
+  uint8_t banks[3];
+  _tca.readAll(banks);
+  return *(uint32_t*)banks;
+}
+
+
+void ArduinoIOExpanderClass::toggle(){
+  writeAll(~(readAll()));
+}
+
 void ArduinoIOExpanderClass::initPins()
 {
 
@@ -126,7 +142,7 @@ void ArduinoIOExpanderClass::initPins()
       pinMode(IO_READ_CH_PIN_10, INPUT);
       pinMode(IO_READ_CH_PIN_11, INPUT);
 
-
+      writeAll(SWITCH_OFF_ALL);
     } else {
       pinMode(DIN_READ_CH_PIN_00, INPUT);
       pinMode(DIN_READ_CH_PIN_01, INPUT);

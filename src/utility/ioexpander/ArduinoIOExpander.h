@@ -25,6 +25,24 @@
 #define SWITCH_ON HIGH
 #define SWITCH_OFF LOW
 
+#define SWITCH_ON_ALL 0x0000FFFF
+#define SWITCH_OFF_ALL 0x00000000
+
+enum {
+    ON_VALUE_PIN_00 =      0x01,
+    ON_VALUE_PIN_01 =      0x02,
+    ON_VALUE_PIN_02 =      0x04,
+    ON_VALUE_PIN_03 =      0x08,
+    ON_VALUE_PIN_04 =      0x80,
+    ON_VALUE_PIN_05 =      0x40,
+    ON_VALUE_PIN_06 =      0x20,
+    ON_VALUE_PIN_07 =      0x10,
+    ON_VALUE_PIN_08 =      0x100,
+    ON_VALUE_PIN_09 =      0x200,
+    ON_VALUE_PIN_10 =      0x400,
+    ON_VALUE_PIN_11 =      0x800,
+};
+
 enum {
     IO_WRITE_CH_PIN_00 =      TCA6424A_P00,
     IO_WRITE_CH_PIN_01 =      TCA6424A_P01,
@@ -77,8 +95,10 @@ public:
     void setAddress(uint8_t address);
     bool set(int pin, PinStatus status);
     bool set(int pin, int status) { return set( pin, (PinStatus)status); };
-
+    void writeAll(uint32_t banks);
     int read(int pin);
+    uint32_t readAll();
+    void toggle();
     bool pinMode(int pin, PinMode direction);
 
 private:
