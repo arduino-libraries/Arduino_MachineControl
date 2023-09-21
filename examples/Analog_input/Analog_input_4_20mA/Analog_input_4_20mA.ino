@@ -21,7 +21,7 @@ using namespace machinecontrol;
 
 #define SENSE_RES 120
 
-float reference = 3.3;
+float reference = 3.0;
 
 void setup() {
   analogReadResolution(16);
