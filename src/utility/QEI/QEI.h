@@ -148,7 +148,7 @@ class QEI {
 public:
 
     typedef enum Encoding {
-
+        X1_ENCODING,
         X2_ENCODING,
         X4_ENCODING
 

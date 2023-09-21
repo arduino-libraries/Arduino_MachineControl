@@ -152,7 +152,9 @@ QEI::QEI(PinName channelA,
     //X4 encoding uses interrupts on      channel A,
     //and on channel B.
     channelA_.rise(mbed::callback(this, &QEI::encode));
-    channelA_.fall(mbed::callback(this, &QEI::encode));
+    if(encoding != X1_ENCODING){
+        channelA_.fall(mbed::callback(this, &QEI::encode));
+    }
 
     //If we're using X4 encoding, then attach interrupts to channel B too.
     if (encoding == X4_ENCODING) {
@@ -191,6 +193,20 @@ int QEI::getRevolutions(void) {
 
 }
 
+// +-------------+
+// | X1 Encoding |
+// +-------------+
+//
+// When observing states two patterns will appear:
+//
+// Counter clockwise rotation:
+//
+// 10 -> 10 -> 10 -> 10 -> ...
+//
+// Clockwise rotation:
+//
+// 11 ->  11 -> 11 -> ...
+//
 // +-------------+
 // | X2 Encoding |
 // +-------------+
@@ -243,8 +259,15 @@ void QEI::encode(void) {
 
     //2-bit state.
     currState_ = (chanA << 1) | (chanB);
-
-    if (encoding_ == X2_ENCODING) {
+         
+    if(encoding_ == X1_ENCODING){
+        if(currState_ == 0x3){
+            pulses_++;
+        }
+        if(currState_ == 0x2){
+            pulses_--;
+        }
+    } else if (encoding_ == X2_ENCODING) {
 
         //11->00->11->00 is counter clockwise rotation or "forward".
         if ((prevState_ == 0x3 && currState_ == 0x0) ||
