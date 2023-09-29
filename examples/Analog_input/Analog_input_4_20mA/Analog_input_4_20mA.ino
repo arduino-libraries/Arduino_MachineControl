@@ -18,7 +18,7 @@
 
 #define SENSE_RES 120
 
-const float REFERENCE = 3.3;
+const float REFERENCE = 3.0;
 
 void setup() {
   Serial.begin(9600);

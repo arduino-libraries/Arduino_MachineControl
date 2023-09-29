@@ -20,7 +20,7 @@
 
 #define REFERENCE_RES 100000
 
-const float REFERENCE = 3.3;
+const float REFERENCE = 3.0;
 const float LOWEST_VOLTAGE = 2.7;
 
 void setup() {

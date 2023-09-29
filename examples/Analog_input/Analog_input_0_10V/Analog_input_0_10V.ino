@@ -17,7 +17,7 @@
 #include <Arduino_MachineControl.h>
 
 const float RES_DIVIDER = 0.28057;
-const float REFERENCE   = 3.3;
+const float REFERENCE   = 3.0;
 
 void setup() {
   Serial.begin(9600);
