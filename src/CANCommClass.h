@@ -12,7 +12,6 @@
 
 /* Includes -------------------------------------------------------------------*/
 #include <Arduino.h>
-#include <pinDefinitions.h>
 #include <mbed.h>
 #include <Arduino_CAN.h>
 #include "pins_mc.h"

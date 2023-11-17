@@ -6,6 +6,7 @@
 
 /* Includes -----------------------------------------------------------------*/
 #include "CANCommClass.h"
+#include <pinDefinitions.h>
 
 /* Functions -----------------------------------------------------------------*/
 CANCommClass::CANCommClass(PinName can_tx_pin, PinName can_rx_pin, PinName can_stb_pin) :
