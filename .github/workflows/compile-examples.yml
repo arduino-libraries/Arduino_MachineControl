@@ -45,6 +45,7 @@ jobs:
           libraries: |
             - source-path: ./
             - name: ArduinoRS485
+            - name: Arduino_AdvancedAnalog
           sketch-paths: |
             - examples            
           enable-deltas-report: true
