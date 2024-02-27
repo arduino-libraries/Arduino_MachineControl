@@ -1,4 +1,16 @@
 /*
+ * IMPORTANT NOTE:
+ *
+ * This example is associated with the deprecated Arduino_MachineControl library.
+ * We have introduced a new and improved library called Arduino_PortentaMachineControl, which offers enhanced features
+ * and ongoing support. 
+ * We encourage you to update your projects to use the new library.
+ * 
+ * The functions and syntax in this example are not compatible with Arduino_PortentaMachineControl.
+ * Please refer to the migration guide for necessary adjustments.
+ */
+
+/*
   Machine Control - RTC Example
 
   This sketch shows how to use the RTC PCF8563T on the Machine

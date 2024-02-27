@@ -1,4 +1,11 @@
-# Portenta Machine Control Library for Arduino
+# [Deprecated] Portenta Machine Control Library for Arduino
+
+> [!WARNING]
+> This library is deprecated and no longer actively maintained.
+>
+> We recommend transitioning to the [Arduino_PortentaMachineControl](https://github.com/arduino-libraries/Arduino_PortentaMachineControl) library for ongoing support, new features and contributions. If you need assistance with migration, refer to the [migration guide](https://docs.arduino.cc/tutorials/portenta-machine-control/pmc-arduino-library).
+>
+> Please note that the [examples](./examples/) provided with this library are not compatible with the new library.
 
 [![Check Arduino status](https://github.com/arduino-libraries/Arduino_MachineControl/actions/workflows/check-arduino.yml/badge.svg)](https://github.com/arduino-libraries/Arduino_MachineControl/actions/workflows/check-arduino.yml)
 [![Compile Examples status](https://github.com/arduino-libraries/Arduino_MachineControl/actions/workflows/compile-examples.yml/badge.svg)](https://github.com/arduino-libraries/Arduino_MachineControl/actions/workflows/compile-examples.yml)
